@@ -1,0 +1,13 @@
+<div class="flex flex-column align-items-center border-bottom-1 surface-border p-1">
+    <img src="assets/demo/images/avatar/circl/avatar-f-1@2x.png" class="w-6rem h-6rem border-circle shadow-4" alt="">
+    <span class="text-900 text-xl font-semibold mt-2">{{ GlobalConstants.loginObject.accounthead }}</span>
+</div>
+<div class="w-full flex row-gap-4 flex-column surface-border p-2">
+    <span class="p-input-icon-left w-full">
+        <i class="pi pi-search"></i>
+        <input id="search" type="text" pInputText placeholder="Search" class="w-full" [(ngModel)]="searchValue" (input)="filter()"/>
+    </span>
+    <div class="w-full flex flex-row md:flex-column overflow-auto">
+        <app-user-card *ngFor="let user of filteredUsers" [user]="user" ></app-user-card>
+    </div>
+</div> 

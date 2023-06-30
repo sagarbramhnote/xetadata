@@ -1,0 +1,16 @@
+
+<div class="w-full flex gap-1">
+    <div class="flex-grow-1 flex-column gap-1">
+        <input pInputText id="fname" placeholder="Enter first name" [(ngModel)]="personalName.firstname" (ngModelChange)="handleChange($event)" autocomplete="off" [disabled]="whetherDisabled"/>
+        <input pInputText id="mname" placeholder="Enter middle name" [(ngModel)]="personalName.middlename" (ngModelChange)="handleChange($event)" autocomplete="off" [disabled]="whetherDisabled"/>
+        <input pInputText id="pname" placeholder="Enter last name" [(ngModel)]="personalName.lastname" (ngModelChange)="handleChange($event)" autocomplete="off" [disabled]="whetherDisabled"/>
+        <span class="fluid">
+            <p-autoComplete [(ngModel)]="selectedTags" [ngModelOptions]="{standalone: true}" placeholder="choose invoice options"
+            [suggestions]="filteredTags" (completeMethod)="filterTags($event)" field="tag" [multiple]="true" [dropdown]="true" (ngModelChange)="handleChange($event)">
+            </p-autoComplete>
+        </span>
+    </div>
+    <div class="flex align-items-center">
+        <button id="lbtn" (click)="handleDelete()" pButton class="p-button-sm menu-button w-max" [disabled]="whetherDisabled">Delete</button>
+    </div>
+</div>

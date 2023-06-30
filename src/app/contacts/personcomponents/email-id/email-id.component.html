@@ -1,0 +1,25 @@
+
+<div class="w-full flex flex-column">
+    
+    <div class="w-full flex gap-1">
+        <div class="flex-grow-1 flex-column gap-1">
+            
+            <input type="email" name="email" #email="ngModel" pInputText placeholder="email id" [(ngModel)]="endpoint.detail.emailid" [ngModelOptions]="{standalone: true}" autocomplete="off" required email (ngModelChange)="inputChange($event)" [disabled]="whetherDisabled">
+            
+        </div>
+        <div class="flex align-items-center">
+            <button id="lbtn" (click)="handleDelete()" pButton class="p-button-sm menu-button" [disabled]="whetherDisabled">Delete</button>
+        </div>
+        
+    </div>
+    <ng-template [ngIf]="email.errors">
+        <small id="username2-help" class="p-error block">email id is invalid.</small>
+    </ng-template>
+
+    <span class="fluid">
+        <p-autoComplete [(ngModel)]="selectedTags" [ngModelOptions]="{standalone: true}" placeholder="Choose invoice options"
+        [suggestions]="filteredTags" (completeMethod)="filterTags($event)" field="tag" [multiple]="true" [dropdown]="true" (ngModelChange)="inputChange($event)">
+        </p-autoComplete>
+    </span>
+    
+</div> 

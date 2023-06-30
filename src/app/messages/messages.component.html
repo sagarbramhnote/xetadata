@@ -1,0 +1,12 @@
+<div class="w-full">
+    <button pButton class="md:hidden mb-2" (click)="toggleChat()">Back</button>
+</div>
+<div class="flex flex-column md:flex-row gap-5" style="min-height: 81vh">
+    
+    <div class="md:w-25rem card p-0 md:block" [ngClass]="{'md:block': hideSidebar, 'hidden': hideSidebar}">
+        <app-chat-sidebar></app-chat-sidebar>
+    </div>
+    <div class="flex-1 card p-0" [ngClass]="{'hidden':hideChatBox}">
+        <app-chat-box></app-chat-box>
+    </div>
+</div>

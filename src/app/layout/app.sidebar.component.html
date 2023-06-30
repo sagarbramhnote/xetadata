@@ -1,0 +1,36 @@
+
+<style>
+    .newlogodiv {
+         font-size: 30px;
+         font-weight: bold;
+         letter-spacing: -2px;
+         color: var(--logo-color);
+    }
+ 
+    .newlogodivsmall {
+         font-size: 18px;
+         font-weight: bold;
+         letter-spacing: -2px;
+         color: var(--logo-color);
+    } 
+</style>
+
+<div class="layout-sidebar" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+    <div class="sidebar-header">
+        <a [routerLink]="['/']" class="app-logo">
+            <div class="app-logo-normal newlogodiv">
+                Xetadata
+            </div>
+
+            <div class="app-logo-small newlogodivsmall">
+                Xe
+            </div>
+        </a>
+        <button class="layout-sidebar-anchor p-link z-2 mb-2" type="button" (click)="anchor()"></button>
+    </div>
+ 
+
+    <div #menuContainer class="layout-menu-container">
+        <app-menu></app-menu>
+    </div>
+</div>

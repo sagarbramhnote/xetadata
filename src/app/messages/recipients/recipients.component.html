@@ -1,0 +1,166 @@
+<div class="flex justify-content-center mb-2">
+    <p-toggleButton [(ngModel)]="showForm" onLabel="Cancel" offLabel="New" (onChange)="handleNew($event)"></p-toggleButton>
+</div>
+
+
+<p-toast key="tst"></p-toast>
+<div class="grid" *ngIf="showForm">
+    <div class="col-12">
+        <div class="card">
+            <div class="p-fluid p-formgrid grid">
+                <form class="col-12" [formGroup]="urlAddressForm" (ngSubmit)="getRecipients()" autocomplete="off">
+                    <div class="w-full flex flex-column gap-1">
+                        <input id="appurl" type="text" pInputText  placeholder="Enter URL" autocomplete="off" formControlName="appurl" />
+                        <div class="text-xs text-red-600" *ngIf="urlAddressForm.controls['appurl'].touched && urlAddressForm.controls['appurl'].errors">URL is required</div>
+                        <input id="database" type="text" pInputText  placeholder="Enter Database" autocomplete="off" formControlName="database" />
+                        <div class="text-xs text-red-600" *ngIf="urlAddressForm.controls['database'].touched && urlAddressForm.controls['database'].errors">Database is required</div>
+                        <input id="schema" type="text" pInputText  placeholder="Enter Schema" autocomplete="off" formControlName="schema"/>
+                        <div class="text-xs text-red-600" *ngIf="urlAddressForm.controls['schema'].touched && urlAddressForm.controls['schema'].errors">Schema is required</div>
+                        <div class="mt-4 flex justify-content-end">
+                            <button pButton pRipple class="p-button-sm w-max" type="submit">Get</button>                    
+                        </div>
+                    </div> 
+                </form>
+              
+                <div class="col-12">
+                    <div>
+                        <p-table [value]="recipients" [(selection)]="selectedRecipients" [loading]="subLoading" [rows]="10" [rowHover]="true" dataKey="id" responsiveLayout="scroll">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 4rem">
+                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                    </th>
+                                    <!-- <th>Code</th>
+                                    <th>Name</th> -->
+                                    <th style="min-width: 14rem">
+                                        <div class="flex justify-content-between align-items-center">
+                                            Name
+                                        </div>
+                                    </th>
+                                    <th style="min-width: 14rem">
+                                        <div class="flex justify-content-between align-items-center">
+                                            Endpoint
+                                        </div>
+                                    </th>
+                                    <th style="min-width: 14rem">
+                                        <div class="flex justify-content-between align-items-center">
+                                            Entity
+                                        </div>
+                                    </th>
+                                    
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-product>
+                                <tr>
+                                    <td>
+                                        <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                                    </td>
+                                    <td>{{product.accounthead}}</td>
+                                    <td>{{product.endpoint}}</td>
+                                    <td>{{product.entity.names[0].name}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                    <div class="mt-4 flex justify-content-end">
+                        <button pButton pRipple class="p-button-sm w-max" (click)="addXetaPeople()">Add</button>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h5>Filter Menu</h5>
+			<p-table #dt1 [value]="people" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll">
+				<ng-template pTemplate="caption">
+					<div class="flex justify-content-between flex-column sm:flex-row">
+						<!-- <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> -->
+						<span class="p-input-icon-left mb-2">
+							<i class="pi pi-search"></i>
+							<input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword" class="w-full"/>
+						</span> 
+					</div>
+				</ng-template>
+				<ng-template pTemplate="header">
+					<tr>
+						<th style="min-width: 14rem">
+							<div class="flex justify-content-between align-items-center">
+								Name
+							</div>
+						</th>
+						<th style="min-width: 14rem">
+							<div class="flex justify-content-between align-items-center">
+								Endpoint
+							</div>
+						</th>
+						<th style="min-width: 10rem">
+							<div class="flex justify-content-between align-items-center">
+								Schema
+							</div>
+						</th>
+						<th style="min-width: 10rem">
+							<div class="flex justify-content-between align-items-center">
+								Database
+							</div>
+						</th>
+						<th style="min-width: 12rem">
+							<div class="flex justify-content-between align-items-center">
+								URL
+							</div>
+						</th>
+						<th style="min-width: 14rem">
+							<div class="flex justify-content-between align-items-center">
+								Entity
+							</div>
+						</th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-customer>
+					<tr>
+						<td>
+							{{customer.name}}
+						</td>
+						<td>
+							<span class="image-text ml-2">{{customer.endpoint}}</span>
+						</td>
+						<td>
+							<span class="image-text ml-2">{{customer.apt}}</span>
+						</td>
+						<td>
+							{{customer.floor}}
+						</td>
+						<td>
+							{{customer.building}}
+						</td>
+						<td>
+							{{customer.entitycontent.names[0].name}}
+						</td>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="emptymessage">
+					<tr>
+						<td colspan="8">No customers found.</td>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="loadingbody">
+					<tr>
+						<td colspan="8">Loading customers data. Please wait.</td>
+					</tr>
+				</ng-template>
+    		</p-table>
+        </div>
+    </div>
+</div>
+
+
+<ng-template [ngIf]="inProgress">
+    <div class="flex justify-content-center align-items-center absolute z-5 h-full w-full top-0 left-0" id="modal">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
+</ng-template>

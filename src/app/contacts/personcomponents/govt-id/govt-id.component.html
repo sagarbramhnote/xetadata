@@ -1,0 +1,70 @@
+<!-- <style>
+    
+
+    .superbox {
+        /* padding: 1em;
+        padding-left: 1em;
+        padding-top: 1em;
+        padding-right: calc(20%); */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .box {
+        
+        /* padding: 1em;
+        padding-left: 1em;
+        padding-top: 1em; */
+        
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        
+    }
+
+    .namebox {
+        /* background-color: chartreuse; */
+        flex-grow: 1;
+        display: flex;
+        /* flex-direction: column;
+        gap: 5px; */
+    }
+    input {
+        width: 100%;
+    }
+    .buttonbox {
+        /* background-color: gold; */
+        display: flex;
+        align-items: center;
+        
+    }
+
+    
+
+
+</style> -->
+
+<div class="flex flex-column">
+    
+    <div class="w-full flex flex-row">
+        <div class="flex-grow-1 flex">
+            <input type="text" pInputText  placeholder="govt id name" [(ngModel)]="govtid.idname"  (ngModelChange)="inputChange($event)" autocomplete="off" [disabled]="whetherDisabled">
+            <input type="text" pInputText  placeholder="govt id number" [(ngModel)]="govtid.idnumber"  (ngModelChange)="inputChange($event)" autocomplete="off" [disabled]="whetherDisabled">
+        </div>
+        <div class="flex align-items-center">
+            <button id="lbtn" (click)="handleDelete()" pButton class="p-button-sm menu-button" [disabled]="whetherDisabled">Delete</button>
+        </div>  
+        
+    </div>
+    <!-- <ng-template [ngIf]="govtidname.errors">
+        <small id="username2-help" class="p-error block">govt id is invalid.</small>
+    </ng-template> -->
+
+    <span class="fluid">
+        <p-autoComplete [(ngModel)]="selectedTags" [ngModelOptions]="{standalone: true}" placeholder="Choose invoice options"
+        [suggestions]="filteredTags" (completeMethod)="filterTags($event)" field="tag" [multiple]="true" [dropdown]="true" (ngModelChange)="inputChange($event)">
+        </p-autoComplete>
+    </span>
+    
+</div> 

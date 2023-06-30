@@ -1,0 +1,78 @@
+<div class="px-5 flex justify-content-center align-items-center">
+    <div class="border-1 surface-border surface-card border-round py-7 px-4 md:px-7 z-1">
+        <div class="mb-4">
+            <div class="text-900 text-xl font-bold mb-2">Log in</div>
+            <span class="text-600 font-medium">Please enter your details</span>
+        </div>
+        <p-toast key="tst"></p-toast> 
+        <form [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="off"> 
+            <div class="flex flex-column">
+                
+                <span class="mb-4">
+                    <div class="p-input-icon-left w-full">
+                        <i class="pi pi-envelope"></i>
+                        <input id="endpoint" type="text" pInputText class="w-full md:w-25rem" placeholder="Email or Telephone" formControlName="endpoint" #endpointInput autocomplete="off">
+                    </div>
+                    <div class="text-xs text-red-600" *ngIf="loginForm.controls['endpoint'].touched && loginForm.controls['endpoint'].errors">Endpoint is required</div>
+                </span>
+                
+                
+                <span class="mb-4">
+                    <div class="p-input-icon-left w-full">
+                        <i class="pi pi-lock"></i>
+                        <input id="password" type="password" pInputText class="w-full md:w-25rem" placeholder="Password" formControlName="password" #passwordInput autocomplete="off">
+                    </div>
+                    <div class="text-xs text-red-600" *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors">Password is required</div>
+                </span>
+
+                <span class="mb-4">
+                    <div class="p-input-icon-left w-full">
+                        <i class="pi pi-envelope"></i>
+                        <input id="schema" type="text" pInputText class="w-full md:w-25rem" placeholder="Business ID" formControlName="schema" #schemaInput autocomplete="off">
+                    </div>
+                    <div class="text-xs text-red-600" *ngIf="loginForm.controls['schema'].touched && loginForm.controls['schema'].errors">Business ID is required</div>
+                </span>
+
+                <span class="mb-4">
+                    <div class="p-input-icon-left w-full">
+                        <i class="pi pi-envelope"></i>
+                        <input id="database" type="text" pInputText class="w-full md:w-25rem" placeholder="Database" formControlName="database" #dbInput autocomplete="off">
+                    </div>
+                    <div class="text-xs text-red-600" *ngIf="loginForm.controls['database'].touched && loginForm.controls['database'].errors">Database is required</div>
+                </span>
+                
+                <span class="mb-4">
+                    <div class="p-input-icon-left w-full">
+                        <i class="pi pi-envelope"></i>
+                        <input id="appurl" type="text" pInputText class="w-full md:w-25rem" placeholder="URL" formControlName="appurl" #appurlInput autocomplete="off">
+                    </div>
+                    <div class="text-xs text-red-600" *ngIf="loginForm.controls['appurl'].touched && loginForm.controls['appurl'].errors">App URL is required</div>
+                </span>
+
+                
+                
+                <div class="mb-4 flex flex-wrap gap-3">
+                    <div>
+                        <p-checkbox name="checkbox" value="val" styleClass="mr-2" [binary]="true"></p-checkbox>
+                        <label for="checkbox" class="text-900 font-medium mr-8">Remember Me</label>
+                    </div>
+                    <a class="text-600 cursor-pointer hover:text-primary cursor-pointer ml-auto transition-colors transition-duration-300">Reset password</a>
+                </div>
+                <button pButton pRipple label="Log In" class="w-full" type="submit"></button> 
+            </div>
+        </form> 
+    </div>
+
+    <ng-template [ngIf]="inProgress">
+        <div class="flex justify-content-center align-items-center absolute z-5 h-full w-full top-0 left-0" id="modal">
+            <p-progressSpinner></p-progressSpinner>
+        </div>
+    </ng-template>
+
+</div>
+
+
+<!-- <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog> -->
+<p-confirmDialog header="Confirmation" key="confirm1" icon="pi pi-exclamation-triangle" message="Are you sure you want to proceed?"
+                             [style]="{width: '350px'}" acceptButtonStyleClass="p-button-text" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+

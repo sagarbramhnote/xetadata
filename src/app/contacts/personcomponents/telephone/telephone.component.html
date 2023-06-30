@@ -1,0 +1,22 @@
+<div class="w-full flex flex-column">
+   
+    <div class="w-full flex gap-1">
+        <div class="flex-grow-1 flex-column gap-1">
+            <input type="text" name="telephone" #telephone="ngModel" min="4" pInputText placeholder="telephone" [(ngModel)]="endpoint.detail.telephone" autocomplete="off" required (ngModelChange)="inputChange($event)" [disabled]="whetherDisabled">
+        </div>
+        <div class="flex align-items-center">
+            <button id="lbtn" (click)="handleDelete()" pButton class="p-button-sm menu-button" [disabled]="whetherDisabled">Delete</button>
+        </div>
+        
+    </div>
+    <ng-template [ngIf]="telephone.errors">
+        <small id="username2-help" class="p-error block">telephone is invalid.</small>
+    </ng-template>
+
+    <span class="fluid">
+        <p-autoComplete [(ngModel)]="selectedTags" [ngModelOptions]="{standalone: true}" autocomplete="off" placeholder="Choose invoice options"
+        [suggestions]="filteredTags" (completeMethod)="filterTags($event)" field="tag" [multiple]="true" [dropdown]="true" (ngModelChange)="inputChange($event)">
+        </p-autoComplete>
+    </span>
+    
+</div>
