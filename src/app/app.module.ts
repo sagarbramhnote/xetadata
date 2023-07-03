@@ -12,14 +12,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { EntityComponent } from './entity/entity.component';
+import { ProfileComponent } from './entity/profile/profile.component';
 
 
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
-        EntityComponent
+        ProfileComponent
     ],
     imports: [
         AppRoutingModule,

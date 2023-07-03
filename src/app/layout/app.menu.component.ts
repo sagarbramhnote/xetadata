@@ -594,6 +594,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Profile',
                         icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/entity/profile'],
                     },
                     {
                         label: 'Party Accounts heads',
@@ -601,6 +602,34 @@ export class AppMenuComponent implements OnInit {
                     },
                     {
                         label: 'Others Accounts heads',
+                        icon: 'pi pi-fw pi-align-left',
+                    },
+                    {
+                        label: 'UOMs',
+                        icon: 'pi pi-fw pi-align-left',
+                    },
+                    {
+                        label: 'Write Cheque',
+                        icon: 'pi pi-fw pi-align-left',
+                    },
+                    {
+                        label: 'Recieve Cheque',
+                        icon: 'pi pi-fw pi-align-left',
+                    },
+                    {
+                        label: 'Tags',
+                        icon: 'pi pi-fw pi-align-left',
+                    },
+                    {
+                        label: 'Item Levels',
+                        icon: 'pi pi-fw pi-align-left',
+                    },
+                    {
+                        label: 'Stock Locations',
+                        icon: 'pi pi-fw pi-align-left',
+                    },
+                    {
+                        label: 'Opening Balances',
                         icon: 'pi pi-fw pi-align-left',
                     }
                 ]
