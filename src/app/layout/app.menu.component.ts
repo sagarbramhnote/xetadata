@@ -590,6 +590,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Items',
                         icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/entity/item'],
                     },
                     {
                         label: 'Profile',
@@ -599,38 +600,47 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Party Accounts heads',
                         icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/entity/partyAccount'],
                     },
                     {
                         label: 'Others Accounts heads',
                         icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/entity/othersAccount'],
                     },
                     {
                         label: 'UOMs',
                         icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/entity/UOMs'],
                     },
                     {
                         label: 'Write Cheque',
                         icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/entity/writeCheque'],
                     },
                     {
                         label: 'Recieve Cheque',
                         icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/entity/recieveCheque'],
                     },
                     {
                         label: 'Tags',
                         icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/entity/tags'],
                     },
                     {
                         label: 'Item Levels',
                         icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/entity/itemLevels'],
                     },
                     {
                         label: 'Stock Locations',
                         icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/entity/stockLocations'],
                     },
                     {
                         label: 'Opening Balances',
                         icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/entity/openingBalance'],
                     }
                 ]
             },
