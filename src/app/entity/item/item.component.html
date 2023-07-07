@@ -1,1 +1,51 @@
-<p>item works!</p>
+<!-- <h5>ITEMS / LIST</h5> -->
+<div class="card">
+    <p-table #dt [value]="items" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['id','itemname','uom.uom','usercode','itemfatype']">
+        <ng-template pTemplate="caption">
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                </span>
+                <button (click)="navigateToCreateItems()" pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-fw pi-th-large" label="Add New"></button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="white-space-nowrap" style="width:10%">Id</th>
+                <th pSortableColumn="itemname" class="white-space-nowrap" style="width:20%">Item Name <p-sortIcon field="itemname"></p-sortIcon></th>
+                <th pSortableColumn="uom.uom" class="white-space-nowrap" style="width:15%">uom <p-sortIcon field="uom.uom"></p-sortIcon></th>
+                <th pSortableColumn="level1" class="white-space-nowrap" style="width:15%">Levels<p-sortIcon field="level1"></p-sortIcon></th>
+                <th pSortableColumn="usercode" class="white-space-nowrap" style="width:10%">Code <p-sortIcon field="usercode"></p-sortIcon></th>
+                <th pSortableColumn="itemfatype" class="white-space-nowrap" style="width:10%">Type <p-sortIcon field="itemfatype"></p-sortIcon></th>
+                <th class="white-space-nowrap" style="width:25%">Modify </th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-v let-i="rowIndex">
+            <tr>
+                <td>{{v.id}}</td>
+                <td>{{ v.itemname }}</td>
+                <td>
+                    <div *ngIf="v.uom; then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock>{{v.uom.uom}}</ng-template>
+                    <ng-template #elseBlock></ng-template>
+                </td>
+                
+                <td><div><span style="font-size: 10px;">{{ v.level1 }} > {{ v.level2 }} > {{v.level3}}</span></div></td>
+                <td>{{v.usercode}}</td>
+                <td>{{v.itemfatype}}</td>
+                <td>
+                    <div class="displayline">
+                        <button pButton class="p-button-sm" (click)="handleViewItem(v)">VIEW</button>
+                        <button pButton class="p-button-sm" (click)="handleEditItem(v)">EDIT</button>
+                    </div>
+                    
+                </td>
+                
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

@@ -11,10 +11,16 @@ import { TagsComponent } from './tags/tags.component';
 import { ItemLevelsComponent } from './item-levels/item-levels.component';
 import { StockLocationsComponent } from './stock-locations/stock-locations.component';
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
+import { ItemCreateComponent } from './item/item-create/item-create.component';
+import { UpdateItemComponent } from './item/update-item/update-item.component';
+import { ItemViewComponent } from './item/item-view/item-view.component';
 
 const routes: Routes = [
   {path: 'profile',component:ProfileComponent},
   {path: 'item',component:ItemComponent},
+  {path: 'itemCreate',component:ItemCreateComponent},
+  {path: 'itemUpdate',component:UpdateItemComponent},
+  {path: 'itemView',component:ItemViewComponent},
   {path: 'partyAccount',component:PartyAccountComponent},
   {path: 'othersAccount',component:OthersAccountComponent},
   {path: 'UOMs',component:UOMsComponent},
