@@ -23,6 +23,12 @@ import { TagsComponent } from './tags/tags.component';
 import { ItemLevelsComponent } from './item-levels/item-levels.component';
 import { StockLocationsComponent } from './stock-locations/stock-locations.component';
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
+import { RippleModule } from 'primeng/ripple';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ItemCreateComponent } from './item/item-create/item-create.component';
+import { DialogModule } from 'primeng/dialog';
+import { UpdateItemComponent } from './item/update-item/update-item.component';
+import { ItemViewComponent } from './item/item-view/item-view.component';
 
 
 
@@ -40,7 +46,10 @@ import { OpeningBalanceComponent } from './opening-balance/opening-balance.compo
          TagsComponent,
          ItemLevelsComponent,
          StockLocationsComponent,
-         OpeningBalanceComponent
+         OpeningBalanceComponent,
+         ItemCreateComponent,
+         UpdateItemComponent,
+         ItemViewComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +63,10 @@ import { OpeningBalanceComponent } from './opening-balance/opening-balance.compo
     RadioButtonModule,
     InputTextModule,
     ToggleButtonModule,
-    DropdownModule
+    DropdownModule,
+		RippleModule,
+		ProgressBarModule,
+    DialogModule
   ]
 })
 export class EntityModule { }

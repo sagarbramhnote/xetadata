@@ -59,6 +59,8 @@ export class ProductsComponent {
           let dataSuccess:XetaSuccess = <XetaSuccess>v;
           console.log('FRESH PRODUCT',dataSuccess.success)
           this.product = dataSuccess.success
+          console.log('fghghhb.....',this.product);
+
           this.loading = false
           return
         }

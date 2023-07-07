@@ -1,0 +1,148 @@
+
+<div class="card">
+    <span class="text-900 text-xl font-bold mb-4 block">Edit Item</span>
+
+    <div class="grid">
+
+
+        <div class="col-12 lg:col-10">
+            <div class="grid formgrid p-fluid">
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="itemname" class="font-medium text-900">Item Name</label>
+
+
+                <input type="text" 
+                #itemTitle="ngModel" 
+                pInputText 
+                class="p-inputtext-sm" 
+                placeholder="Enter item name" 
+                [ngModelOptions]="{standalone: true}"
+                 [(ngModel)]="item.itemname" 
+                 autocomplete="off" 
+                 minlength="3" 
+                 required 
+                 (ngModelChange)="inputChange($event)" [disabled]="true"
+                 >
+                <ng-template [ngIf]="itemTitle.errors"> 
+                    <small id="username2-help" class="p-error block">Item name is required and must be atleast 3 letters</small>
+                </ng-template>
+
+            </div>
+
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="itemname" class="font-medium text-900">Item Type For Report</label>
+             
+                <p-dropdown [options]="itemtypes" 
+                [(ngModel)]="item.itemfatype" 
+                optionLabel="type" 
+                optionValue="type" 
+                (ngModelChange)="itemFATypeChange($event)"
+                [required]="true" #selectItemFAType="ngModel" 
+                [ngModelOptions]="{standalone: true}">
+                    </p-dropdown>
+                    <ng-template [ngIf]="selectItemFAType.errors">
+                        <small id="username2-help" class="p-error block">You must select item type for reports</small>
+                    </ng-template>
+    
+        </div>
+
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="itemname" class="font-medium text-900">UOM</label>
+
+                <p-autoComplete
+                [(ngModel)]="selectedUOM"
+                [suggestions]="filteredUOMs" 
+                (completeMethod)="filterUOMs($event)"
+                field="uom" 
+                [multiple]="false" class="autocomplete" 
+                (onSelect)="handleOnSelect($event)"
+                placeholder="Select UOM" 
+                [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="UOMChange($event)"
+                [required]="true" #selectUOM="ngModel" 
+                [forceSelection]="true" [disabled]="true" >
+            </p-autoComplete>
+            <ng-template [ngIf]="selectUOM.errors">
+                <small id="username2-help" class="p-error block">You must select a unit of measurement</small>
+            </ng-template>
+
+        </div>
+
+
+        <div class="field mb-4 col-12">
+            <label for="itemgroup" class="font-medium text-900">Item Grouping</label>
+            <div class="newpcradiogroup">
+                <div>Level 1</div>
+                <p-dropdown [options]="level1" 
+            [(ngModel)]="item.level1" 
+            optionLabel="levelname" 
+            optionValue="levelname" 
+            (ngModelChange)="itemLevelOneTypeChange($event)" 
+            [ngModelOptions]="{standalone: true}" [style]="{'width':'300px'}" [filter]="true" filterBy="levelname">
+                </p-dropdown>
+            </div>
+            <div class="newpcradiogroup">
+                <div>Level 2</div>
+                <p-dropdown [options]="level2" 
+            [(ngModel)]="item.level2" 
+            optionLabel="levelname" 
+            optionValue="levelname" 
+            (ngModelChange)="itemLevelTwoTypeChange($event)" 
+            [ngModelOptions]="{standalone: true}" [style]="{'width':'300px'}" [filter]="true" filterBy="levelname">
+                </p-dropdown>
+            </div>
+            <div class="newpcradiogroup">
+                <div>Level 3</div>
+                <p-dropdown [options]="level3" 
+            [(ngModel)]="item.level3" 
+            optionLabel="levelname" 
+            optionValue="levelname" 
+            (ngModelChange)="itemLevelThreeTypeChange($event)" 
+            [ngModelOptions]="{standalone: true}" [style]="{'width':'300px'}" [filter]="true" filterBy="levelname">
+                </p-dropdown>
+            </div>
+    </div>
+
+
+        <div class="field mb-4 col-12 md:col-6">
+            <label for="itemname" class="font-medium text-900">Item Code</label>
+            <input type="text" 
+            #userCode="ngModel" 
+            pInputText 
+            class="p-inputtext-sm" 
+            placeholder="Enter Code" 
+            [ngModelOptions]="{standalone: true}"
+             [(ngModel)]="item.usercode" 
+             autocomplete="off" 
+             minlength="3">
+    </div>
+
+   
+
+    <div class="field mb-4 col-12 md:col-6">
+        <label for="itemname" class="font-medium text-900">Reorder Quantity</label>
+        <input type="text"
+        type="number" min="0" 
+        #reorderQuantity="ngModel" 
+        pInputText 
+        class="p-inputtext-sm" 
+        placeholder="Enter Reorder Quantity" 
+        [ngModelOptions]="{standalone: true}"
+         [(ngModel)]="item.reorderquantity" 
+         autocomplete="off">
+
+  </div>
+           
+            </div>
+        </div>
+
+
+      </div>
+
+      <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+        <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
+                <button style="margin-left: 10px;" pButton class="w-auto mt-3" (click)="handleUpdate()" label="Update Item"></button>
+      </div>
+      
+</div>
+
