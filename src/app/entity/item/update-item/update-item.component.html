@@ -78,7 +78,7 @@
             optionLabel="levelname" 
             optionValue="levelname" 
             (ngModelChange)="itemLevelOneTypeChange($event)" 
-            [ngModelOptions]="{standalone: true}" [style]="{'width':'300px'}" [filter]="true" filterBy="levelname">
+            [ngModelOptions]="{standalone: true}" [style]="{'width':'460px'}" [filter]="true" filterBy="levelname">
                 </p-dropdown>
             </div>
             <div class="newpcradiogroup">
@@ -88,7 +88,7 @@
             optionLabel="levelname" 
             optionValue="levelname" 
             (ngModelChange)="itemLevelTwoTypeChange($event)" 
-            [ngModelOptions]="{standalone: true}" [style]="{'width':'300px'}" [filter]="true" filterBy="levelname">
+            [ngModelOptions]="{standalone: true}" [style]="{'width':'460px'}" [filter]="true" filterBy="levelname">
                 </p-dropdown>
             </div>
             <div class="newpcradiogroup">
@@ -98,7 +98,7 @@
             optionLabel="levelname" 
             optionValue="levelname" 
             (ngModelChange)="itemLevelThreeTypeChange($event)" 
-            [ngModelOptions]="{standalone: true}" [style]="{'width':'300px'}" [filter]="true" filterBy="levelname">
+            [ngModelOptions]="{standalone: true}" [style]="{'width':'460px'}" [filter]="true" filterBy="levelname">
                 </p-dropdown>
             </div>
     </div>
@@ -132,17 +132,512 @@
          autocomplete="off">
 
   </div>
-           
+
+  <p-button (click)="showNewTaxDialog()" icon="pi pi-external-link" styleClass="p-button-sm p-button-info p-button-raised" label="New Tax"></p-button>
+  <div class="card">
+      <p-table [value]="selectedTaxes" [scrollable]="true"  
+      selectionMode="single" 
+      (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm" [style]="{'width':'60vw'}">
+          <!--[style]="{'width':'320px'}"-->
+          <ng-template pTemplate="header">
+              <tr>
+                  <th>Name</th>
+                  <th>Code</th>
+                  <th>Percent</th>
+                  <th>Type</th>
+                  <th>Authority</th>
+                  <th>Modify</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-tax let-i="rowIndex">
+              <tr>
+                  
+                  <td>{{tax.taxname}}</td>
+                  <td>{{tax.taxcode}}</td>
+                  <td>{{tax.taxpercent}}</td>
+                  <td>{{tax.taxtype}}</td>
+                  <td>{{tax.taxauthority.accounthead}}</td>
+                  <div >
+                  <button pButton class="p-button-sm" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="handleTaxEdit(tax)"></button>
+                  <button pButton class="p-button-sm" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="handleTaxDelete(i)"></button>
+                </div>
+                  
+              </tr>
+          </ng-template>
+      </p-table>
+  </div>
+
+  <p-dialog header="New Tax" [(visible)]="displayTaxModal" [modal]="true" [style]="{width: '40vw',height:'40vw'}"
+  [draggable]="false" [resizable]="false">
+          
+  <form #taxForm="ngForm" autocomplete="off" novalidate class="box">
+      
+          <div>
+              <div>Tax Name</div>
+          <input type="text" #selectTaxname="ngModel" pInputText class="p-inputtext-sm fn" placeholder="Tax Name" [(ngModel)]="selectedTaxname" [ngModelOptions]="{standalone: true}"  autocomplete="off" required >
+          <ng-template [ngIf]="selectTaxname.errors">
+              <small id="username2-help" class="p-error block">You must enter a tax name. eg CGST or Sales Tax etc</small>
+          </ng-template>
+          </div>
+          
+
+
+          <div>
+              <div>Tax Authority</div>
+              <p-autoComplete
+                  [(ngModel)]="selectedTaxParty"
+                  [suggestions]="filteredParties" 
+                  (completeMethod)="filterParties($event)"
+                  field="accounthead" 
+                  [multiple]="false" class="autocomplete" 
+                  (onSelect)="handleOnSelectTaxParty($event)"
+                  [style]="{'width':'100%'}"
+                  [inputStyle]="{'width':'100%'}" 
+                  placeholder="Select Tax Authority" 
+                  [ngModelOptions]="{standalone: true}"
+                  (ngModelChange)="partyChange($event)"
+                  [required]="true" #selectTaxParty="ngModel" 
+                  [forceSelection]="true">
+  
+                  <ng-template let-selectedTaxParty pTemplate="item">
+                      <div>{{selectedTaxParty.accounthead}} - {{selectedTaxParty.id}}</div>
+                      <div>{{selectedTaxParty.endpoint}}</div>
+                  </ng-template>
+  
+              </p-autoComplete>
+              <ng-template [ngIf]="selectTaxParty.errors">
+                  <small id="username2-help" class="p-error block">You must select a party</small>
+              </ng-template>
+  
+          </div>
+
+     
+      <div>
+          <div>Tax Code</div>
+          <input type="text" #selectTaxcode="ngModel" pInputText class="p-inputtext-sm" placeholder="Tax Code" [(ngModel)]="selectedTaxcode" [ngModelOptions]="{standalone: true}"  autocomplete="off">
+      </div>
+      <div>
+          <div>Tax Percent</div>
+          <input type="number" #selectTaxpercent="ngModel" pInputText class="p-inputtext-sm" placeholder="Tax Percent" [(ngModel)]="selectedTaxpercent" [ngModelOptions]="{standalone: true}"  autocomplete="off" required>
+          <ng-template [ngIf]="selectTaxpercent.errors">
+              <small id="username2-help" class="p-error block">You must enter a tax percent</small>
+          </ng-template>
+      </div>
+      <div>
+          <div>Tax Type</div>
+      <p-dropdown #selectTaxType="ngModel" [options]="taxTypes" [(ngModel)]="selectedTaxtype" optionLabel="type" optionValue="type" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
+      <ng-template [ngIf]="selectTaxType.errors">
+          <small id="username2-help" class="p-error block">You must select a tax type</small>
+      </ng-template>
+
+      </div>
+      
+
+  </form>
+      
+          <ng-template pTemplate="footer">
+              <p-button icon="pi pi-check" (click)="handleAddTax()" label="Save" styleClass="p-button-text"></p-button>
+          </ng-template>
+      </p-dialog>
+
+
+      <p-dialog header="Edit Tax" [(visible)]="displayTaxEditModal" [modal]="true" [style]="{width: '50vw',height:'40vw'}"
+      [draggable]="false" [resizable]="false">
+              
+              <form #taxForm="ngForm" autocomplete="off" novalidate class="box">
+                  <div class="modifytax">
+                      <div>
+                          <div>Tax Name</div>
+                      <input type="text" #selectTaxname="ngModel" pInputText class="p-inputtext-sm fn" placeholder="Tax Name" [(ngModel)]="selectedTaxname" [ngModelOptions]="{standalone: true}"  autocomplete="off" required >
+                      <ng-template [ngIf]="selectTaxname.errors">
+                          <small id="username2-help" class="p-error block">You must enter a tax name. eg CGST or Sales Tax etc</small>
+                      </ng-template>
+                      </div>
+                      
+
+
+                      <div>
+                          <div>Tax Authority</div>
+                          <p-autoComplete
+                              [(ngModel)]="selectedTaxParty"
+                              [suggestions]="filteredParties" 
+                              (completeMethod)="filterParties($event)"
+                              field="accounthead" 
+                              [multiple]="false" class="autocomplete" 
+                              (onSelect)="handleOnSelectTaxParty($event)"
+                              [style]="{'width':'100%'}"
+                              [inputStyle]="{'width':'100%'}" 
+                              placeholder="Select Tax Authority" 
+                              [ngModelOptions]="{standalone: true}"
+                              (ngModelChange)="partyChange($event)"
+                              [required]="true" #selectTaxParty="ngModel" 
+                              [forceSelection]="true">
+              
+                              <ng-template let-selectedTaxParty pTemplate="item">
+                                  <div>{{selectedTaxParty.accounthead}} - {{selectedTaxParty.id}}</div>
+                                  <div>{{selectedTaxParty.endpoint}}</div>
+                              </ng-template>
+              
+                          </p-autoComplete>
+                          <ng-template [ngIf]="selectTaxParty.errors">
+                              <small id="username2-help" class="p-error block">You must select a party</small>
+                          </ng-template>
+              
+                      </div>
+
+                  </div>
+                  <div>
+                      <div>Tax Code</div>
+                      <input type="text" #selectTaxcode="ngModel" pInputText class="p-inputtext-sm" placeholder="Tax code" [(ngModel)]="selectedTaxcode" [ngModelOptions]="{standalone: true}"  autocomplete="off">
+                  </div>
+                  <div>
+                      <div>Tax Percent</div>
+                      <input type="number" #selectTaxpercent="ngModel" pInputText class="p-inputtext-sm" placeholder="tax percent" [(ngModel)]="selectedTaxpercent" [ngModelOptions]="{standalone: true}"  autocomplete="off" required>
+                      <ng-template [ngIf]="selectTaxpercent.errors">
+                          <small id="username2-help" class="p-error block">You must enter a tax percent</small>
+                      </ng-template>
+                  </div>
+                  <div>
+                      <div>Tax Type</div>
+                  <p-dropdown #selectTaxType="ngModel" [options]="taxTypes" [(ngModel)]="selectedTaxtype" optionLabel="type" optionValue="type" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
+                  <ng-template [ngIf]="selectTaxType.errors">
+                      <small id="username2-help" class="p-error block">You must select a tax type</small>
+                  </ng-template>
+
+                  </div>
+                  
+
+              </form>
+              
+              <ng-template pTemplate="footer">
+                  <p-button icon="pi pi-check" (click)="handleUpdateTax()" label="Ok" styleClass="p-button-text"></p-button>
+              </ng-template>
+          </p-dialog>
+
+            <!-- End Tax............ -->
+
+    <!-- Start Recorder Contact......... -->
+
+    <div><p-button (click)="addReorderContact()" styleClass="p-button-sm p-button-info p-button-raised" icon="pi pi-external-link" label="New Reorder Contact"></p-button></div>
+    <div class="card">
+        <p-table [value]="selectedReorderContacts" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px" [style]="{'width':'60vw'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Contact</th>
+                    <th>Phone Or Email</th>
+                    <th>Contact Name</th>
+                    <th>Type</th>
+                    <th style="width:8rem">Modify</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="product">
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="product.contact" [ngModelOptions]="{standalone: true}">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{product.contact}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-dropdown [options]="pes" appendTo="body" [(ngModel)]="product.phoneoremail" [style]="{'width':'100%'}"
+                                 [ngModelOptions]="{standalone: true}" optionLabel="value" optionValue="value"></p-dropdown>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{product.phoneoremail}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="product.contactname" [ngModelOptions]="{standalone: true}">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{product.contactname}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-dropdown [options]="ces" appendTo="body" [(ngModel)]="product.contacttype" [style]="{'width':'100%'}"
+                                 [ngModelOptions]="{standalone: true}" optionLabel="value" optionValue="value"></p-dropdown>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{product.contacttype}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td style="text-align:center">
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="onRowEditInit(product, ri)"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" class="p-button-rounded p-button-success mr-2" (click)="onRowEditSave(product,ri)"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="onRowEditCancel(product, ri)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <!-- End Recorder Contact......... -->
+
+   <!-- Start New Expression UOM -->
+
+   <div><p-button (click)="addExpressionUOM()" styleClass="p-button-sm p-button-info p-button-raised" icon="pi pi-external-link" label="New Expression UOM"></p-button></div>
+   <div class="card">
+       <p-table [value]="selectedExpressionUOMS" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px" [style]="{'width':'60vw'}">
+           <ng-template pTemplate="header">
+               <tr>
+                   <th>Quantity</th>
+                   <th>UOM</th>
+                   <th style="width:8rem">Modify</th> 
+               </tr>
+           </ng-template>
+           <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
+               <tr [pEditableRow]="product">
+                   <td>
+                       <p-cellEditor>
+                           <ng-template pTemplate="input">
+                               <input pInputText type="text" [(ngModel)]="product.quantity" [ngModelOptions]="{standalone: true}">
+                           </ng-template>
+                           <ng-template pTemplate="output">
+                               {{product.quantity}}
+                           </ng-template>
+                       </p-cellEditor>
+                   </td>
+                   
+                   <td>
+                       <p-cellEditor>
+                           <ng-template pTemplate="input">
+                               <!-- <input pInputText type="text" [(ngModel)]="product.contactname" [ngModelOptions]="{standalone: true}"> -->
+                               <div>
+                                   <p-autoComplete
+                                       [(ngModel)]="product.uom"
+                                       [suggestions]="filteredExpressionUOMs" 
+                                       (completeMethod)="filterExpressionUOMs($event)"
+                                       field="uom" 
+                                       [multiple]="false" class="autocomplete" 
+                                       (onSelect)="handleOnSelectExpressionUOM($event)"
+                                       [style]="{'width':'100%'}"
+                                       [inputStyle]="{'width':'100%'}" 
+                                       [ngModelOptions]="{standalone: true}"
+                                       (ngModelChange)="expressionUOMChange($event,ri,product)"
+                                       [required]="true" #selectExpressionUOM="ngModel" 
+                                       [forceSelection]="true" >
+                                   </p-autoComplete>
+                                   <ng-template [ngIf]="selectExpressionUOM.errors">
+                                       <small id="username2-help" class="p-error block">you must select a unit of measurement</small>
+                                   </ng-template>
+                   
+                               </div>
+                           </ng-template>
+                           <ng-template pTemplate="output">
+                               {{product.uom.uom}}
+                           </ng-template>
+                       </p-cellEditor>
+                   </td>
+                   
+                   <td style="text-align:center">
+                       <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="onEUOMRowEditInit(product, ri)"></button>
+                       <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" class="p-button-rounded p-button-success mr-2" (click)="onEUOMRowEditSave(product,ri)"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="onEUOMRowEditCancel(product, ri)"></button>
+                   </td>
+               </tr>
+           </ng-template>
+       </p-table>
+   </div>
+
+      <!-- End New Expression UOM -->
+
+     <!-- Start Bill of Material or Product Recipe -->
+
+     <p-button (click)="showNewRecipeDialog()" styleClass="p-button-sm p-button-info p-button-raised" icon="pi pi-external-link" label="Bill of Material or Product Recipe"></p-button>
+     <div class="card">
+         <p-table [value]="selectedConsumedUnits" [scrollable]="true"  
+         selectionMode="single" scrollHeight="200px" 
+          (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm" [style]="{'width':'60vw'}">
+             <ng-template pTemplate="header">
+                 <tr>
+                     <th>Item</th>
+                     <th>Quantity</th>
+                     <th>UOM</th>
+                     <th>Modify</th>
+                 </tr>
+             </ng-template>
+             <ng-template pTemplate="body" let-recipe let-i="rowIndex">
+                 <tr>
+                     
+                     <td>{{recipe.consumeditem.itemname}}</td>
+                     <td>{{recipe.quantity}}</td>
+                     <td>{{recipe.uom.uom}}</td>
+                     
+                     <div >
+                         <button pButton class="p-button-sm" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="handleRecipeEdit(recipe,i)"></button>
+                         <button pButton class="p-button-sm" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="handleRecipeDelete(recipe,i)"></button>
+                     </div>
+                     
+                 </tr>
+             </ng-template>
+         </p-table>
+     </div>
+
+     <p-dialog header="New Material or Ingredient or Subassembly" [(visible)]="displayRecipeModal" [modal]="true" [style]="{width: '40vw',height:'30vw'}"
+ [draggable]="false" [resizable]="false">
+         
+ <form #taxForm="ngForm" autocomplete="off" novalidate class="box">
+     
+         
+         <div>
+             <div>Item</div>
+             <p-autoComplete
+             [(ngModel)]="selectedCItem"
+             [suggestions]="filteredConsumedItems" 
+             (completeMethod)="filterConsumedItems($event)"
+             field="itemname" 
+             [multiple]="false" class="autocomplete" 
+             (onSelect)="handleOnSelectConsumedItem($event)"
+             [style]="{'width':'100%'}"
+             [inputStyle]="{'width':'100%'}" 
+             placeholder="Select Ingredient" 
+             [ngModelOptions]="{standalone: true}"
+             (ngModelChange)="consumedItemChange($event)"
+             [required]="true" #selectConsumedItem="ngModel" 
+             [forceSelection]="true">
+
+             <ng-template let-selectedItem pTemplate="item">
+                 <div>{{selectedItem.itemname}} - {{selectedItem.id}}</div>
+                 <div>{{selectedItem.uom.uom}}</div>
+             </ng-template>
+
+         </p-autoComplete>
+         <ng-template [ngIf]="selectConsumedItem.errors">
+             <small id="username2-help" class="p-error block">You must select an item</small>
+         </ng-template>
+ 
+         </div>
+
+ 
+     
+     <div>
+         <div>Quantity</div>
+         <input type="number" #selectQuantity="ngModel" pInputText class="p-inputtext-sm" placeholder="Quantity" [(ngModel)]="selectedCQty" [ngModelOptions]="{standalone: true}"  autocomplete="off" required>
+         <ng-template [ngIf]="selectQuantity.errors">
+             <small id="username2-help" class="p-error block">You must enter quantity</small>
+         </ng-template>
+     </div>
+     <div>
+         <div>UOM</div>
+     <p-dropdown #selectUOM="ngModel" [options]="cus" [(ngModel)]="selectedCUOM" optionLabel="uom.uom" optionValue="uom" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
+
+     </div>
+     
+
+ </form>
+     
+             
+             
+             
+
+             
+
+         
+
+         <ng-template pTemplate="footer">
+             <p-button icon="pi pi-check" (click)="addConsumedUnit()" label="Save" styleClass="p-button-text"></p-button>
+         </ng-template>
+     </p-dialog>
+
+
+     <p-dialog header="Edit Material or Ingredient or Subassembly" [(visible)]="displayRecipeEditModal" [modal]="true" [style]="{width: '50vw',height:'30vw'}"
+ [draggable]="false" [resizable]="false">
+         
+         <form #taxForm="ngForm" autocomplete="off" novalidate class="box">
+             <div class="modifytax">
+                 
+                 
+
+                 <div>
+                     <div>Item</div>
+                     <p-autoComplete
+                     [(ngModel)]="selectedCItem"
+                     [suggestions]="filteredConsumedItems" 
+                     (completeMethod)="filterConsumedItems($event)"
+                     field="itemname" 
+                     [multiple]="false" class="autocomplete" 
+                     (onSelect)="handleOnSelectConsumedItem($event)"
+                     [style]="{'width':'100%'}"
+                     [inputStyle]="{'width':'100%'}" 
+                     placeholder="Select Ingredient" 
+                     [ngModelOptions]="{standalone: true}"
+                     (ngModelChange)="consumedItemChange($event)"
+                     [required]="true" #selectConsumedItem="ngModel" 
+                     [forceSelection]="true">
+ 
+                     <ng-template let-selectedItem pTemplate="item">
+                         <div>{{selectedItem.itemname}} - {{selectedItem.id}}</div>
+                         <div>{{selectedItem.uom.uom}}</div>
+                     </ng-template>
+ 
+                 </p-autoComplete>
+                 <ng-template [ngIf]="selectConsumedItem.errors">
+                     <small id="username2-help" class="p-error block">You must select an item</small>
+                 </ng-template>
+         
+                 </div>
+
+             </div>
+
+             <div>
+                 <div>Quantity</div>
+                 <input type="number" #selectQuantity="ngModel" pInputText class="p-inputtext-sm" placeholder="Quantity" [(ngModel)]="selectedCQty" [ngModelOptions]="{standalone: true}"  autocomplete="off" required>
+                 <ng-template [ngIf]="selectQuantity.errors">
+                     <small id="username2-help" class="p-error block">You must enter quantity</small>
+                 </ng-template>
+             </div>
+             <div>
+                 <div>UOM</div>
+             <p-dropdown #selectUOM="ngModel" [options]="cus" [(ngModel)]="selectedCUOM" optionLabel="uom.uom" optionValue="uom" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
+
+             </div>
+
+         </form>
+         
+                 
+                 
+                 
+
+                 
+
+             
+
+         <ng-template pTemplate="footer">
+             <p-button icon="pi pi-check" (click)="handleUpdateRecipe(selectedRecipeItem,selectedCUIndex)" label="Edit" styleClass="p-button-text"></p-button>
+         </ng-template>
+     </p-dialog>
+
+
+
+     <!-- End Bill of Material or Product Recipe -->
+
+      <!-- end............      -->
             </div>
         </div>
 
 
       </div>
 
-      <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+      <div class="ui-g-12" style= " text-align:right">
+     
         <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
-                <button style="margin-left: 10px;" pButton class="w-auto mt-3" (click)="handleUpdate()" label="Update Item"></button>
-      </div>
+                <button style="margin-left: 10px;" pButton class="w-auto mt-3" icon="pi pi-check" (click)="handleUpdate()" label="Update Item"></button>
+                <button style="margin-left: 10px;" pButton class="w-auto mt-3 p-button-danger" icon="pi pi-times" (click)="navigateToListItems()" label="Cancel"></button>
+    
+            </div>
       
 </div>
 

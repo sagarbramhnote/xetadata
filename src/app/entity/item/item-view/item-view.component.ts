@@ -69,20 +69,41 @@ navigateToListItems(){
   this.router.navigate(['entity/item'])
 }
 
-itemTitle:any
-selectUOM:any 
 
-inputChange(event:any) {
-
-  console.log('ISVALID',this.itemTitle.valid)
-  this.item['isvalid'] = this.itemTitle.valid
-
-} 
 filteredUOMs:any[] = new Array
 private _pweSub:any
 
-filterUOMs(event:any) {
-  console.log('IN FILTER UOMs',event)
+
+
+itemLevels:any[] = []
+itemtypes:any[] = [{type:''},{type:'stock'},{type:'asset'},{type:'other'}]
+
+level1:any[] = []
+level2:any[] = []
+level3:any[] = []
+
+
+selectedTax:any = {
+  taxname: "",
+  taxcode: "",
+  taxpercent: "",
+  taxtype: "",
+  taxamount: "0.00",
+  taxauthority: {}
+}
+onRowSelect(event:any) {
+  if(event !== null) {
+    console.log('ROW SELECT',event)
+    this.selectedTax = event.data
+  }
+  
+}
+pes:any[] = []
+ces:any[] = []
+filteredExpressionUOMs:any[] = new Array
+
+filterExpressionUOMs(event:any) {
+  console.log('IN FILTER EXPRESSION UOMs',event)
   // let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'party-name-contains'};
   let criteria:any = {
     searchtext: event.query,
@@ -110,8 +131,8 @@ filterUOMs(event:any) {
       }
       else if(v.hasOwnProperty('success')) {
         let dataSuccess:XetaSuccess = <XetaSuccess>v;
-        this.filteredUOMs = dataSuccess.success;
-        console.log('FILTERED UOMS',dataSuccess.success)
+        this.filteredExpressionUOMs = dataSuccess.success;
+        console.log('FILTERED EXPRESSION UOMS',dataSuccess.success)
         return;
       }
       else if(v == null) {
@@ -125,47 +146,16 @@ filterUOMs(event:any) {
     }
   })
 }
-
-handleOnSelect(event:any) {
-  this.selectedUOM = event
-  this.item.uom = event;
-}
-UOMChange(event:any) {
-  this.item.uom = {uom:'',symbol:'',country:''}
-  //this.item.uom = ''
-}
-
-itemLevels:any[] = []
-itemtypes:any[] = [{type:''},{type:'stock'},{type:'asset'},{type:'other'}]
-
-itemFATypeChange(event:any) {
-
-  console.log('CP DROPDOWN CHANGE',event)
-  this.item.itemfatype = event
+handleOnSelectExpressionUOM(event:any) {
 
 }
-level1:any[] = []
-level2:any[] = []
-level3:any[] = []
-
-itemLevelOneTypeChange(event:any) {
-
-  console.log('CP DROPDOWN CHANGE',event)
-  this.item.level1 = event
-
+expressionUOMChange(event:any,ri:any,product:any) {
+  console.log('EVENT',event)
+  console.log('PRODUCT',product)
+  console.log('RI',ri)
+  console.log('EXPRUOMS',this.selectedExpressionUOMS)
 }
 
-itemLevelTwoTypeChange(event:any) {
-
-  console.log('CP DROPDOWN CHANGE',event)
-  this.item.level2 = event
-}
-
-itemLevelThreeTypeChange(event:any) {
-
-  console.log('CP DROPDOWN CHANGE',event)
-  this.item.level3 = event
-}
 
 }
 

@@ -65,7 +65,7 @@ export class ItemComponent{
       complete:() => {console.info('complete')},
       error:(e) => {
         this.inProgress = false
-      //  this.confirm('A server error occured while fetching account heads. '+e.message)
+        this.confirm('A server error occured while fetching account heads. '+e.message)
         return
       },
       next:(v) => {
@@ -97,6 +97,18 @@ export class ItemComponent{
         // }
       }
     })
+  }
+    confirm(msg:string) {
+    this.confirmationService.confirm({
+        header:'Error',
+        message: msg,
+        acceptVisible: true,
+        rejectVisible: false,
+        acceptLabel: 'Ok',
+        accept: () => {
+            //Actual logic to perform a confirmation
+        }
+    });
   }
 
   loadItems(offset:number,moreoffset:number) {
