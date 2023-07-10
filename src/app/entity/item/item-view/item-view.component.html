@@ -1,11 +1,11 @@
 
 <div class="card">
     <span class="text-900 text-xl font-bold mb-4 block">Item</span>
-
     <div class="grid">
 
         <div class="col-12 lg:col-10">
             <div class="grid formgrid p-fluid">
+
                 <div class="field mb-4 col-12 md:col-6">
                     <label for="itemname" class="font-medium text-900">Item Name</label>
 
@@ -16,50 +16,35 @@
                     placeholder="enter item name" 
                     [ngModelOptions]="{standalone: true}"
                      [(ngModel)]="item.itemname" 
-                     autocomplete="off" 
-                     minlength="3" 
-                     required 
-                     (ngModelChange)="inputChange($event)" [disabled]="true"
+                     autocomplete="off"  readonly
                      >
-
             </div>
 
             <div class="field mb-4 col-12 md:col-6">
                 <label for="itemname" class="font-medium text-900">Item Type For Report</label>
              
-
                 <input type="text" 
                 #itemTitle="ngModel" 
                 pInputText 
                 class="p-inputtext-sm" 
                 [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="item.itemfatype" 
-                 autocomplete="off" 
-                 (ngModelChange)="itemFATypeChange($event)" [disabled]="true"
+                 autocomplete="off" readonly
                  >
-
         </div>
 
             <div class="field mb-4 col-12 md:col-6">
                 <label for="itemname" class="font-medium text-900">UOM</label>
 
-                <p-autoComplete
-                [(ngModel)]="selectedUOM"
-                [suggestions]="filteredUOMs" 
-                (completeMethod)="filterUOMs($event)"
-                field="uom" 
-                [multiple]="false" class="autocomplete" 
-                (onSelect)="handleOnSelect($event)"
-                [style]="{'width':'100%'}"
-                [inputStyle]="{'width':'100%'}" 
+                <input type="text" 
+                #itemTitle="ngModel" 
+                pInputText 
+                class="p-inputtext-sm" 
                 [ngModelOptions]="{standalone: true}"
-                (ngModelChange)="UOMChange($event)"
-                [required]="true" #selectUOM="ngModel" 
-                [forceSelection]="true" [disabled]="true" >
-            </p-autoComplete>
-
+                [(ngModel)]="item.uom.uom" 
+                 autocomplete="off"  readonly
+                 >
         </div>
-
 
         <div class="field mb-4 col-12">
             <label for="itemgroup" class="font-medium text-900">Item Grouping</label>
@@ -71,9 +56,8 @@
                 class="p-inputtext-sm" 
                 [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="item.level1" 
-                 autocomplete="off" 
-                 (ngModelChange)="itemLevelOneTypeChange($event)" [disabled]="true"
-                 [ngModelOptions]="{standalone: true}" [style]="{'width':'300px'}">
+                 autocomplete="off" readonly
+                 [ngModelOptions]="{standalone: true}" [style]="{'width':'460px'}">
 
             </div>
             <div class="newpcradiogroup">
@@ -84,9 +68,8 @@
                 class="p-inputtext-sm" 
                 [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="item.level2" 
-                 autocomplete="off" 
-                 (ngModelChange)="itemLevelTwoTypeChange($event)" [disabled]="true"
-                 [ngModelOptions]="{standalone: true}" [style]="{'width':'300px'}">
+                 autocomplete="off"  readonly
+                 [ngModelOptions]="{standalone: true}" [style]="{'width':'460px'}">
             </div>
             <div class="newpcradiogroup">
                 <div>Level 3</div>
@@ -96,9 +79,8 @@
                 class="p-inputtext-sm" 
                 [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="item.level3" 
-                 autocomplete="off" 
-                 (ngModelChange)="itemLevelThreeTypeChange($event)" [disabled]="true"
-                 [ngModelOptions]="{standalone: true}" [style]="{'width':'300px'}">
+                 autocomplete="off" readonly
+                 [ngModelOptions]="{standalone: true}" [style]="{'width':'460px'}">
             </div>
     </div>
 
@@ -110,7 +92,7 @@
             pInputText 
             class="p-inputtext-sm" 
             placeholder="Enter Code" 
-            [ngModelOptions]="{standalone: true}" [disabled]="true"
+            [ngModelOptions]="{standalone: true}" readonly
              [(ngModel)]="item.usercode" 
              autocomplete="off" 
              minlength="3">
@@ -126,12 +108,196 @@
         pInputText 
         class="p-inputtext-sm" 
         placeholder="Enter Reorder Quantity" 
-        [ngModelOptions]="{standalone: true}" [disabled]="true"
+        [ngModelOptions]="{standalone: true}" readonly
          [(ngModel)]="item.reorderquantity" 
          autocomplete="off">
 
   </div>
 
+
+  <p>Taxes</p>
+    
+
+  <div class="card">
+      <p-table [value]="selectedTaxes" [scrollable]="true"  
+      selectionMode="single" scrollHeight="200px" 
+       (onRowSelect)="onRowSelect($event)" dataKey="recordid" styleClass="p-datatable-sm" [style]="{'width':'60vw'}">
+          <!--[style]="{'width':'320px'}"-->
+          <ng-template pTemplate="header">
+              <tr>
+                  <th>Name</th>
+                  <th>Code</th>
+                  <th>Percent</th>
+                  <th>Type</th>
+                  <th>Authority</th>
+                  
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-tax let-i="rowIndex">
+              <tr>
+                  
+                  <td>{{tax.taxname}}</td>
+                  <td>{{tax.taxcode}}</td>
+                  <td>{{tax.taxpercent}}</td>
+                  <td>{{tax.taxtype}}</td>
+                  <td>{{tax.taxauthority.accounthead}}</td>
+                  
+                  
+              </tr>
+          </ng-template>
+      </p-table>
+  </div>
+
+  
+<p>Reorder Contacts</p>
+  <div class="card">
+      <p-table [value]="selectedReorderContacts" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px" [style]="{'width':'60vw'}">
+          <ng-template pTemplate="header">
+              <tr>
+                  <th>Contact</th>
+                  <th>Phone Or Email</th>
+                  <th>Contact Name</th>
+                  <th>Type</th>
+                  <th style="width:8rem"></th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="product">
+                  <td>
+                      <p-cellEditor>
+                          <ng-template pTemplate="input">
+                              <input pInputText type="text" [(ngModel)]="product.contact" [ngModelOptions]="{standalone: true}">
+                          </ng-template>
+                          <ng-template pTemplate="output">
+                              {{product.contact}}
+                          </ng-template>
+                      </p-cellEditor>
+                  </td>
+                  <td>
+                      <p-cellEditor>
+                          <ng-template pTemplate="input">
+                              <p-dropdown [options]="pes" appendTo="body" [(ngModel)]="product.phoneoremail" [style]="{'width':'100%'}"
+                               [ngModelOptions]="{standalone: true}" optionLabel="value" optionValue="value"></p-dropdown>
+                          </ng-template>
+                          <ng-template pTemplate="output">
+                              {{product.phoneoremail}}
+                          </ng-template>
+                      </p-cellEditor>
+                  </td>
+                  <td>
+                      <p-cellEditor>
+                          <ng-template pTemplate="input">
+                              <input pInputText type="text" [(ngModel)]="product.contactname" [ngModelOptions]="{standalone: true}">
+                          </ng-template>
+                          <ng-template pTemplate="output">
+                              {{product.contactname}}
+                          </ng-template>
+                      </p-cellEditor>
+                  </td>
+                  <td>
+                      <p-cellEditor>
+                          <ng-template pTemplate="input">
+                              <p-dropdown [options]="ces" appendTo="body" [(ngModel)]="product.contacttype" [style]="{'width':'100%'}"
+                               [ngModelOptions]="{standalone: true}" optionLabel="value" optionValue="value"></p-dropdown>
+                          </ng-template>
+                          <ng-template pTemplate="output">
+                              {{product.contacttype}}
+                          </ng-template>
+                      </p-cellEditor>
+                  </td>
+
+              </tr>
+          </ng-template>
+      </p-table>
+  </div>
+
+  <p>Expression UOMs</p>
+  <div class="card">
+      <p-table [value]="selectedExpressionUOMS" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px" [style]="{'width':'60vw'}">
+          <ng-template pTemplate="header">
+              <tr>
+                  <th>Quantity</th>
+                  <th>UOM</th>
+                  <th style="width:8rem"></th> 
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="product">
+                  <td>
+                      <p-cellEditor>
+                          <ng-template pTemplate="input">
+                              <input pInputText type="text" [(ngModel)]="product.quantity" [ngModelOptions]="{standalone: true}">
+                          </ng-template>
+                          <ng-template pTemplate="output">
+                              {{product.quantity}}
+                          </ng-template>
+                      </p-cellEditor>
+                  </td>
+                  
+                  <td>
+                      <p-cellEditor>
+                          <ng-template pTemplate="input">
+                              <div>
+                                  <p-autoComplete
+                                      [(ngModel)]="product.uom"
+                                      [suggestions]="filteredExpressionUOMs" 
+                                      (completeMethod)="filterExpressionUOMs($event)"
+                                      field="uom" 
+                                      [multiple]="false" class="autocomplete" 
+                                      (onSelect)="handleOnSelectExpressionUOM($event)"
+                                      [style]="{'width':'100%'}"
+                                      [inputStyle]="{'width':'100%'}" 
+                                      [ngModelOptions]="{standalone: true}"
+                                      (ngModelChange)="expressionUOMChange($event,ri,product)"
+                                      [required]="true" #selectExpressionUOM="ngModel" 
+                                      [forceSelection]="true" >
+                                  </p-autoComplete>
+                  
+                              </div>
+                          </ng-template>
+                          <ng-template pTemplate="output">
+                              {{product.uom.uom}}
+                          </ng-template>
+                      </p-cellEditor> 
+                  </td>
+                  
+
+              </tr>
+          </ng-template>
+      </p-table>
+  </div>
+
+  
+  <p>Bill of Material or Product Recipe</p>
+
+  <div class="card">
+      <p-table [value]="selectedConsumedUnits" [scrollable]="true"  
+      selectionMode="single" scrollHeight="200px" 
+       (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm" [style]="{'width':'60vw'}">
+          <!--[style]="{'width':'320px'}"-->
+          <ng-template pTemplate="header">
+              <tr>
+                  <th>Item</th>
+                  <th>Quantity</th>
+                  <th>UOM</th>
+                  
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-recipe let-i="rowIndex">
+              <tr>
+                  
+                  <td>{{recipe.consumeditem.itemname}}</td>
+                  <td>{{recipe.quantity}}</td>
+                  <td>{{recipe.uom.uom}}</td>
+                  
+                  
+                  
+              </tr>
+          </ng-template>
+      </p-table>
+  </div>
+
+<!-- end... -->
             </div>
         </div>
 
@@ -139,7 +305,7 @@
 
       <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
         <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
-                <button style="margin-left: 10px;" pButton class="w-auto mt-3" (click)="navigateToListItems()" label="Ok"></button>
+                <button style="margin-left: 10px;" pButton class="w-auto mt-3" icon="pi pi-check" (click)="navigateToListItems()" label="Ok"></button>
       </div>
 </div>
 
