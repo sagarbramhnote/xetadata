@@ -23,7 +23,10 @@ import { UOMListService } from 'src/app/services/uomlist.service';
 })
 export class ItemCreateComponent implements OnInit{
 
-  // showFields: boolean = false;
+   showFields: boolean = false;
+   showFieldsContact: boolean = false;
+   showFieldsUom: boolean = false;
+   showFieldsBill: boolean = false;
 
 // toggleFields() {
 //   this.showFields = !this.showFields;
@@ -571,7 +574,7 @@ handleAddTax() {
 
   this.selectedTaxes.push(tax)
   
-
+  this.showFields = true;
 
   this.selectedTaxname = null
   this.selectedTaxcode = null
@@ -683,6 +686,7 @@ addReorderContact() {
   reco.phoneoremail = ""
 
   this.selectedReorderContacts.push(reco)
+  this.showFieldsContact=true;
   
 }
 
@@ -728,6 +732,7 @@ addExpressionUOM() {
   euom["quantity"] = 0
 
   this.selectedExpressionUOMS.push(euom)
+  this.showFieldsUom=true;
 
 }
 
@@ -954,6 +959,7 @@ addConsumedUnit() {
   cu["quantity"] = this.selectedCQty
 
   this.selectedConsumedUnits.push(cu)
+  this.showFieldsBill=true
 
   this.displayRecipeModal = false
 

@@ -46,9 +46,7 @@
                  >
         </div>
 
-        <div class="field mb-4 col-12">
-            <label for="itemgroup" class="font-medium text-900">Item Grouping</label>
-            <div class="newpcradiogroup">
+        <div class="field mb-4 col-12 md:col-6">
                 <div>Level 1</div>
                 <input type="text" 
                 #itemTitle="ngModel" 
@@ -57,10 +55,11 @@
                 [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="item.level1" 
                  autocomplete="off" readonly
-                 [ngModelOptions]="{standalone: true}" [style]="{'width':'460px'}">
+                 [ngModelOptions]="{standalone: true}">
 
             </div>
-            <div class="newpcradiogroup">
+
+            <div class="field mb-4 col-12 md:col-6">
                 <div>Level 2</div>
                 <input type="text" 
                 #itemTitle="ngModel" 
@@ -69,9 +68,10 @@
                 [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="item.level2" 
                  autocomplete="off"  readonly
-                 [ngModelOptions]="{standalone: true}" [style]="{'width':'460px'}">
+                 [ngModelOptions]="{standalone: true}">
             </div>
-            <div class="newpcradiogroup">
+
+            <div class="field mb-4 col-12 md:col-6">
                 <div>Level 3</div>
                 <input type="text" 
                 #itemTitle="ngModel" 
@@ -80,9 +80,9 @@
                 [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="item.level3" 
                  autocomplete="off" readonly
-                 [ngModelOptions]="{standalone: true}" [style]="{'width':'460px'}">
+                 [ngModelOptions]="{standalone: true}">
             </div>
-    </div>
+
 
 
         <div class="field mb-4 col-12 md:col-6">
@@ -114,16 +114,16 @@
 
   </div>
 
+  <button style="margin-left: 10px;" pButton class="w-auto mt-3" label="Taxes"></button>
 
-  <p>Taxes</p>
-    
-
-  <div class="card">
+  <!-- <div class="card">
       <p-table [value]="selectedTaxes" [scrollable]="true"  
       selectionMode="single" scrollHeight="200px" 
        (onRowSelect)="onRowSelect($event)" dataKey="recordid" styleClass="p-datatable-sm" [style]="{'width':'60vw'}">
-          <!--[style]="{'width':'320px'}"-->
-          <ng-template pTemplate="header">
+          <ng-template pTemplate="header"> -->
+    <div class="card col-12">
+        <p-table [value]="selectedTaxes" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px">
+            <ng-template pTemplate="header">
               <tr>
                   <th>Name</th>
                   <th>Code</th>
@@ -148,11 +148,15 @@
       </p-table>
   </div>
 
-  
-<p>Reorder Contacts</p>
-  <div class="card">
+
+<button style="margin-left: 10px;" pButton class="w-auto mt-3" label="Reorder Contacts"></button>
+
+  <!-- <div class="card">
       <p-table [value]="selectedReorderContacts" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px" [style]="{'width':'60vw'}">
-          <ng-template pTemplate="header">
+          <ng-template pTemplate="header"> -->
+            <div class="card col-12">
+                <p-table [value]="selectedReorderContacts" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px">
+                    <ng-template pTemplate="header">
               <tr>
                   <th>Contact</th>
                   <th>Phone Or Email</th>
@@ -211,10 +215,15 @@
       </p-table>
   </div>
 
-  <p>Expression UOMs</p>
-  <div class="card">
+
+  <button style="margin-left: 10px;" pButton class="w-auto mt-3" label="Expression UOMs"></button>
+
+  <!-- <div class="card">
       <p-table [value]="selectedExpressionUOMS" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px" [style]="{'width':'60vw'}">
-          <ng-template pTemplate="header">
+          <ng-template pTemplate="header"> -->
+     <div class="card col-12">
+       <p-table [value]="selectedExpressionUOMS" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px">
+        <ng-template pTemplate="header">       
               <tr>
                   <th>Quantity</th>
                   <th>UOM</th>
@@ -268,14 +277,17 @@
   </div>
 
   
-  <p>Bill of Material or Product Recipe</p>
 
-  <div class="card">
+<button style="margin-left: 10px;" pButton class="w-auto mt-3" label="Bill of Material or Product Recipe"></button>
+
+  <!-- <div class="card">
       <p-table [value]="selectedConsumedUnits" [scrollable]="true"  
       selectionMode="single" scrollHeight="200px" 
        (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm" [style]="{'width':'60vw'}">
-          <!--[style]="{'width':'320px'}"-->
-          <ng-template pTemplate="header">
+          <ng-template pTemplate="header"> -->
+            <div class="card col-12">
+                <p-table [value]="selectedConsumedUnits" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px">
+                 <ng-template pTemplate="header">          
               <tr>
                   <th>Item</th>
                   <th>Quantity</th>

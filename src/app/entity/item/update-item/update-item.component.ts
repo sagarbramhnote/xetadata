@@ -28,25 +28,12 @@ export class UpdateItemComponent{
 
   ngOnInit(): void {
 
-    const item = localStorage.getItem('editItem');
-    if (item !== null) {
-      this.item = JSON.parse(item);
-      console.log('ITEM TO BE EDITED in update',this.item)
-      this.displayEditModal = true;
-      this.selectedUOM = this.item.uom
-      this.selectedTaxes = this.item.taxes;
-      this.selectedReorderContacts = this.item.reordercontacts;
-      this.selectedExpressionUOMS = this.item.expressionuoms
-      this.selectedConsumedUnits = this.item.recipe.consumedunits
-    }
-
-
     this.level1.push('')
     this.level2.push('') 
     this.level3.push('')
     this.loadItemLevels(0,0)
     
-    this.loadItems(0,0)
+      this.loadItems(0,0)
     this.pes = [{value: ''},{value: 'PHONE'},{value: 'EMAIL'}]
     this.ces = [{value: ''},{value: 'INTERNAL'},{value: 'VENDOR'}]
 }
@@ -410,6 +397,7 @@ navigateToListItems(){
           this.itemLevels = dataSuccess.success
           console.log('ITEMLEVELS',JSON.stringify(this.itemLevels))
           this.processItemLevels(this.itemLevels)
+          this.update()
           this.inProgress = false
           return
         }
@@ -619,8 +607,14 @@ navigateToListItems(){
   
   handleTaxDelete(event:any) {
     console.log('EVENT',event)
-    this.selectedTaxes.splice(event,1)
+    this.deleteProductDialog=true;
     
+  }
+  confirmDelete(event:any){
+    this.selectedTaxes.splice(event,1)
+    this.deleteProductDialog=false;
+    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted', life: 3000 });
+
   }
   selectedRecordid:any
   handleTaxEdit(tax:any) {
@@ -982,5 +976,21 @@ addConsumedUnit() {
   return false
 
 }
+
+update(){
+  const item = localStorage.getItem('editItem');
+  if (item !== null) {
+    this.item = JSON.parse(item);
+    console.log('ITEM TO BE EDITED in update',this.item)
+    this.displayEditModal = true;
+    this.selectedUOM = this.item.uom
+    this.selectedTaxes = this.item.taxes;
+    this.selectedReorderContacts = this.item.reordercontacts;
+    this.selectedExpressionUOMS = this.item.expressionuoms
+    this.selectedConsumedUnits = this.item.recipe.consumedunits
+  }
+}
+
+deleteProductDialog:boolean=false;
 
 }
