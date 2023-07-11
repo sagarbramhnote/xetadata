@@ -69,39 +69,37 @@
         </div>
 
 
-        <div class="field mb-4 col-12">
-            <label for="itemgroup" class="font-medium text-900">Item Grouping</label>
-            <div class="newpcradiogroup">
+        <div class="field mb-4 col-12 md:col-6">
                 <div>Level 1</div>
                 <p-dropdown [options]="level1" 
             [(ngModel)]="item.level1" 
             optionLabel="levelname" 
             optionValue="levelname" 
             (ngModelChange)="itemLevelOneTypeChange($event)" 
-            [ngModelOptions]="{standalone: true}" [style]="{'width':'460px'}" [filter]="true" filterBy="levelname">
+            [ngModelOptions]="{standalone: true}" [filter]="true" filterBy="levelname">
                 </p-dropdown>
             </div>
-            <div class="newpcradiogroup">
+            <div class="field mb-4 col-12 md:col-6">
                 <div>Level 2</div>
                 <p-dropdown [options]="level2" 
             [(ngModel)]="item.level2" 
             optionLabel="levelname" 
             optionValue="levelname" 
             (ngModelChange)="itemLevelTwoTypeChange($event)" 
-            [ngModelOptions]="{standalone: true}" [style]="{'width':'460px'}" [filter]="true" filterBy="levelname">
+            [ngModelOptions]="{standalone: true}" [filter]="true" filterBy="levelname">
                 </p-dropdown>
             </div>
-            <div class="newpcradiogroup">
+            <div class="field mb-4 col-12 md:col-6">
                 <div>Level 3</div>
                 <p-dropdown [options]="level3" 
             [(ngModel)]="item.level3" 
             optionLabel="levelname" 
             optionValue="levelname" 
             (ngModelChange)="itemLevelThreeTypeChange($event)" 
-            [ngModelOptions]="{standalone: true}" [style]="{'width':'460px'}" [filter]="true" filterBy="levelname">
+            [ngModelOptions]="{standalone: true}" [filter]="true" filterBy="levelname">
                 </p-dropdown>
             </div>
-    </div>
+  
 
 
         <div class="field mb-4 col-12 md:col-6">
@@ -134,12 +132,14 @@
   </div>
 
   <p-button (click)="showNewTaxDialog()" icon="pi pi-external-link" styleClass="p-button-sm p-button-info p-button-raised" label="New Tax"></p-button>
-  <div class="card">
+  <!-- <div class="card">
       <p-table [value]="selectedTaxes" [scrollable]="true"  
       selectionMode="single" 
       (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm" [style]="{'width':'60vw'}">
-          <!--[style]="{'width':'320px'}"-->
-          <ng-template pTemplate="header">
+          <ng-template pTemplate="header"> -->
+    <div class="card col-12">
+        <p-table [value]="selectedTaxes" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px">
+            <ng-template pTemplate="header">
               <tr>
                   <th>Name</th>
                   <th>Code</th>
@@ -163,14 +163,27 @@
                 </div>
                   
               </tr>
+              <p-dialog [(visible)]="deleteProductDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span >Are you sure you want to delete <b></b>?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" class="w-auto mt-3" label="Yes" (click)="confirmDelete(i)"></button>
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" class="w-auto mt-3 p-button-danger" label="No" (click)="deleteProductDialog = false"></button>
+                </ng-template>
+            </p-dialog>
+
           </ng-template>
       </p-table>
   </div>
 
-  <p-dialog header="New Tax" [(visible)]="displayTaxModal" [modal]="true" [style]="{width: '40vw',height:'40vw'}"
+  <!-- <p-dialog header="New Tax" [(visible)]="displayTaxModal" [modal]="true" [style]="{width: '40vw',height:'40vw'}"
   [draggable]="false" [resizable]="false">
           
-  <form #taxForm="ngForm" autocomplete="off" novalidate class="box">
+  <form #taxForm="ngForm" autocomplete="off" novalidate class="box"> -->
+    <p-dialog [(visible)]="displayTaxModal" [style]="{width: '450px'}" header="New Tax" [modal]="true" class="p-fluid">
+        <ng-template pTemplate="content">  
       
           <div>
               <div>Tax Name</div>
@@ -211,6 +224,14 @@
   
           </div>
 
+          <div>
+            <div>Tax Type</div>
+        <p-dropdown #selectTaxType="ngModel" [options]="taxTypes" [(ngModel)]="selectedTaxtype" optionLabel="type" optionValue="type" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
+        <ng-template [ngIf]="selectTaxType.errors">
+            <small id="username2-help" class="p-error block">You must select a tax type</small>
+        </ng-template>
+  
+        </div>
      
       <div>
           <div>Tax Code</div>
@@ -223,17 +244,10 @@
               <small id="username2-help" class="p-error block">You must enter a tax percent</small>
           </ng-template>
       </div>
-      <div>
-          <div>Tax Type</div>
-      <p-dropdown #selectTaxType="ngModel" [options]="taxTypes" [(ngModel)]="selectedTaxtype" optionLabel="type" optionValue="type" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
-      <ng-template [ngIf]="selectTaxType.errors">
-          <small id="username2-help" class="p-error block">You must select a tax type</small>
-      </ng-template>
 
-      </div>
       
 
-  </form>
+        </ng-template>
       
           <ng-template pTemplate="footer">
               <p-button icon="pi pi-check" (click)="handleAddTax()" label="Save" styleClass="p-button-text"></p-button>
@@ -241,11 +255,13 @@
       </p-dialog>
 
 
-      <p-dialog header="Edit Tax" [(visible)]="displayTaxEditModal" [modal]="true" [style]="{width: '50vw',height:'40vw'}"
+      <!-- <p-dialog header="Edit Tax" [(visible)]="displayTaxEditModal" [modal]="true" [style]="{width: '50vw',height:'40vw'}"
       [draggable]="false" [resizable]="false">
               
               <form #taxForm="ngForm" autocomplete="off" novalidate class="box">
-                  <div class="modifytax">
+                  <div class="modifytax"> -->
+    <p-dialog [(visible)]="displayTaxEditModal" [style]="{width: '450px'}" header="Edit Tax" [modal]="true" class="p-fluid">
+        <ng-template pTemplate="content">  
                       <div>
                           <div>Tax Name</div>
                       <input type="text" #selectTaxname="ngModel" pInputText class="p-inputtext-sm fn" placeholder="Tax Name" [(ngModel)]="selectedTaxname" [ngModelOptions]="{standalone: true}"  autocomplete="off" required >
@@ -285,7 +301,15 @@
               
                       </div>
 
-                  </div>
+                      <div>
+                        <div>Tax Type</div>
+                    <p-dropdown #selectTaxType="ngModel" [options]="taxTypes" [(ngModel)]="selectedTaxtype" optionLabel="type" optionValue="type" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
+                    <ng-template [ngIf]="selectTaxType.errors">
+                        <small id="username2-help" class="p-error block">You must select a tax type</small>
+                    </ng-template>
+  
+                    </div>
+
                   <div>
                       <div>Tax Code</div>
                       <input type="text" #selectTaxcode="ngModel" pInputText class="p-inputtext-sm" placeholder="Tax code" [(ngModel)]="selectedTaxcode" [ngModelOptions]="{standalone: true}"  autocomplete="off">
@@ -297,17 +321,10 @@
                           <small id="username2-help" class="p-error block">You must enter a tax percent</small>
                       </ng-template>
                   </div>
-                  <div>
-                      <div>Tax Type</div>
-                  <p-dropdown #selectTaxType="ngModel" [options]="taxTypes" [(ngModel)]="selectedTaxtype" optionLabel="type" optionValue="type" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
-                  <ng-template [ngIf]="selectTaxType.errors">
-                      <small id="username2-help" class="p-error block">You must select a tax type</small>
-                  </ng-template>
-
-                  </div>
+         
                   
 
-              </form>
+        </ng-template>
               
               <ng-template pTemplate="footer">
                   <p-button icon="pi pi-check" (click)="handleUpdateTax()" label="Ok" styleClass="p-button-text"></p-button>
@@ -319,8 +336,11 @@
     <!-- Start Recorder Contact......... -->
 
     <div><p-button (click)="addReorderContact()" styleClass="p-button-sm p-button-info p-button-raised" icon="pi pi-external-link" label="New Reorder Contact"></p-button></div>
-    <div class="card">
+    <!-- <div class="card">
         <p-table [value]="selectedReorderContacts" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px" [style]="{'width':'60vw'}">
+            <ng-template pTemplate="header"> -->
+    <div class="card col-12">
+        <p-table [value]="selectedReorderContacts" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Contact</th>
@@ -389,9 +409,12 @@
    <!-- Start New Expression UOM -->
 
    <div><p-button (click)="addExpressionUOM()" styleClass="p-button-sm p-button-info p-button-raised" icon="pi pi-external-link" label="New Expression UOM"></p-button></div>
-   <div class="card">
+   <!-- <div class="card">
        <p-table [value]="selectedExpressionUOMS" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px" [style]="{'width':'60vw'}">
-           <ng-template pTemplate="header">
+           <ng-template pTemplate="header"> -->
+   <div class="card col-12">
+        <p-table [value]="selectedExpressionUOMS" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px">
+            <ng-template pTemplate="header">
                <tr>
                    <th>Quantity</th>
                    <th>UOM</th>
@@ -457,11 +480,14 @@
      <!-- Start Bill of Material or Product Recipe -->
 
      <p-button (click)="showNewRecipeDialog()" styleClass="p-button-sm p-button-info p-button-raised" icon="pi pi-external-link" label="Bill of Material or Product Recipe"></p-button>
-     <div class="card">
+     <!-- <div class="card">
          <p-table [value]="selectedConsumedUnits" [scrollable]="true"  
          selectionMode="single" scrollHeight="200px" 
           (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm" [style]="{'width':'60vw'}">
-             <ng-template pTemplate="header">
+             <ng-template pTemplate="header"> -->
+    <div class="card col-12">
+        <p-table [value]="selectedConsumedUnits" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px">
+            <ng-template pTemplate="header">
                  <tr>
                      <th>Item</th>
                      <th>Quantity</th>
@@ -486,11 +512,12 @@
          </p-table>
      </div>
 
-     <p-dialog header="New Material or Ingredient or Subassembly" [(visible)]="displayRecipeModal" [modal]="true" [style]="{width: '40vw',height:'30vw'}"
+     <!-- <p-dialog header="New Material or Ingredient or Subassembly" [(visible)]="displayRecipeModal" [modal]="true" [style]="{width: '40vw',height:'30vw'}"
  [draggable]="false" [resizable]="false">
          
- <form #taxForm="ngForm" autocomplete="off" novalidate class="box">
-     
+ <form #taxForm="ngForm" autocomplete="off" novalidate class="box"> -->
+    <p-dialog [(visible)]="displayRecipeModal" [style]="{width: '450px'}" header="New Material or Ingredient or Subassembly" [modal]="true" class="p-fluid">
+        <ng-template pTemplate="content">   
          
          <div>
              <div>Item</div>
@@ -537,15 +564,8 @@
      </div>
      
 
- </form>
-     
-             
-             
-             
+        </ng-template>
 
-             
-
-         
 
          <ng-template pTemplate="footer">
              <p-button icon="pi pi-check" (click)="addConsumedUnit()" label="Save" styleClass="p-button-text"></p-button>
@@ -553,12 +573,13 @@
      </p-dialog>
 
 
-     <p-dialog header="Edit Material or Ingredient or Subassembly" [(visible)]="displayRecipeEditModal" [modal]="true" [style]="{width: '50vw',height:'30vw'}"
+     <!-- <p-dialog header="Edit Material or Ingredient or Subassembly" [(visible)]="displayRecipeEditModal" [modal]="true" [style]="{width: '50vw',height:'30vw'}"
  [draggable]="false" [resizable]="false">
          
          <form #taxForm="ngForm" autocomplete="off" novalidate class="box">
-             <div class="modifytax">
-                 
+             <div class="modifytax"> -->
+      <p-dialog [(visible)]="displayRecipeEditModal" [style]="{width: '450px'}" header="Edit Material or Ingredient or Subassembly" [modal]="true" class="p-fluid">
+        <ng-template pTemplate="content">                  
                  
 
                  <div>
@@ -590,7 +611,7 @@
          
                  </div>
 
-             </div>
+
 
              <div>
                  <div>Quantity</div>
@@ -605,15 +626,8 @@
 
              </div>
 
-         </form>
-         
-                 
-                 
-                 
+        </ng-template>
 
-                 
-
-             
 
          <ng-template pTemplate="footer">
              <p-button icon="pi pi-check" (click)="handleUpdateRecipe(selectedRecipeItem,selectedCUIndex)" label="Edit" styleClass="p-button-text"></p-button>
@@ -640,4 +654,6 @@
             </div>
       
 </div>
+
+
 
