@@ -578,7 +578,7 @@ navigateToListItems(){
   
     this.selectedTaxes.push(tax)
     
-  
+    this.showTax=true
   
     this.selectedTaxname = null
     this.selectedTaxcode = null
@@ -604,7 +604,7 @@ navigateToListItems(){
     return recid
   
   }
-  
+  deleteProductDialog:boolean=false;
   handleTaxDelete(event:any) {
     console.log('EVENT',event)
     this.deleteProductDialog=true;
@@ -696,6 +696,7 @@ addReorderContact() {
   reco.phoneoremail = ""
 
   this.selectedReorderContacts.push(reco)
+  this.showContact=true
   
 }
 
@@ -717,10 +718,18 @@ onRowEditSave(product: ReorderContact, index:number) {
     //this.messageService.add({severity:'success', summary: 'Success', detail:'Product is updated'});
 }
 
+deleteContact:boolean=false
 onRowEditCancel(product: ReorderContact, index: number) {
     //this.selectedReorderContacts[index] = this.clonedObjects[index];
     //delete this.selectedReorderContacts[index];
-    this.selectedReorderContacts.splice(index,1)
+   // this.selectedReorderContacts.splice(index,1)
+   this.deleteContact=true
+}
+confirmDeleteContact(product: any, index: number){
+  this.selectedReorderContacts.splice(index,1)
+  this.deleteContact=false;
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted', life: 3000 });
+
 }
 
 addExpressionUOM() {
@@ -741,6 +750,7 @@ addExpressionUOM() {
   euom["quantity"] = 0
 
   this.selectedExpressionUOMS.push(euom)
+  this.showUom=true
 
 }
 
@@ -752,11 +762,18 @@ onEUOMRowEditSave(product: ReorderContact, index:number) {
   
  
 }
-
+deleteUom:boolean=false;
 onEUOMRowEditCancel(product: any, index: number) {
-
-  this.selectedExpressionUOMS.splice(index,1)
+  this.deleteUom=true
+ 
 }
+confirmDeleteUoms(product: any, index: number){
+  this.selectedExpressionUOMS.splice(index,1)
+  this.deleteUom=false;
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted', life: 3000 });
+
+}
+
 filteredExpressionUOMs:any[] = new Array
 filterExpressionUOMs(event:any) {
   console.log('IN FILTER EXPRESSION UOMs',event)
@@ -864,8 +881,17 @@ handleRecipeEdit(recipe:any,i:any) {
 
 }
 
+deleteRecipeItm:boolean=false;
 handleRecipeDelete(recipe:any,index:any) {
+  this.deleteRecipeItm=true;
+ 
+}
+
+confirmDeleteRecipe(recipe:any,index:any){
   this.selectedConsumedUnits.splice(index,1)
+  this.deleteRecipeItm=false;
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted', life: 3000 });
+
 }
 
 handleRecipeDeleteInEdit(recipe:any,index:any) {
@@ -970,12 +996,17 @@ addConsumedUnit() {
   cu["quantity"] = this.selectedCQty
 
   this.selectedConsumedUnits.push(cu)
+  this.showRecipe=true
 
   this.displayRecipeModal = false
 
   return false
 
 }
+showTax:boolean=true
+showContact:boolean=true
+showUom:boolean=true
+showRecipe:boolean=true
 
 update(){
   const item = localStorage.getItem('editItem');
@@ -988,9 +1019,28 @@ update(){
     this.selectedReorderContacts = this.item.reordercontacts;
     this.selectedExpressionUOMS = this.item.expressionuoms
     this.selectedConsumedUnits = this.item.recipe.consumedunits
+  
   }
-}
+  if (!this.selectedTaxes || this.selectedTaxes.length === 0) {
+    console.log("xyz is empty");
+    this.showTax=false
+  }
 
-deleteProductDialog:boolean=false;
+  if (!this.selectedReorderContacts || this.selectedReorderContacts.length === 0) {
+    console.log("xyz is empty");
+    this.showContact=false
+  }
+
+  if (!this.selectedExpressionUOMS || this.selectedExpressionUOMS.length === 0) {
+    console.log("xyz is empty");
+    this.showUom=false
+  }
+
+  if (!this.selectedConsumedUnits || this.selectedConsumedUnits.length === 0) {
+    console.log("xyz is empty");
+    this.showRecipe=false
+  }
+  
+}
 
 }

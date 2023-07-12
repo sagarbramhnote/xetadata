@@ -601,10 +601,17 @@ highestRecordID(objectArray:any[]) {
 
 }
 
+deleteProductDialog:boolean=false;
 handleTaxDelete(event:any) {
   console.log('EVENT',event)
-  this.selectedTaxes.splice(event,1)
+  this.deleteProductDialog=true;
   
+}
+confirmDelete(event:any){
+  this.selectedTaxes.splice(event,1)
+  this.deleteProductDialog=false;
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted', life: 3000 });
+
 }
 
 handleTaxEdit(tax:any) {
@@ -708,10 +715,18 @@ onRowEditSave(product: ReorderContact, index:number) {
     //this.messageService.add({severity:'success', summary: 'Success', detail:'Product is updated'});
 }
 
+deleteContact:boolean=false
 onRowEditCancel(product: ReorderContact, index: number) {
     //this.selectedReorderContacts[index] = this.clonedObjects[index];
     //delete this.selectedReorderContacts[index];
-    this.selectedReorderContacts.splice(index,1)
+   // this.selectedReorderContacts.splice(index,1)
+   this.deleteContact=true
+}
+confirmDeleteContact(product: any, index: number){
+  this.selectedReorderContacts.splice(index,1)
+  this.deleteContact=false;
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted', life: 3000 });
+
 }
 
 addExpressionUOM() {
@@ -745,9 +760,16 @@ onEUOMRowEditSave(product: ReorderContact, index:number) {
  
 }
 
+deleteUom:boolean=false;
 onEUOMRowEditCancel(product: any, index: number) {
-
+  this.deleteUom=true
+ 
+}
+confirmDeleteUoms(product: any, index: number){
   this.selectedExpressionUOMS.splice(index,1)
+  this.deleteUom=false;
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted', life: 3000 });
+
 }
 
 filterExpressionUOMs(event:any) {
@@ -854,8 +876,17 @@ handleRecipeEdit(recipe:any,i:any) {
 
 }
 
+deleteRecipeItm:boolean=false;
 handleRecipeDelete(recipe:any,index:any) {
+  this.deleteRecipeItm=true;
+ 
+}
+
+confirmDeleteRecipe(recipe:any,index:any){
   this.selectedConsumedUnits.splice(index,1)
+  this.deleteRecipeItm=false;
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted', life: 3000 });
+
 }
 
 handleRecipeDeleteInEdit(recipe:any,index:any) {

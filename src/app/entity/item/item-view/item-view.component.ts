@@ -16,6 +16,11 @@ import { UOMListService } from 'src/app/services/uomlist.service';
 })
 export class ItemViewComponent {
 
+showTax:boolean=true
+showContact:boolean=true
+showUom:boolean=true
+showRecipe:boolean=true
+
   ngOnInit(): void {
 
     const item = localStorage.getItem('editView');
@@ -28,7 +33,27 @@ export class ItemViewComponent {
       this.selectedReorderContacts = this.item.reordercontacts;
       this.selectedExpressionUOMS = this.item.expressionuoms
       this.selectedConsumedUnits = this.item.recipe.consumedunits
-    }   
+    }  
+    
+    if (!this.selectedTaxes || this.selectedTaxes.length === 0) {
+      console.log("xyz is empty");
+      this.showTax=false
+    }
+  
+    if (!this.selectedReorderContacts || this.selectedReorderContacts.length === 0) {
+      console.log("xyz is empty");
+      this.showContact=false
+    }
+  
+    if (!this.selectedExpressionUOMS || this.selectedExpressionUOMS.length === 0) {
+      console.log("xyz is empty");
+      this.showUom=false
+    }
+  
+    if (!this.selectedConsumedUnits || this.selectedConsumedUnits.length === 0) {
+      console.log("xyz is empty");
+      this.showRecipe=false
+    }
 }
 
 constructor(private router:Router,private httpClient:HttpClient,private eventBusService:EventBusServiceService,private confirmationService:ConfirmationService, private messageService: MessageService,private filterService: FilterService) { }

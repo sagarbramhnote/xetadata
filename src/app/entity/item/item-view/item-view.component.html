@@ -114,14 +114,14 @@
 
   </div>
 
-  <button style="margin-left: 10px;" pButton class="w-auto mt-3" label="Taxes"></button>
+  <button *ngIf="showTax" style="margin-left: 10px;" pButton class="w-auto mt-3" label="Taxes"></button>
 
   <!-- <div class="card">
       <p-table [value]="selectedTaxes" [scrollable]="true"  
       selectionMode="single" scrollHeight="200px" 
        (onRowSelect)="onRowSelect($event)" dataKey="recordid" styleClass="p-datatable-sm" [style]="{'width':'60vw'}">
           <ng-template pTemplate="header"> -->
-    <div class="card col-12">
+    <div class="card col-12" *ngIf="showTax">
         <p-table [value]="selectedTaxes" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px">
             <ng-template pTemplate="header">
               <tr>
@@ -149,12 +149,12 @@
   </div>
 
 
-<button style="margin-left: 10px;" pButton class="w-auto mt-3" label="Reorder Contacts"></button>
+<button *ngIf="showContact" style="margin-left: 10px;" pButton class="w-auto mt-3" label="Reorder Contacts"></button>
 
   <!-- <div class="card">
       <p-table [value]="selectedReorderContacts" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px" [style]="{'width':'60vw'}">
           <ng-template pTemplate="header"> -->
-            <div class="card col-12">
+            <div class="card col-12" *ngIf="showContact">
                 <p-table [value]="selectedReorderContacts" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px">
                     <ng-template pTemplate="header">
               <tr>
@@ -216,12 +216,12 @@
   </div>
 
 
-  <button style="margin-left: 10px;" pButton class="w-auto mt-3" label="Expression UOMs"></button>
+  <button *ngIf="showUom" style="margin-left: 10px;" pButton class="w-auto mt-3" label="Expression UOMs"></button>
 
   <!-- <div class="card">
       <p-table [value]="selectedExpressionUOMS" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px" [style]="{'width':'60vw'}">
           <ng-template pTemplate="header"> -->
-     <div class="card col-12">
+     <div class="card col-12" *ngIf="showUom">
        <p-table [value]="selectedExpressionUOMS" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px">
         <ng-template pTemplate="header">       
               <tr>
@@ -278,14 +278,14 @@
 
   
 
-<button style="margin-left: 10px;" pButton class="w-auto mt-3" label="Bill of Material or Product Recipe"></button>
+<button *ngIf="showRecipe" style="margin-left: 10px;" pButton class="w-auto mt-3" label="Bill of Material or Product Recipe"></button>
 
   <!-- <div class="card">
       <p-table [value]="selectedConsumedUnits" [scrollable]="true"  
       selectionMode="single" scrollHeight="200px" 
        (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm" [style]="{'width':'60vw'}">
           <ng-template pTemplate="header"> -->
-            <div class="card col-12">
+            <div class="card col-12" *ngIf="showRecipe">
                 <p-table [value]="selectedConsumedUnits" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px">
                  <ng-template pTemplate="header">          
               <tr>

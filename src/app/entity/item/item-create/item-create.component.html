@@ -220,6 +220,16 @@
                   </div>
                   
               </tr>
+              <p-dialog [(visible)]="deleteProductDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span >Are you sure you want to delete <b></b>?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" class="w-auto mt-3" label="Yes" (click)="confirmDelete(i)"></button>
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" class="w-auto mt-3 p-button-danger" label="No" (click)="deleteProductDialog = false"></button>
+                </ng-template>
+            </p-dialog>
           </ng-template>
       </p-table>
   </div>
@@ -441,6 +451,16 @@
                         <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="onRowEditCancel(product, ri)"></button>
                     </td>
                 </tr>
+                <p-dialog [(visible)]="deleteContact" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                    <div class="flex align-items-center justify-content-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                        <span >Are you sure you want to delete <b></b>?</span>
+                    </div>
+                    <ng-template pTemplate="footer">
+                        <button pButton pRipple icon="pi pi-check" class="p-button-text" class="w-auto mt-3" label="Yes" (click)="confirmDeleteContact(product, ri)"></button>
+                        <button pButton pRipple icon="pi pi-times" class="p-button-text" class="w-auto mt-3 p-button-danger" label="No" (click)="deleteContact = false"></button>
+                    </ng-template>
+                </p-dialog>
             </ng-template>
         </p-table>
     </div>
@@ -509,6 +529,16 @@
                         <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="onEUOMRowEditCancel(product, ri)"></button>
                    </td>
                </tr>
+               <p-dialog [(visible)]="deleteUom" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span >Are you sure you want to delete <b></b>?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" class="w-auto mt-3" label="Yes" (click)="confirmDeleteUoms(product, ri)"></button>
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" class="w-auto mt-3 p-button-danger" label="No" (click)="deleteUom = false"></button>
+                </ng-template>
+            </p-dialog>
            </ng-template>
        </p-table>
    </div>
@@ -543,6 +573,16 @@
                      </div>
                      
                  </tr>
+                 <p-dialog [(visible)]="deleteRecipeItm" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                    <div class="flex align-items-center justify-content-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                        <span >Are you sure you want to delete <b></b>?</span>
+                    </div>
+                    <ng-template pTemplate="footer">
+                        <button pButton pRipple icon="pi pi-check" class="p-button-text" class="w-auto mt-3" label="Yes" (click)="confirmDeleteRecipe(recipe,i)"></button>
+                        <button pButton pRipple icon="pi pi-times" class="p-button-text" class="w-auto mt-3 p-button-danger" label="No" (click)="deleteRecipeItm = false"></button>
+                    </ng-template>
+                </p-dialog>
              </ng-template>
          </p-table>
      </div>
