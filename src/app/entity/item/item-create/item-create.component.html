@@ -623,7 +623,11 @@
  
          </div>
 
- 
+         <div>
+            <div>UOM</div>
+        <p-dropdown #selectUOM="ngModel" [options]="cus" [(ngModel)]="selectedCUOM" optionLabel="uom.uom" optionValue="uom" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
+   
+        </div>
      
      <div>
          <div>Quantity</div>
@@ -632,11 +636,7 @@
              <small id="username2-help" class="p-error block">You must enter quantity</small>
          </ng-template>
      </div>
-     <div>
-         <div>UOM</div>
-     <p-dropdown #selectUOM="ngModel" [options]="cus" [(ngModel)]="selectedCUOM" optionLabel="uom.uom" optionValue="uom" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
-
-     </div>
+ 
      
 
         </ng-template>
@@ -688,7 +688,11 @@
          
                  </div>
 
-
+                 <div>
+                    <div>UOM</div>
+                <p-dropdown #selectUOM="ngModel" [options]="cus" [(ngModel)]="selectedCUOM" optionLabel="uom.uom" optionValue="uom" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
+   
+                </div>
 
              <div>
                  <div>Quantity</div>
@@ -697,11 +701,7 @@
                      <small id="username2-help" class="p-error block">You must enter quantity</small>
                  </ng-template>
              </div>
-             <div>
-                 <div>UOM</div>
-             <p-dropdown #selectUOM="ngModel" [options]="cus" [(ngModel)]="selectedCUOM" optionLabel="uom.uom" optionValue="uom" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
-
-             </div>
+         
 
                     </ng-template>
              
