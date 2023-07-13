@@ -29,6 +29,8 @@ import { ItemCreateComponent } from './item/item-create/item-create.component';
 import { DialogModule } from 'primeng/dialog';
 import { UpdateItemComponent } from './item/update-item/update-item.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 
@@ -66,7 +68,9 @@ import { ItemViewComponent } from './item/item-view/item-view.component';
     DropdownModule,
 		RippleModule,
 		ProgressBarModule,
-    DialogModule
+    DialogModule,
+    ConfirmDialogModule,
+    TooltipModule,
   ]
 })
 export class EntityModule { }

@@ -17,10 +17,10 @@ import { ItemViewComponent } from './item/item-view/item-view.component';
 
 const routes: Routes = [
   {path: 'profile',component:ProfileComponent},
-  {path: 'item',component:ItemComponent},
-  {path: 'itemCreate',component:ItemCreateComponent},
-  {path: 'itemUpdate',component:UpdateItemComponent},
-  {path: 'itemView',component:ItemViewComponent},
+  { path: 'item', data: {breadcrumb: 'List'},component:ItemComponent},
+  {path: 'itemCreate',data: {breadcrumb: 'Create'},component:ItemCreateComponent},
+  {path: 'itemUpdate',data: {breadcrumb: 'Edit'},component:UpdateItemComponent},
+  {path: 'itemView',data: {breadcrumb: 'View'},component:ItemViewComponent},
   {path: 'partyAccount',component:PartyAccountComponent},
   {path: 'othersAccount',component:OthersAccountComponent},
   {path: 'UOMs',component:UOMsComponent},

@@ -21,7 +21,7 @@ const routes: Routes = [
             { path: 'messages', loadChildren: () => import('./messages/messages.module').then(m => m.MessagesModule), canActivate:[authenticationGuard()]},
             { path: 'recipients',component: RecipientsComponent, canActivate:[authenticationGuard()]},
             { path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule), canActivate:[authenticationGuard()]},
-            { path: 'entity', loadChildren: () => import('./entity/entity.module').then(m => m.EntityModule), canActivate:[authenticationGuard()]},
+            { path: 'entity',data: { breadcrumb: 'Entity' }, loadChildren: () => import('./entity/entity.module').then(m => m.EntityModule), canActivate:[authenticationGuard()]},
 
 
         ]

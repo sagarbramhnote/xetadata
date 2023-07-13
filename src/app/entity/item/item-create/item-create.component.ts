@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ConfirmationService, FilterService, MessageService } from 'primeng/api';
 import { EventBusServiceService } from 'src/app/global/event-bus-service.service';
 import { GlobalConstants } from 'src/app/global/global-constants';
+import { ReorderContact } from 'src/app/global/reorderContact';
 import { XetaSuccess } from 'src/app/global/xeta-success';
 import { Xetaerror } from 'src/app/global/xetaerror';
 import { AccountHeadListService } from 'src/app/services/account-head-list.service';
@@ -21,6 +22,16 @@ import { UOMListService } from 'src/app/services/uomlist.service';
 
 })
 export class ItemCreateComponent implements OnInit{
+
+   showFields: boolean = false;
+   showFieldsContact: boolean = false;
+   showFieldsUom: boolean = false;
+   showFieldsBill: boolean = false;
+
+// toggleFields() {
+//   this.showFields = !this.showFields;
+//*ngIf="showFields"
+// }
 
   ngOnInit(): void {
     this.lo = GlobalConstants.loginObject
@@ -217,10 +228,6 @@ confirm(msg:string) {
 handleSave(){
 
 
-  // console.log(this.itemTitle.errors ? true : false)
-  // console.log(this.selectUOM.errors ? true : false)
-
-
   if(this.itemTitle.errors || this.selectUOM.errors)
   {
     console.log('there is an error in the form !')
@@ -255,6 +262,8 @@ handleSave(){
   this.item.reordercontacts = this.selectedReorderContacts
   this.item.expressionuoms = this.selectedExpressionUOMS
   this.item.recipe.consumedunits = this.selectedConsumedUnits
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Created ', life: 4000 });
+   
 
   console.log('CONUNITS',this.selectedConsumedUnits)
   
@@ -296,7 +305,8 @@ handleSave(){
         this.inProgress = false
         
         this.displayModal = false
-        this.loadItems(0,0)
+        this.loadItems(0,0) 
+        this.router.navigate(['entity/item'])      
         return;
 
       }
@@ -316,6 +326,7 @@ handleSave(){
   })
 
   return
+  
 
 }
 
@@ -529,7 +540,8 @@ taxTypes:any[] = [{type:''},{type:'vat'},{type:'nonvat'}]
 handleAddTax() {
   // let copiedTax = JSON.parse(JSON.stringify(this.selectedTax));
   // this.item.taxes.push(copiedTax)
-
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Upsated', life: 4000 });
+   
   if (typeof this.selectedTaxParty === 'undefined' || this.selectedTaxParty == null) {
     this.confirm('You must select a tax authority')
     return false
@@ -566,7 +578,7 @@ handleAddTax() {
 
   this.selectedTaxes.push(tax)
   
-
+  this.showFields = true;
 
   this.selectedTaxname = null
   this.selectedTaxcode = null
@@ -608,6 +620,8 @@ handleTaxEdit(tax:any) {
   this.selectedTaxParty = tax.taxauthority
   this.selectedRecordid = tax.recordid
   this.displayTaxEditModal = true
+
+ 
 }
 handleUpdateTax() {
 
@@ -646,6 +660,7 @@ handleUpdateTax() {
   console.log('TAX TO BE UPDATED',tax)
 
   return false
+  
 
 }
 recordByRecordID(recordid:any,array:any) {
@@ -659,13 +674,322 @@ recordByRecordID(recordid:any,array:any) {
   return object
 }
 
-showFields: boolean = false;
 
-toggleFields() {
-  this.showFields = !this.showFields;
+addReorderContact() {
+    
+  let i = 0
+  for (let index = 0; index < this.selectedReorderContacts.length; index++) {
+    const element = this.selectedReorderContacts[index];
+    if(element.id > i) {
+      i = element.id
+    }
+  }
+
+  let reco = {} as ReorderContact;
+  reco.contact = ""
+  reco.contactname = ""
+  reco.id = i
+  reco.contacttype = ""
+  reco.phoneoremail = ""
+
+  this.selectedReorderContacts.push(reco)
+  this.showFieldsContact=true;
+  
 }
-// <button (click)="toggleFields()">Toggle Fields</button>
-//     <div *ngIf="showFields">
 
+onRowEditInit(product: ReorderContact, index:number) {
+  //this.clonedObjects[index!] = {...product};
+}
+
+onRowEditSave(product: ReorderContact, index:number) {
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Save Order Contact ', life: 4000 });
+   
+  
+    // if (product.price > 0) {
+    //     delete this.clonedObjects[product.id!];
+    //     this.messageService.add({severity:'success', summary: 'Success', detail:'Product is updated'});
+    // }
+    // else {
+    //     this.messageService.add({severity:'error', summary: 'Error', detail:'Invalid Price'});
+    // }
+
+    //delete this.clonedObjects[index];
+    //this.messageService.add({severity:'success', summary: 'Success', detail:'Product is updated'});
+}
+
+onRowEditCancel(product: ReorderContact, index: number) {
+    //this.selectedReorderContacts[index] = this.clonedObjects[index];
+    //delete this.selectedReorderContacts[index];
+    this.selectedReorderContacts.splice(index,1)
+    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Order Contact Deleted', life: 4000 });
+   
+}
+
+addExpressionUOM() {
+  let i = 0
+  for (let index = 0; index < this.selectedExpressionUOMS.length; index++) {
+    const element = this.selectedExpressionUOMS[index];
+    if(element.id > i) {
+      i = element.id
+    }
+  }
+
+  let euom:any = {}
+  euom["uom"] = {
+    uom:'',
+    country: '',
+    symbol: ''
+  }
+  euom["quantity"] = 0
+
+  this.selectedExpressionUOMS.push(euom)
+  this.showFieldsUom=true;
+
+}
+
+onEUOMRowEditInit(product: ReorderContact, index:number) {
+  
+}
+
+onEUOMRowEditSave(product: ReorderContact, index:number) {
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Save Expression UOM ', life: 4000 });
+   
+  
+ 
+}
+
+onEUOMRowEditCancel(product: any, index: number) {
+
+  this.selectedExpressionUOMS.splice(index,1)
+
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: ' UOM Deleted', life: 4000 });
+   
+}
+
+filterExpressionUOMs(event:any) {
+  console.log('IN FILTER EXPRESSION UOMs',event)
+  // let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'party-name-contains'};
+  let criteria:any = {
+    searchtext: event.query,
+    screen: "",
+    searchtype: "begins",
+    offset: 0
+  }
+  console.log('CRITERIA',criteria)
+  let pweService:UOMListService = new UOMListService(this.httpClient)
+  this._pweSub = pweService.fetchUOMs(criteria).subscribe({
+    complete: () => {
+      console.info('complete')
+    },
+    error: (e) => {
+      console.log('ERROR',e)
+      alert('A server error occured. '+e.message)
+      return;
+    },
+    next: (v) => {
+      console.log('NEXT',v);
+      if (v.hasOwnProperty('error')) {
+        let dataError:Xetaerror = <Xetaerror>v; 
+        alert(dataError.error);
+        return;
+      }
+      else if(v.hasOwnProperty('success')) {
+        let dataSuccess:XetaSuccess = <XetaSuccess>v;
+        this.filteredExpressionUOMs = dataSuccess.success;
+        console.log('FILTERED EXPRESSION UOMS',dataSuccess.success)
+        return;
+      }
+      else if(v == null) {
+        alert('A null object has been returned. An undefined error has occurred.')
+        return;
+      }
+      else {
+        alert('An undefined error has occurred.')
+        return
+      }
+    }
+  })
+}
+handleOnSelectExpressionUOM(event:any) {
+
+}
+expressionUOMChange(event:any,ri:any,product:any) {
+  console.log('EVENT',event)
+  console.log('PRODUCT',product)
+  console.log('RI',ri)
+  console.log('EXPRUOMS',this.selectedExpressionUOMS)
+}
+
+selectedCUOM:any
+selectedCItem:any
+selectedCQty:any
+selectedCUIndex:any
+selectedRecipeItem:any
+cus:any[] = []
+
+recipeMode:boolean = false
+
+showNewRecipeDialog() {
+
+  this.selectedCItem = null
+  this.selectedCQty = null
+  this.selectedCUOM = null
+  
+  this.cus = []
+
+  this.recipeMode = false;
+
+  this.displayRecipeModal = true; 
+
+}
+
+onCURowEditInit(product: ReorderContact, index:number) {
+  
+}
+
+handleRecipeEdit(recipe:any,i:any) {
+
+  console.log('EUOMS AN LENGTH',recipe.consumeditem.expressionuoms.length)
+  if(recipe.consumeditem.expressionuoms.length == 0) {
+    this.confirm("You cannot select and item that has no expression uoms")
+    return;
+  }
+  
+  console.log('RECIPE ITEM',recipe)
+  this.selectedCUIndex = i
+  this.selectedRecipeItem = recipe
+  this.selectedCItem = recipe.consumeditem
+  this.selectedCQty = recipe.quantity
+  this.selectedCUOM = recipe.uom
+
+  this.recipeMode = true;
+
+  //this.cus = recipe.expressionuoms
+
+  this.displayRecipeEditModal = true
+ 
+
+}
+
+handleRecipeDelete(recipe:any,index:any) {
+  this.selectedConsumedUnits.splice(index,1)
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Material Or Recipe Deleted', life: 4000 });
+   
+}
+
+handleRecipeDeleteInEdit(recipe:any,index:any) {
+  this.selectedConsumedUnits.splice(index,1)
+}
+
+handleUpdateRecipe(product: any, index:number) {
+  
+  product.consumeditem = this.selectedCItem
+  product.uom = this.selectedCUOM
+  product.quantity = this.selectedCQty
+  console.log('UPDATED RECIPE ITEM',product)
+
+  this.displayRecipeEditModal = false
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Save Material Or Recipe', life: 4000 });
+   
+
+}
+
+onCURowEditCancel(product: any, index: number) {
+
+  this.selectedConsumedUnits.splice(index,1)
+}
+
+filterConsumedItems(event:any) {
+  console.log('IN FILTER ITEMS',event)
+  // let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'party-name-contains'};
+  let criteria:any = {searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'itemname-contains',attribute:''};
+  console.log('CRITERIA',criteria)
+  let iService:ItemsListService = new ItemsListService(this.httpClient)
+  this._iSub = iService.fetchItems(criteria).subscribe({
+    complete: () => {
+      console.info('complete')
+    },
+    error: (e) => {
+      console.log('ERROR',e)
+      alert('A server error occured. '+e.message)
+      return;
+    },
+    next: (v) => {
+      console.log('NEXT',v);
+      if (v.hasOwnProperty('error')) {
+        let dataError:Xetaerror = <Xetaerror>v; 
+        alert(dataError.error);
+        return;
+      }
+      else if(v.hasOwnProperty('success')) {
+        let dataSuccess:XetaSuccess = <XetaSuccess>v;
+        this.filteredConsumedItems = dataSuccess.success;
+        console.log('FILTERED ITEMS',dataSuccess.success)
+        return;
+      }
+      else if(v == null) {
+        alert('A null object has been returned. An undefined error has occurred.')
+        return;
+      }
+      else {
+        alert('An undefined error has occurred.')
+        return
+      }
+    }
+  })
+}
+handleOnSelectConsumedItem(event:any) {
+  console.log('EVENT',event)
+  this.cus = event.expressionuoms
+  // console.log('PRODUCT',product)
+  // console.log('RI',ri)
+}
+consumedItemChange(event:any) {
+
+}
+
+addConsumedUnit() {
+
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Save Material Or Recipe', life: 4000 });
+   
+  // let i = 0
+
+  // for (let index = 0; index < this.selectedConsumedUnits.length; index++) {
+  //   const element = this.selectedConsumedUnits[index];
+  //   if(element.id > i) {
+  //     i = element.id
+  //   }
+  // }
+
+
+  if (typeof this.selectedCItem === 'undefined' || this.selectedCItem == null) {
+    this.confirm('You must select an item')
+    return false
+  }
+
+  if (typeof this.selectedCQty === 'undefined' || this.selectedCQty == null ) {
+    this.confirm('You must enter quantity')
+    return false
+  }
+
+  if (typeof this.selectedCUOM === 'undefined' || this.selectedCUOM == null || this.selectedCUOM === '') {
+    this.confirm('You must select a uom')
+    return false
+  }
+
+  let cu:any = {}
+  cu["consumeditem"] = this.selectedCItem
+  cu["uom"] = this.selectedCUOM
+  
+  cu["quantity"] = this.selectedCQty
+
+  this.selectedConsumedUnits.push(cu)
+  this.showFieldsBill=true
+
+  this.displayRecipeModal = false
+
+  return false
+
+}
 
 }

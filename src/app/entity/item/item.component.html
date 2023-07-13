@@ -9,7 +9,7 @@
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
                 </span>
-                <button (click)="navigateToCreateItems()" pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-fw pi-th-large" label="Add New"></button>
+                <button (click)="navigateToCreateItems()" pButton class="p-button-raised p-button-primary" icon="pi pi-plus" label="Add New"></button>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
@@ -38,10 +38,17 @@
                 <td>{{v.usercode}}</td>
                 <td>{{v.itemfatype}}</td>
                 <td>
-                    <div class="displayline">
-                        <button pButton class="p-button-sm" (click)="handleViewItem(v)">VIEW</button>
-                        <button pButton class="p-button-sm" (click)="handleEditItem(v)">EDIT</button>
-                    </div>
+
+                    <div class="grid">
+                        <div class="col-12">
+                            <button  pButton icon="pi pi-external-link" class="mr-2 p-button-success p-button-sm p-button-raised" (click)="handleViewItem(v)" label="View"></button>
+                            <button  pButton icon="pi pi-pencil" class="p-button-sm p-button-info p-button-raised" (click)="handleEditItem(v)" label="Edit"></button>
+                        </div>
+                        </div>
+                    <!-- <div >
+                        <button pButton icon="pi pi-external-link" class="p-button-sm" (click)="handleViewItem(v)">View</button>
+                        <button pButton icon="pi pi-pencil" class="p-button-sm" (click)="handleEditItem(v)">Edit</button>
+                    </div> -->
                     
                 </td>
                 

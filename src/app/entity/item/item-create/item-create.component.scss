@@ -3,3 +3,9 @@
     grid-template-areas: 'edit delete';
     gap: 5px;
 }
+
+.full-page {
+    grid-column: 1 / -1; /* Span the full width of the grid */
+    grid-row: 1 / -1; /* Span the full height of the grid */
+    background-color: lightgray;
+  }
