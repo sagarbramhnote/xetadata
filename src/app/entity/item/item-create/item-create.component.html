@@ -191,7 +191,8 @@
    <!-- Start Tax............ -->
 
  <div class="mr-2"> <p-button styleClass="p-button-sm p-button-info p-button-raised" (click)="showNewTaxDialog()" icon="pi pi-external-link" label="New Tax"></p-button></div>
-  
+  <br>
+  <br>
  <div class="card col-12" *ngIf="showFields">
       <p-table [value]="selectedTaxes" [scrollable]="true"  
       (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm" scrollHeight="200px">
@@ -390,6 +391,8 @@
     <!-- Start Recorder Contact......... -->
 
     <div class="mr-2"><p-button styleClass="p-button-sm p-button-info p-button-raised" (click)="addReorderContact()" icon="pi pi-external-link" label="New Reorder Contact"></p-button></div>
+    <br>
+    <br>
     <div class="card col-12" *ngIf="showFieldsContact">
         <p-table [value]="selectedReorderContacts" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px">
             <ng-template pTemplate="header">
@@ -470,6 +473,8 @@
    <!-- Start New Expression UOM -->
 
    <div class="mr-2"><p-button  styleClass="p-button-sm p-button-info p-button-raised" (click)="addExpressionUOM()" icon="pi pi-external-link" label="New Expression UOM"></p-button></div>
+   <br>
+   <br>
    <div class="card col-12" *ngIf="showFieldsUom">
        <p-table [value]="selectedExpressionUOMS" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px"> 
            <ng-template pTemplate="header">
@@ -547,7 +552,9 @@
 
      <!-- Start Bill of Material or Product Recipe -->
 
-     <p-button styleClass="p-button-sm p-button-info p-button-raised" (click)="showNewRecipeDialog()" icon="pi pi-external-link" label="Bill of Material or Product Recipe"></p-button>
+     <div class="mr-2"><p-button styleClass="p-button-sm p-button-info p-button-raised" (click)="showNewRecipeDialog()" icon="pi pi-external-link" label="Bill of Material or Product Recipe"></p-button></div>
+     <br>
+     <br>
      <div class="card col-12" *ngIf="showFieldsBill">
          <p-table [value]="selectedConsumedUnits" [scrollable]="true"  
          selectionMode="single" scrollHeight="200px" 
