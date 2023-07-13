@@ -241,6 +241,8 @@ navigateToListItems(){
   private _sahSub:any
   handleUpdate() {
 
+    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Updated', life: 3000 });
+
 
     if(this.item.itemfatype === '') {
       this.confirm('You must select item type for report.')
@@ -613,7 +615,7 @@ navigateToListItems(){
   confirmDelete(event:any){
     this.selectedTaxes.splice(event,1)
     this.deleteProductDialog=false;
-    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted', life: 3000 });
+    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Tax Deleted', life: 3000 });
 
   }
   selectedRecordid:any
@@ -724,6 +726,7 @@ onRowEditCancel(product: ReorderContact, index: number) {
     //delete this.selectedReorderContacts[index];
    // this.selectedReorderContacts.splice(index,1)
    this.deleteContact=true
+   
 }
 confirmDeleteContact(product: any, index: number){
   this.selectedReorderContacts.splice(index,1)
