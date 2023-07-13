@@ -228,6 +228,7 @@ confirm(msg:string) {
 handleSave(){
 
 
+
   if(this.itemTitle.errors || this.selectUOM.errors)
   {
     console.log('there is an error in the form !')
@@ -262,6 +263,8 @@ handleSave(){
   this.item.reordercontacts = this.selectedReorderContacts
   this.item.expressionuoms = this.selectedExpressionUOMS
   this.item.recipe.consumedunits = this.selectedConsumedUnits
+  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Updated', life: 3000 });
+
 
   console.log('CONUNITS',this.selectedConsumedUnits)
   
@@ -304,6 +307,8 @@ handleSave(){
         
         this.displayModal = false
         this.loadItems(0,0) 
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Created', life: 3000 });
+
         this.router.navigate(['entity/item'])      
         return;
 
