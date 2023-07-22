@@ -1,1 +1,44 @@
-<p>others-account works!</p>
+<!-- <h5>ITEMS / LIST</h5> -->
+<div class="card">
+    <p-table #dt [value]="accountheads"  [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['id','accounthead','defaultgroup','partof']">
+        <ng-template pTemplate="caption">
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                </span>
+                <button (click)="navigateToCreateOtherAccount()" pButton class="p-button-raised p-button-primary" icon="pi pi-plus" label="Add New"></button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="white-space-nowrap" style="width:10%">Id</th>
+                <th pSortableColumn="accounthead" class="white-space-nowrap" style="width:20%">Account <p-sortIcon field="accounthead"></p-sortIcon></th>
+                <th pSortableColumn="defaultgroup" class="white-space-nowrap" style="width:20%">Type <p-sortIcon field="defaultgroup"></p-sortIcon></th>
+                <th pSortableColumn="partof" class="white-space-nowrap" style="width:20%">Part of<p-sortIcon field="partof"></p-sortIcon></th>
+                <th class="white-space-nowrap" style="width:20%">Modify </th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-ah let-i="rowIndex">
+            <tr>
+                <td>{{ah.id}}</td>
+                <td>{{ah.accounthead}}</td>
+                <td>{{ah.defaultgroup}}</td>
+                <td>{{ah.partof}}</td>
+                <td>
+
+                    <div class="grid">
+                        <div class="col-12">
+                            <button  pButton icon="pi pi-pencil" class="p-button-sm p-button-info p-button-raised" (click)="handleEditOtherAccount(ah)" label="Edit"></button>
+                        </div>
+                        </div>
+                    
+                </td>
+                
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

@@ -14,6 +14,8 @@ import { OpeningBalanceComponent } from './opening-balance/opening-balance.compo
 import { ItemCreateComponent } from './item/item-create/item-create.component';
 import { UpdateItemComponent } from './item/update-item/update-item.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
+import { CreateOtherAccountComponent } from './others-account/create-other-account/create-other-account.component';
+import { UpdateOtherAccountComponent } from './others-account/update-other-account/update-other-account.component';
 
 const routes: Routes = [
   {path: 'profile',component:ProfileComponent},
@@ -22,7 +24,9 @@ const routes: Routes = [
   {path: 'itemUpdate',data: {breadcrumb: 'Edit'},component:UpdateItemComponent},
   {path: 'itemView',data: {breadcrumb: 'View'},component:ItemViewComponent},
   {path: 'partyAccount',component:PartyAccountComponent},
-  {path: 'othersAccount',component:OthersAccountComponent},
+  {path: 'othersAccount',data: {breadcrumb: 'List'},component:OthersAccountComponent},
+  {path: 'othersAccountCreate',data: {breadcrumb: 'Create'},component:CreateOtherAccountComponent},
+  {path: 'othersAccountUpdate',data: {breadcrumb: 'Edit'},component:UpdateOtherAccountComponent},
   {path: 'UOMs',component:UOMsComponent},
   {path: 'writeCheque',component:WriteChequeComponent},
   {path: 'recieveCheque',component:RecieveChequeComponent},
