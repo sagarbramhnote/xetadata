@@ -30,6 +30,9 @@ import { DialogModule } from 'primeng/dialog';
 import { UpdateItemComponent } from './item/update-item/update-item.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CreateOtherAccountComponent } from './others-account/create-other-account/create-other-account.component';
+import { UpdateOtherAccountComponent } from './others-account/update-other-account/update-other-account.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 
@@ -50,7 +53,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
          OpeningBalanceComponent,
          ItemCreateComponent,
          UpdateItemComponent,
-         ItemViewComponent
+         ItemViewComponent,
+         CreateOtherAccountComponent,
+         UpdateOtherAccountComponent
   ],
   imports: [
     CommonModule,
@@ -68,7 +73,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 		RippleModule,
 		ProgressBarModule,
     DialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    CheckboxModule
   ]
 })
 export class EntityModule { }
