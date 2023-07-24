@@ -1,23 +1,23 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, FilterService, MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
 import { EventBusServiceService } from 'src/app/global/event-bus-service.service';
 import { XetaSuccess } from 'src/app/global/xeta-success';
 import { Xetaerror } from 'src/app/global/xetaerror';
+import { SaveStockLocationService } from 'src/app/services/save-stock-location.service';
 import { StockLocationListService } from 'src/app/services/stock-location-list.service';
 
 @Component({
-  selector: 'app-stock-locations',
-  templateUrl: './stock-locations.component.html',
-  styleUrls: ['./stock-locations.component.scss'],
+  selector: 'app-stock-locations-create',
+  templateUrl: './stock-locations-create.component.html',
+  styleUrls: ['./stock-locations-create.component.scss'],
   providers: [ConfirmationService,MessageService]
 })
-export class StockLocationsComponent {
+export class StockLocationsCreateComponent {
 
   constructor(private router:Router,private httpClient:HttpClient,private eventBusService:EventBusServiceService,private confirmationService:ConfirmationService, private messageService: MessageService,private filterService: FilterService) { }
-  
+
   @ViewChild('itemTitle') itemTitle:any
 
   _ahlSub:any
@@ -32,11 +32,73 @@ export class StockLocationsComponent {
 
   _sahSub:any
 
-  
 
+  inputChange(event:any) {
 
-  ngOnInit(): void {
-    this.loadStockLocations(0,0)
+  }
+
+  handleSave() {
+
+    if(this.itemTitle.errors)
+    {
+      console.log('there is an error in the form !')
+      this.confirm('There are errors in the form.  Please check before saving.')
+      return
+    }
+
+    
+    
+    console.log('ITEM TO BE SAVED',JSON.stringify(this.selectedLocation))
+
+    //return
+    
+    this.inProgress = true
+    
+    let sah:SaveStockLocationService = new SaveStockLocationService(this.httpClient)
+    this._sahSub = sah.saveStockLocation(this.selectedLocation).subscribe({
+      complete:() => {console.info('complete')},
+      error:(e) => {
+        console.log('ERROR',e)
+        this.inProgress = false
+        this.confirm('A server error occured while saving stock location. '+e.message)
+        return;
+      },
+      next:(v) => {
+        console.log('NEXT',v);
+        if (v.hasOwnProperty('error')) {
+          let dataError:Xetaerror = <Xetaerror>v; 
+          //alert(dataError.error);
+          this.confirm(dataError.error)
+          this.inProgress = false
+          return;
+        }
+        else if(v.hasOwnProperty('success')) {
+
+          this.inProgress = false
+          
+          this.displayModal = false
+          this.loadStockLocations(0,0)
+          this.router.navigate(['entity/stockLocations'])
+          return;
+
+        }
+        else if(v == null) {
+
+          this.inProgress = false
+          this.confirm('A null object has been returned. An undefined error has occurred.')
+          return;
+        }
+        else {
+          //alert('An undefined error has occurred.')
+          this.inProgress = false
+          this.confirm('An undefined error has occurred.')
+          return
+        }
+      }
+    })
+
+    return
+
   }
 
   loadStockLocations(offset:number,moreoffset:number) {
@@ -81,6 +143,9 @@ export class StockLocationsComponent {
 
   }
 
+
+
+
   confirm(msg:string) {
     this.confirmationService.confirm({
         header:'Error',
@@ -95,13 +160,9 @@ export class StockLocationsComponent {
   }
 
 
+  navigateToStockLocationList(){
+    this.router.navigate(['entity/stockLocations'])
 
-  onGlobalFilter(table: Table, event: Event) {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
-}
-
-navigateToStockLocation(){
-  this.router.navigate(['entity/stockLocationsCreate'])
-}
+  }
 
 }
