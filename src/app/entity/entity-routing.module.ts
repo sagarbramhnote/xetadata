@@ -23,6 +23,7 @@ import { CreateOtherAccountComponent } from './others-account/create-other-accou
 import { UpdateOtherAccountComponent } from './others-account/update-other-account/update-other-account.component';
 import { CreatePartyAccountComponent } from './party-account/create-party-account/create-party-account.component';
 import { AccessPartyAccountComponent } from './party-account/access-party-account/access-party-account.component';
+import { StockLocationsCreateComponent } from './stock-locations/stock-locations-create/stock-locations-create.component';
 
 
 const routes: Routes = [
@@ -49,7 +50,9 @@ const routes: Routes = [
   {path: 'itemLevels',data: {breadcrumb: 'List'},component:ItemLevelsComponent},
   {path: 'itemLevelCeate',data: {breadcrumb: 'Create'},component:ItemLevelCreateComponent},
 
-  {path: 'stockLocations',component:StockLocationsComponent},
+  {path: 'stockLocations',data: {breadcrumb: 'Stock-Location-List'},component:StockLocationsComponent},
+  {path: 'stockLocationsCreate',data: {breadcrumb: 'Stock-Location-Create'},component:StockLocationsCreateComponent},
+
   {path: 'openingBalance',component:OpeningBalanceComponent}
 
 ];
