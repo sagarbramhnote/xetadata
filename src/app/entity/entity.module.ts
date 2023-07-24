@@ -61,7 +61,7 @@ import { AccessPartyAccountComponent } from './party-account/access-party-accoun
          UpdateItemComponent,
          ItemViewComponent,
 
-         ItemLevelCreateComponent
+         ItemLevelCreateComponent,
 
          CreateOtherAccountComponent,
          UpdateOtherAccountComponent,
