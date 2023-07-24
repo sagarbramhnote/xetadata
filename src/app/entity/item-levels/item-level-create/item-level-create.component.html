@@ -1,0 +1,75 @@
+<div class="card">
+
+    <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+        <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+            <span class="text-900 text-xl font-bold mb-4 block">Create Item-Level</span>
+                </span>
+                <!-- <button style="margin-left: 10px;" (click)="navigateToListItems()" pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-fw pi-align-left" label="List"></button> -->
+            </div>
+
+            <div class="grid">
+
+                <div class="col-12 lg:col-10">
+                    <div class="grid formgrid p-fluid">
+                        <div class="field mb-6 col-12 md:col-12">
+                          <label for="itemname" class="font-medium text-900"> Item Level </label>
+
+                               <p-dropdown [options]="itemLevelTypes" 
+                               [(ngModel)]="itemLevel.level" 
+                               optionLabel="level" 
+                               optionValue="level" 
+                               (ngModelChange)="itemLevelTypeChange($event)" 
+                               [ngModelOptions]="{standalone: true}"  [filter]="true" filterBy="levelname">
+                           </p-dropdown> 
+                           </div>
+
+                           <!-- <div class="field mb-4 col-12 md:col-6">
+                            <label for="itemname" class="font-medium text-900">Level 3</label>
+                    
+                            <p-dropdown [options]="level3" 
+                            [(ngModel)]="item.level3" 
+                            optionLabel="levelname" 
+                            optionValue="levelname" 
+                            (ngModelChange)="itemLevelThreeTypeChange($event)" 
+                            [ngModelOptions]="{standalone: true}" [filter]="true" filterBy="levelname">
+                                </p-dropdown>
+                    
+                    </div>
+
+ -->
+
+
+
+                           <div class="field mb-6 col-12 md:col-12">
+                            <label for="itemname" class="font-medium text-900">Enter Tag</label>
+                            <input type="text" 
+                            #itemTitle="ngModel" 
+                            pInputText 
+                            class="p-inputtext-sm" 
+                            placeholder="enter tag" 
+                            [ngModelOptions]="{standalone: true}"
+                             [(ngModel)]="itemLevel.levelname" 
+                             autocomplete="off" 
+                             minlength="4" 
+                             required 
+                             (ngModelChange)="inputChange($event)" 
+                             >
+                            <ng-template [ngIf]="itemTitle.errors">
+                                <small id="username2-help" class="p-error block">item level is required and must be atleast 3 letters</small>
+                            </ng-template>
+                            </div>
+                        </div>
+                           </div>
+                           </div>
+                   
+
+
+</div>
+<div>
+<div class="ui-g-12" style= " text-align:right">
+ <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
+         <button style="margin-left: 10px;" pButton class="w-auto mt-3" icon="pi pi-check" (click)="handleSave()" label="Create"></button>
+         <button style="margin-left: 10px;" pButton class="w-auto mt-3 p-button-danger" icon="pi pi-times" (click)="navigateToListItemsLevel()" label="Cancel"></button>
+
+     </div>
+</div>
