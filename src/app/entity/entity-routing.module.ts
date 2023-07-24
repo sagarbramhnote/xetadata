@@ -50,7 +50,6 @@ const routes: Routes = [
   {path: 'tags',component:TagsComponent},
   {path: 'itemLevels',data: {breadcrumb: 'List'},component:ItemLevelsComponent},
   {path: 'itemLevelCeate',data: {breadcrumb: 'Create'},component:ItemLevelCreateComponent},
-  {path: 'stockLocations',component:StockLocationsComponent},
   {path: 'openingBalance',component:OpeningBalanceComponent},
   {path: 'uomsCreate',data: {breadcrumb: 'Create'},component:UomsCreateComponent},
   {path: 'stockLocations',data: {breadcrumb: 'Stock-Location-List'},component:StockLocationsComponent},
