@@ -1,1 +1,40 @@
-<p>tags works!</p>
+<div class="card">
+    <p-table #dt [value]="tags" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['id','tag']">
+        <ng-template pTemplate="caption">
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                </span>
+                <button (click)="navigateToCreateTags()" pButton class="p-button-raised p-button-primary" icon="pi pi-plus" label="Add New"></button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="white-space-nowrap" style="width:20%">Id</th>
+                <th pSortableColumn="tag" class="white-space-nowrap" style="width:30%">Tag<p-sortIcon field="tag"></p-sortIcon></th>
+                <th class="white-space-nowrap" style="width:25%">Modify </th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-v let-i="rowIndex">
+            <tr>
+                <td>{{v.id}}</td>
+                <td>{{v.tag}}</td>
+                
+                <td>
+                    <div class="grid">
+                        <div class="col-12">
+                            <button  pButton icon="pi pi-external-link" class="mr-2 p-button-success p-button-sm p-button-raised" label="View"></button>
+        
+                        </div>
+                        </div>
+                    
+                </td>
+                
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

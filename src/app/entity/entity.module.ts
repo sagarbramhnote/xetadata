@@ -30,6 +30,8 @@ import { DialogModule } from 'primeng/dialog';
 import { UpdateItemComponent } from './item/update-item/update-item.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TagCreateComponent } from './tags/tag-create/tag-create.component';
+
 
 import { ItemLevelCreateComponent } from './item-levels/item-level-create/item-level-create.component';
 
@@ -60,6 +62,10 @@ import { AccessPartyAccountComponent } from './party-account/access-party-accoun
          ItemCreateComponent,
          UpdateItemComponent,
          ItemViewComponent,
+
+         TagCreateComponent,
+         
+
 
          ItemLevelCreateComponent,
 

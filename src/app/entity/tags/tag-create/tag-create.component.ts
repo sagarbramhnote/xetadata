@@ -1,5 +1,4 @@
-import { Table } from 'primeng/table';
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit ,ViewChild} from '@angular/core';
 import {ConfirmationService,FilterService,FilterMatchMode,MessageService} from 'primeng/api';
 import { TagListService } from 'src/app/services/tag-list.service';
 import { EventBusServiceService } from 'src/app/global/event-bus-service.service';
@@ -11,21 +10,14 @@ import { SaveTagService } from 'src/app/services/save-tag.service';
 import { Router } from '@angular/router';
 
 
-
 @Component({
-  selector: 'app-tags',
-  templateUrl: './tags.component.html',
-  styleUrls: ['./tags.component.scss'],
+  selector: 'app-tag-create',
+  templateUrl: './tag-create.component.html',
+  styleUrls: ['./tag-create.component.scss'],
   providers: [ConfirmationService,MessageService]
 })
-export class TagsComponent {
-  
-
-  onGlobalFilter(table: Table, event: Event) {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
-}
-
-tags:any[] = []  
+export class TagCreateComponent implements OnInit{
+  tags:any[] = []  
   tag:any = {}
   inProgress:boolean = false;
 
@@ -97,15 +89,87 @@ tags:any[] = []
     });
   }
 
-  navigateToCreateTags(){
-    this.router.navigate(['entity/tagCreate'])
+  showModalDialog() {
+    
+    this.tag = {
+      id: "",
+      tag: ""
+    }
+
+    this.displayModal = true
+
+  }
+
+  handleSave() {
+
+    if(this.itemTitle.errors)
+    {
+      console.log('there is an error in the form !')
+      this.confirm('There are errors in the form.  Please check before saving.')
+      return
+    }
+
+    
+    console.log('ITEM TO BE SAVED',JSON.stringify(this.tag))
+
+    //return
+    
+    this.inProgress = true
+    
+    let sah:SaveTagService = new SaveTagService(this.httpClient)
+    this._sahSub = sah.saveTag(this.tag).subscribe({
+      complete:() => {console.info('complete')},
+      error:(e) => {
+        console.log('ERROR',e)
+        this.inProgress = false
+        this.confirm('A server error occured while saving account head. '+e.message)
+        return;
+      },
+      next:(v) => {
+        console.log('NEXT',v);
+        if (v.hasOwnProperty('error')) {
+          let dataError:Xetaerror = <Xetaerror>v; 
+          //alert(dataError.error);
+          this.confirm(dataError.error)
+          this.inProgress = false
+          return;
+        }
+        else if(v.hasOwnProperty('success')) {
+
+          this.inProgress = false
+          
+          this.displayModal = false
+          this.loadTags(0,0)
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Created', life: 3000 });
+
+          this.router.navigate(['entity/tags']) 
+          return;
+
+        }
+        else if(v == null) {
+
+          this.inProgress = false
+          this.confirm('A null object has been returned. An undefined error has occurred.')
+          return;
+        }
+        else {
+          //alert('An undefined error has occurred.')
+          this.inProgress = false
+          this.confirm('An undefined error has occurred.')
+          return
+        }
+      }
+    })
+
+    return
+
+  }
+  inputChange(event:any) {
+
+  } 
+                
+  navigateToListTags(){
+    this.router.navigate(['entity/tags'])
  }
-
-handleViewItem(item:any) {
-  localStorage.setItem('editView', JSON.stringify(item));
-  this.router.navigate(['entity/tagView'])
-
-}
-
 
 }

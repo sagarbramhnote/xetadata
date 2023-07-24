@@ -14,6 +14,8 @@ import { OpeningBalanceComponent } from './opening-balance/opening-balance.compo
 import { ItemCreateComponent } from './item/item-create/item-create.component';
 import { UpdateItemComponent } from './item/update-item/update-item.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
+import { TagCreateComponent } from './tags/tag-create/tag-create.component';
+
 
 import { ItemLevelCreateComponent } from './item-levels/item-level-create/item-level-create.component';
 
@@ -38,9 +40,15 @@ const routes: Routes = [
   {path: 'UOMs',component:UOMsComponent},
   {path: 'writeCheque',component:WriteChequeComponent},
   {path: 'recieveCheque',component:RecieveChequeComponent},
+
+  {path: 'tags', data: {breadcrumb: 'List'},component:TagsComponent},
+  {path: 'tagCreate',data: {breadcrumb: 'Create'},component:TagCreateComponent},
+  {path: 'itemLevels',component:ItemLevelsComponent},
+
   {path: 'tags',component:TagsComponent},
   {path: 'itemLevels',data: {breadcrumb: 'List'},component:ItemLevelsComponent},
   {path: 'itemLevelCeate',data: {breadcrumb: 'Create'},component:ItemLevelCreateComponent},
+
   {path: 'stockLocations',component:StockLocationsComponent},
   {path: 'openingBalance',component:OpeningBalanceComponent}
 
