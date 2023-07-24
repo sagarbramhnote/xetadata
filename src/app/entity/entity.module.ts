@@ -33,6 +33,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CreateOtherAccountComponent } from './others-account/create-other-account/create-other-account.component';
 import { UpdateOtherAccountComponent } from './others-account/update-other-account/update-other-account.component';
 import { CheckboxModule } from 'primeng/checkbox';
+import { CreatePartyAccountComponent } from './party-account/create-party-account/create-party-account.component';
+import { AccessPartyAccountComponent } from './party-account/access-party-account/access-party-account.component';
 
 
 
@@ -55,7 +57,9 @@ import { CheckboxModule } from 'primeng/checkbox';
          UpdateItemComponent,
          ItemViewComponent,
          CreateOtherAccountComponent,
-         UpdateOtherAccountComponent
+         UpdateOtherAccountComponent,
+         CreatePartyAccountComponent,
+         AccessPartyAccountComponent
   ],
   imports: [
     CommonModule,
