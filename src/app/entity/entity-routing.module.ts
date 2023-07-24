@@ -16,6 +16,8 @@ import { UpdateItemComponent } from './item/update-item/update-item.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
 import { CreateOtherAccountComponent } from './others-account/create-other-account/create-other-account.component';
 import { UpdateOtherAccountComponent } from './others-account/update-other-account/update-other-account.component';
+import { CreatePartyAccountComponent } from './party-account/create-party-account/create-party-account.component';
+import { AccessPartyAccountComponent } from './party-account/access-party-account/access-party-account.component';
 
 const routes: Routes = [
   {path: 'profile',component:ProfileComponent},
@@ -23,7 +25,9 @@ const routes: Routes = [
   {path: 'itemCreate',data: {breadcrumb: 'Create'},component:ItemCreateComponent},
   {path: 'itemUpdate',data: {breadcrumb: 'Edit'},component:UpdateItemComponent},
   {path: 'itemView',data: {breadcrumb: 'View'},component:ItemViewComponent},
-  {path: 'partyAccount',component:PartyAccountComponent},
+  {path: 'partyAccount',data: {breadcrumb: 'List'},component:PartyAccountComponent},
+  {path: 'partyAccountCreate',data: {breadcrumb: 'Create'},component:CreatePartyAccountComponent},
+  {path: 'partyAccountAccess',data: {breadcrumb: 'Access'},component:AccessPartyAccountComponent},
   {path: 'othersAccount',data: {breadcrumb: 'List'},component:OthersAccountComponent},
   {path: 'othersAccountCreate',data: {breadcrumb: 'Create'},component:CreateOtherAccountComponent},
   {path: 'othersAccountUpdate',data: {breadcrumb: 'Edit'},component:UpdateOtherAccountComponent},
