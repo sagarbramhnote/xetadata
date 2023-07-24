@@ -14,6 +14,7 @@ import { OpeningBalanceComponent } from './opening-balance/opening-balance.compo
 import { ItemCreateComponent } from './item/item-create/item-create.component';
 import { UpdateItemComponent } from './item/update-item/update-item.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
+import { ItemLevelCreateComponent } from './item-levels/item-level-create/item-level-create.component';
 
 const routes: Routes = [
   {path: 'profile',component:ProfileComponent},
@@ -27,7 +28,8 @@ const routes: Routes = [
   {path: 'writeCheque',component:WriteChequeComponent},
   {path: 'recieveCheque',component:RecieveChequeComponent},
   {path: 'tags',component:TagsComponent},
-  {path: 'itemLevels',component:ItemLevelsComponent},
+  {path: 'itemLevels',data: {breadcrumb: 'List'},component:ItemLevelsComponent},
+  {path: 'itemLevelCeate',data: {breadcrumb: 'Create'},component:ItemLevelCreateComponent},
   {path: 'stockLocations',component:StockLocationsComponent},
   {path: 'openingBalance',component:OpeningBalanceComponent}
 

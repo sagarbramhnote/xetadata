@@ -30,6 +30,7 @@ import { DialogModule } from 'primeng/dialog';
 import { UpdateItemComponent } from './item/update-item/update-item.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ItemLevelCreateComponent } from './item-levels/item-level-create/item-level-create.component';
 
 
 
@@ -50,7 +51,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
          OpeningBalanceComponent,
          ItemCreateComponent,
          UpdateItemComponent,
-         ItemViewComponent
+         ItemViewComponent,
+         ItemLevelCreateComponent
   ],
   imports: [
     CommonModule,
