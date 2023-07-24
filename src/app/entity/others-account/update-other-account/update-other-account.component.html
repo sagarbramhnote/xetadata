@@ -1,0 +1,76 @@
+<div class="card">
+
+    <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+        <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+            <span class="text-900 text-xl font-bold mb-4 block">Edit Account Head</span>
+                </span>
+            </div>
+            
+          
+<div class="grid">
+
+        <div class="col-12 lg:col-10">
+            <div class="grid formgrid p-fluid">
+
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="itemname" class="font-medium text-900">Account Head</label>                 
+                    <input type="text" #accountHeadTitle="ngModel" pInputText #ahinput class="p-inputtext-sm" 
+                    placeholder="enter account head" 
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="accountHead.accounthead" autocomplete="off" 
+                    minlength="6" required (ngModelChange)="inputChange($event)" [disabled]="true">
+                    <ng-template [ngIf]="accountHeadTitle.errors">
+                        <small id="username2-help" class="p-error block">account head is required and must be atleast 6 letters</small>
+                    </ng-template>
+            </div>
+
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="itemname" class="font-medium text-900">Default Groups</label>            
+                <p-dropdown #selectAccountType="ngModel" [options]="defaultGroups" 
+                [(ngModel)]="accountHead.defaultgroup" (ngModelChange)="defaultGroupChange($event)" 
+                optionLabel="type" optionValue="type" [ngModelOptions]="{standalone: true}" [required]="true" 
+                [disabled]="true"></p-dropdown>
+                <ng-template [ngIf]="selectAccountType.errors">
+                    <small id="username2-help" class="p-error block">you must select a default account group</small>
+                </ng-template>
+        </div>
+
+        
+        <div class="field mb-4 col-12 md:col-6">
+            <label for="itemname" class="font-medium text-900">Part of</label>
+            <p-dropdown [options]="partofList" 
+            [(ngModel)]="accountHead.partof" 
+            optionLabel="type" 
+            optionValue="type" 
+            (ngModelChange)="partofChange($event)"
+            [required]="true" #selectItemFAType="ngModel" 
+            [ngModelOptions]="{standalone: true}" [disabled]="disablePartof">
+                </p-dropdown>
+                <ng-template [ngIf]="selectItemFAType.errors">
+                    <small id="username2-help" class="p-error block">you must select partof account</small>
+                </ng-template>
+    </div>
+    
+    <div class="field mb-4 col-12 md:col-6 field-checkbox">
+        <p-checkbox [(ngModel)]="accountHead.isgroup" [binary]="true" inputId="binary" 
+        [ngModelOptions]="{standalone: true}"></p-checkbox>
+        <div class="check-label">
+            <label for="binary">Is Group?</label>
+            <div>{{ accountHead.isgroup }}</div>
+        </div> 
+    </div>
+
+
+ </div>
+</div>
+
+
+</div>
+<div class="ui-g-12" style= " text-align:right">
+<span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
+       <button style="margin-left: 10px;" pButton class="w-auto mt-3" icon="pi pi-check" (click)="handleUpdate()" label="Update"></button>
+       <button style="margin-left: 10px;" pButton class="w-auto mt-3 p-button-danger" icon="pi pi-times" (click)="navigateToListOtherAccount()" label="Cancel"></button>
+
+   </div>
+</div>
+
+<p-toast></p-toast>
