@@ -23,6 +23,7 @@ import { CreateOtherAccountComponent } from './others-account/create-other-accou
 import { UpdateOtherAccountComponent } from './others-account/update-other-account/update-other-account.component';
 import { CreatePartyAccountComponent } from './party-account/create-party-account/create-party-account.component';
 import { AccessPartyAccountComponent } from './party-account/access-party-account/access-party-account.component';
+import { UomsCreateComponent } from './uoms/uoms-create/uoms-create.component';
 
 
 const routes: Routes = [
@@ -37,7 +38,7 @@ const routes: Routes = [
   {path: 'othersAccount',data: {breadcrumb: 'List'},component:OthersAccountComponent},
   {path: 'othersAccountCreate',data: {breadcrumb: 'Create'},component:CreateOtherAccountComponent},
   {path: 'othersAccountUpdate',data: {breadcrumb: 'Edit'},component:UpdateOtherAccountComponent},
-  {path: 'UOMs',component:UOMsComponent},
+  {path: 'UOMs', data: {breadcrumb: 'List'},component:UOMsComponent},
   {path: 'writeCheque',component:WriteChequeComponent},
   {path: 'recieveCheque',component:RecieveChequeComponent},
 
@@ -50,7 +51,8 @@ const routes: Routes = [
   {path: 'itemLevelCeate',data: {breadcrumb: 'Create'},component:ItemLevelCreateComponent},
 
   {path: 'stockLocations',component:StockLocationsComponent},
-  {path: 'openingBalance',component:OpeningBalanceComponent}
+  {path: 'openingBalance',component:OpeningBalanceComponent},
+  {path: 'uomsCreate',data: {breadcrumb: 'Create'},component:UomsCreateComponent}
 
 ];
 

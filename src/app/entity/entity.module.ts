@@ -40,6 +40,7 @@ import { UpdateOtherAccountComponent } from './others-account/update-other-accou
 import { CheckboxModule } from 'primeng/checkbox';
 import { CreatePartyAccountComponent } from './party-account/create-party-account/create-party-account.component';
 import { AccessPartyAccountComponent } from './party-account/access-party-account/access-party-account.component';
+import { UomsCreateComponent } from './uoms/uoms-create/uoms-create.component';
 
 
 
@@ -72,7 +73,8 @@ import { AccessPartyAccountComponent } from './party-account/access-party-accoun
          CreateOtherAccountComponent,
          UpdateOtherAccountComponent,
          CreatePartyAccountComponent,
-         AccessPartyAccountComponent
+         AccessPartyAccountComponent,
+         UomsCreateComponent
 
   ],
   imports: [
