@@ -1,0 +1,14 @@
+
+<div class="w-full flex gap-1">
+    <div class="flex-grow-1 flex-column gap-1">
+        <input type="text" pInputText class="p-inputtext-sm fn" placeholder="company name" [(ngModel)]="companyName.name" autocomplete="off" [disabled]="whetherDisabled">
+        <span class="p-fluid">
+            <p-autoComplete [(ngModel)]="selectedTags" [ngModelOptions]="{standalone: true}" 
+            [suggestions]="filteredTags" (completeMethod)="filterTags($event)" field="tag" [multiple]="true" [dropdown]="true" (ngModelChange)="handleChange($event)">
+            </p-autoComplete>
+        </span>
+    </div>
+    <div class="flex align-items-center">
+        <button id="lbtn" (click)="handleDelete()" pButton class="p-button-sm menu-button w-max" [disabled]="whetherDisabled">Delete</button>
+    </div>
+</div>

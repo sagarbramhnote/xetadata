@@ -2,7 +2,7 @@
 
     <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
         <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
-            <span class="text-900 text-xl font-bold mb-4 block">Create Tag</span>
+            <span class="text-900 text-xl font-bold mb-4 block">Stock Location</span>
                 </span>
                 <!-- <button style="margin-left: 10px;" (click)="navigateToListItems()" pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-fw pi-align-left" label="List"></button> -->
             </div>
@@ -10,14 +10,14 @@
             <div class="col-12 lg:col-10">
                 <div class="grid formgrid p-fluid">
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="tag" class="font-medium text-900">Tag</label>
+                        <label for="tag" class="font-medium text-900">Enter tag</label>
                         <input type="text" 
                     #itemTitle="ngModel" 
                     pInputText 
                     class="p-inputtext-sm" 
                     placeholder="Enter tag" 
                     [ngModelOptions]="{standalone: true}"
-                     [(ngModel)]="tag.tag" 
+                    [(ngModel)]="selectedLocation.stocklocation" 
                      autocomplete="off" 
                      minlength="3" 
                      required 
@@ -27,11 +27,12 @@
                         <small id="username2-help" class="p-error block">Tag is required and must be atleast 3 letters</small>
                     </ng-template>
                 </div>
-            </div>
+                </div>
+            
                 <div class="ui-g-12" style= " text-align:right">
                     <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
                             <button style="margin-left: 10px;" pButton class="w-auto mt-3" icon="pi pi-check" (click)="handleSave()" label="Create"></button>
-                            <button style="margin-left: 10px;" pButton class="w-auto mt-3 p-button-danger" icon="pi pi-times" (click)="navigateToListTags()" label="Cancel"></button>
+                            <button style="margin-left: 10px;" pButton class="w-auto mt-3 p-button-danger" icon="pi pi-times" (click)="navigateToStockLocationList()" label="Cancel"></button>
             
                         </div>
 
