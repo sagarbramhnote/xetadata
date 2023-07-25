@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProfileComponent } from './profile/profile.component';
 import { ItemComponent } from './item/item.component';
 import { PartyAccountComponent } from './party-account/party-account.component';
 import { OthersAccountComponent } from './others-account/others-account.component';
@@ -25,10 +24,11 @@ import { CreatePartyAccountComponent } from './party-account/create-party-accoun
 import { AccessPartyAccountComponent } from './party-account/access-party-account/access-party-account.component';
 import { UomsCreateComponent } from './uoms/uoms-create/uoms-create.component';
 import { StockLocationsCreateComponent } from './stock-locations/stock-locations-create/stock-locations-create.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 const routes: Routes = [
-  {path: 'profile',component:ProfileComponent},
+  {path: 'profile', data: {breadcrumb: 'Profile'},component:ProfileComponent},
   { path: 'item', data: {breadcrumb: 'List'},component:ItemComponent},
   {path: 'itemCreate',data: {breadcrumb: 'Create'},component:ItemCreateComponent},
   {path: 'itemUpdate',data: {breadcrumb: 'Edit'},component:UpdateItemComponent},

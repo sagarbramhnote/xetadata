@@ -1,1 +1,97 @@
-<p>profile works!</p>
+<div class="card">
+            
+    <div class="p-fluid p-formgrid grid">
+        
+        <div class="field col-4 md:col-4">
+            <p-radioButton name="pc" value="person" label="Person" [(ngModel)]="person.pc" inputId="pc1"  [disabled]="true" ></p-radioButton>
+        </div>   
+       <div class="field col-4 md:col-4">
+            <p-radioButton id="companyradio" name="pc" value="company" label="Company" [(ngModel)]="person.pc" inputId="pc2"  [disabled]="true"></p-radioButton>
+        </div>
+        <br>
+        
+        <div class="col-12">
+            <button id="lbtnn" pButton pRipple class="p-button-sm w-max"  (click)="handleAddName()" >Add Name</button>
+        </div>
+        <div class="field mb-4 col-12 md:col-8">
+            <ng-container *ngFor="let name of person.names; let i = index">
+                <div *ngIf="isperson; then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock>
+                    <app-personal-name-profile [personalName]="name" [mode]="''" (deleteEvent)="handleDeleteOfName($event,i)" ></app-personal-name-profile>
+                </ng-template>
+                <ng-template #elseBlock> 
+                    <app-company-name-profile [companyName]="name" [mode]="''" (deleteEvent)="handleDeleteOfName($event,i)"  ></app-company-name-profile>
+                </ng-template>
+            </ng-container> 
+        </div>
+        
+    
+        <br>
+        <br>
+        <br>
+        <div class="col-12">
+            <button id="lbtnt" pButton pRipple class="p-button-sm w-max" (click)="handleAddTelephone()" >Add Telephone</button>
+        </div>
+        <div class="field mb-4 col-12 md:col-8">
+            <ng-container *ngFor="let telephone of telephones; let i = index">
+                <app-telephone-profile [endpoint]="telephone" [mode]="''" (deleteEvent)="handleDeleteOfTelephone($event,i)"></app-telephone-profile>
+            </ng-container>
+        </div>
+     
+   
+        <br>
+        <br>
+        <br>
+        <div class="col-12">
+            <button id="lbtne" pButton pRipple class="p-button-sm w-max" (click)="handleAddEmailID()" >Add EmailID</button>
+        </div>
+        <div class="field mb-4 col-12 md:col-8">
+            <ng-container *ngFor="let emailid of emailids; let i = index">
+                <app-email-id-profile [endpoint]="emailid" [mode]="''" (deleteEvent)="handleDeleteOfEmail($event,i)"></app-email-id-profile>    
+            </ng-container>
+        </div>
+      
+       
+        <br>
+        <br>
+        <br>
+        <div class="col-12">
+            <button id="lbtna" pButton pRipple class="p-button-sm w-max" (click)="handleAddAddress()" >Add Address</button>   
+       </div>
+       <div class="field mb-4 col-12 md:col-8">
+            <ng-container *ngFor="let address of postalAddresses; let i = index">
+                <app-postal-address-profile [endpoint]="address" [mode]="''" (deleteEvent)="handleDeleteOfPostalAddress($event,i)"></app-postal-address-profile>
+            </ng-container>
+        </div>
+   
+        <br>
+        <br>
+        <br>
+        <div class="col-12">
+            <button id="lbtn" pButton pRipple class="p-button-sm w-max" (click)="handleAddGovtID()" >Add GovtID</button>      
+        </div>
+        <div class="field mb-4 col-12 md:col-8">
+            <ng-container *ngFor="let govtid of person.govtids; let i = index">
+                <app-govt-id-profile [govtid]="govtid" (deleteEvent)="handleDeleteOfGovtID($event,i)"></app-govt-id-profile>
+            </ng-container>
+        </div>
+
+    
+        
+    
+    
+        <ng-template [ngIf]="inProgress">
+            <div class="overlay" id="modal">
+                <p-progressSpinner></p-progressSpinner>
+            </div>
+        </ng-template>
+
+        <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+    </div>
+    <div class="ui-g-12" style= " text-align:right">
+        <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
+                <button style="margin-left: 10px;" pButton class="w-auto mt-3" icon="pi pi-check" (click)="atleast()" label="Update"></button>
+
+            </div>
+</div>

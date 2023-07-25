@@ -42,6 +42,13 @@ import { CreatePartyAccountComponent } from './party-account/create-party-accoun
 import { AccessPartyAccountComponent } from './party-account/access-party-account/access-party-account.component';
 import { UomsCreateComponent } from './uoms/uoms-create/uoms-create.component';
 import { StockLocationsCreateComponent } from './stock-locations/stock-locations-create/stock-locations-create.component';
+import { ProfileComponent } from './profile/profile.component';
+import { PersonalNameProfileComponent } from './profile/personal-name-profile/personal-name-profile.component';
+import { CompanyNameProfileComponent } from './profile/company-name-profile/company-name-profile.component';
+import { TelephoneProfileComponent } from './profile/telephone-profile/telephone-profile.component';
+import { EmailIDProfileComponent } from './profile/email-id-profile/email-id-profile.component';
+import { PostalAddressProfileComponent } from './profile/postal-address-profile/postal-address-profile.component';
+import { GovtIDProfileComponent } from './profile/govt-id-profile/govt-id-profile.component';
 
 
 
@@ -71,7 +78,16 @@ import { StockLocationsCreateComponent } from './stock-locations/stock-locations
          CreatePartyAccountComponent,
          AccessPartyAccountComponent,
          UomsCreateComponent,
-         StockLocationsCreateComponent
+         StockLocationsCreateComponent,
+         ProfileComponent,
+         PersonalNameProfileComponent,
+         CompanyNameProfileComponent,
+         TelephoneProfileComponent,
+         EmailIDProfileComponent,
+         PostalAddressProfileComponent,
+         GovtIDProfileComponent
+
+
 
   ],
   imports: [
