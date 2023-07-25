@@ -576,11 +576,74 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Sales',
                         icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/sales'],
                     },
                     {
-                        label: 'Purcheses',
+                        label: 'Purchases',
                         icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/purchase'],
+                    },
+                    {
+                        label: 'Sale Return',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/sales'],
+                    },
+                    {
+                        label: 'Purcheses Return',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/sales'],
+                    },
+                    {
+                        label: 'Payments',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/sales'],
+                    },
+                    {
+                        label: 'Receipts',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/sales'],
+                    },
+                    {
+                        label: 'Bank Reconcilation',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/sales'],
+                    },
+                    {
+                        label: 'Production',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/sales'],
+                    },
+                    {
+                        label: 'Consumption',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/sales'],
+                    },
+                    {
+                        label: 'Journal Voucher',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/sales'],
+                    },
+                    {
+                        label: 'Line Production',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/sales'],
+                    },
+                    {
+                        label: 'Conversion',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/sales'],
+                    },
+                    {
+                        label: 'Transfer',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/sales'],
+                    },
+                    {
+                        label: 'New Journal Voucher',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/sales'],
                     }
+                    
                 ]
             },
             {
@@ -588,15 +651,10 @@ export class AppMenuComponent implements OnInit {
                 icon: 'pi pi-fw pi-building',
                 items: [
                     {
-                        label: 'Items',
-                        icon: 'pi pi-list',
-                        routerLink: ['/entity/item'],
-                    },
-                    {
                         label: 'Profile',
                         icon: 'pi pi-users',
                         routerLink: ['/entity/profile'],
-                    },
+                    },              
                     {
                         label: 'Party Accounts heads',
                         icon: 'pi pi-user',
@@ -607,6 +665,17 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-user',
                         routerLink: ['/entity/othersAccount'],
                     },
+                       {
+
+                        label: 'Items',
+                        icon: 'pi pi-list',
+                        routerLink: ['/entity/item'],
+                    },
+                    {
+                        label: 'Items',
+                        icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/entity/item'],
+                    },  
                     {
                         label: 'UOMs',
                         icon: 'pi pi-user',
