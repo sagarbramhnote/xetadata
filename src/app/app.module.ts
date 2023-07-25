@@ -14,10 +14,12 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
+
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent
+
     ],
     imports: [
         AppRoutingModule,

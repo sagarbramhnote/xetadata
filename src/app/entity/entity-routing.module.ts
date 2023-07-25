@@ -28,12 +28,14 @@ import { ProfileComponent } from './profile/profile.component';
 
 
 const routes: Routes = [
-  {path: 'profile', data: {breadcrumb: 'Profile'},component:ProfileComponent},
+
+  {path: 'profile',data: {breadcrumb: 'Profile'},component:ProfileComponent},
+
   { path: 'item', data: {breadcrumb: 'List'},component:ItemComponent},
   {path: 'itemCreate',data: {breadcrumb: 'Create'},component:ItemCreateComponent},
   {path: 'itemUpdate',data: {breadcrumb: 'Edit'},component:UpdateItemComponent},
   {path: 'itemView',data: {breadcrumb: 'View'},component:ItemViewComponent},
-  {path: 'partyAccount',data: {breadcrumb: 'List'},component:PartyAccountComponent},
+  {path: 'partyAccount',data: {breadcrumb: 'PartyAccount'},component:PartyAccountComponent},
   {path: 'partyAccountCreate',data: {breadcrumb: 'Create'},component:CreatePartyAccountComponent},
   {path: 'partyAccountAccess',data: {breadcrumb: 'Access'},component:AccessPartyAccountComponent},
   {path: 'othersAccount',data: {breadcrumb: 'List'},component:OthersAccountComponent},
@@ -50,11 +52,16 @@ const routes: Routes = [
   {path: 'tags',component:TagsComponent},
   {path: 'itemLevels',data: {breadcrumb: 'List'},component:ItemLevelsComponent},
   {path: 'itemLevelCeate',data: {breadcrumb: 'Create'},component:ItemLevelCreateComponent},
-  {path: 'openingBalance',component:OpeningBalanceComponent},
+
+
+  {path: 'stockLocations',component:StockLocationsComponent},
+  {path: 'openingBalance', data:{breadcrumb:'OpeningBalance'},component:OpeningBalanceComponent},
+
   {path: 'uomsCreate',data: {breadcrumb: 'Create'},component:UomsCreateComponent},
   {path: 'stockLocations',data: {breadcrumb: 'Stock-Location-List'},component:StockLocationsComponent},
   {path: 'stockLocationsCreate',data: {breadcrumb: 'Stock-Location-Create'},component:StockLocationsCreateComponent},
-  {path: 'openingBalance',component:OpeningBalanceComponent}
+
+
 
 
 ];
