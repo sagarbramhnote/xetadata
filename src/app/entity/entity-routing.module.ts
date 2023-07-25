@@ -55,13 +55,12 @@ const routes: Routes = [
 
 
   {path: 'stockLocations',component:StockLocationsComponent},
-  {path: 'openingBalance', data:{breadcrumb:'OpeningBalance'},component:OpeningBalanceComponent}
+  {path: 'openingBalance', data:{breadcrumb:'OpeningBalance'},component:OpeningBalanceComponent},
 
-  {path: 'openingBalance',component:OpeningBalanceComponent},
   {path: 'uomsCreate',data: {breadcrumb: 'Create'},component:UomsCreateComponent},
   {path: 'stockLocations',data: {breadcrumb: 'Stock-Location-List'},component:StockLocationsComponent},
   {path: 'stockLocationsCreate',data: {breadcrumb: 'Stock-Location-Create'},component:StockLocationsCreateComponent},
-  {path: 'openingBalance',component:OpeningBalanceComponent}
+
 
 
 

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
-import { ReplaceZeroWithEmptyForCSPipe } from 'src/app/pipes/replace-zero-with-empty-for-cs.pipe';
 import {ConfirmationService,MessageService} from 'primeng/api';
 import { XetaSuccess } from 'src/app/global/xeta-success';
 import { PeopleService } from 'src/app/services/people.service';
@@ -16,7 +15,7 @@ import { Table } from 'primeng/table';
   selector: 'app-opening-balance',
   templateUrl: './opening-balance.component.html',
   styleUrls: ['./opening-balance.component.scss'],
-  providers: [ConfirmationService,MessageService,ReplaceZeroWithEmptyForCSPipe]
+  providers: [ConfirmationService,MessageService]
 })
 export class OpeningBalanceComponent implements OnInit{
 

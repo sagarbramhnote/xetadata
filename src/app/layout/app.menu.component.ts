@@ -654,7 +654,7 @@ export class AppMenuComponent implements OnInit {
                         label: 'Profile',
                         icon: 'pi pi-users',
                         routerLink: ['/entity/profile'],
-                    },              
+                    },                           
                     {
                         label: 'Party Accounts heads',
                         icon: 'pi pi-user',
@@ -675,7 +675,7 @@ export class AppMenuComponent implements OnInit {
                         label: 'Items',
                         icon: 'pi pi-fw pi-align-left',
                         routerLink: ['/entity/item'],
-                    },  
+                    }, 
                     {
                         label: 'UOMs',
                         icon: 'pi pi-user',

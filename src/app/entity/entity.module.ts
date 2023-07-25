@@ -4,7 +4,7 @@ import { TableModule } from 'primeng/table';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToggleButtonModule } from 'primeng/togglebutton';
@@ -22,7 +22,6 @@ import { RecieveChequeComponent } from './recieve-cheque/recieve-cheque.componen
 import { TagsComponent } from './tags/tags.component';
 import { ItemLevelsComponent } from './item-levels/item-levels.component';
 import { StockLocationsComponent } from './stock-locations/stock-locations.component';
-import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 import { RippleModule } from 'primeng/ripple';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ItemCreateComponent } from './item/item-create/item-create.component';
@@ -52,6 +51,7 @@ import { TelephoneProfileComponent } from './profile/telephone-profile/telephone
 import { EmailIDProfileComponent } from './profile/email-id-profile/email-id-profile.component';
 import { PostalAddressProfileComponent } from './profile/postal-address-profile/postal-address-profile.component';
 import { GovtIDProfileComponent } from './profile/govt-id-profile/govt-id-profile.component';
+import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 
 
 
@@ -71,7 +71,6 @@ import { GovtIDProfileComponent } from './profile/govt-id-profile/govt-id-profil
          TagsComponent,
          ItemLevelsComponent,
          StockLocationsComponent,
-         OpeningBalanceComponent,
          ItemCreateComponent,
          UpdateItemComponent,
          ItemViewComponent,
@@ -83,6 +82,7 @@ import { GovtIDProfileComponent } from './profile/govt-id-profile/govt-id-profil
          AccessPartyAccountComponent,
          UomsCreateComponent,
          StockLocationsCreateComponent,
+         OpeningBalanceComponent,
          ProfileComponent,
          PersonalNameProfileComponent,
          CompanyNameProfileComponent,
@@ -111,7 +111,8 @@ import { GovtIDProfileComponent } from './profile/govt-id-profile/govt-id-profil
 		ProgressBarModule,
     DialogModule,
     ConfirmDialogModule,
-    CheckboxModule,CalendarModule
+    CheckboxModule,CalendarModule,
+    ReactiveFormsModule
   ]
 })
 export class EntityModule { }

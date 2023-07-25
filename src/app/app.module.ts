@@ -18,11 +18,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @NgModule({
     declarations: [
         AppComponent,
-        openingbalance
-        LoginComponent,
-        ProfileComponent
-      
-
         LoginComponent
 
     ],
