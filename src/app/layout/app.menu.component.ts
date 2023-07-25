@@ -665,6 +665,12 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-user',
                         routerLink: ['/entity/othersAccount'],
                     },
+                       {
+
+                        label: 'Items',
+                        icon: 'pi pi-list',
+                        routerLink: ['/entity/item'],
+                    },
                     {
                         label: 'Items',
                         icon: 'pi pi-fw pi-align-left',
