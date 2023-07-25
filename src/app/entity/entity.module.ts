@@ -40,6 +40,7 @@ import { UpdateOtherAccountComponent } from './others-account/update-other-accou
 import { CheckboxModule } from 'primeng/checkbox';
 import { CreatePartyAccountComponent } from './party-account/create-party-account/create-party-account.component';
 import { AccessPartyAccountComponent } from './party-account/access-party-account/access-party-account.component';
+import { CalendarModule } from 'primeng/calendar';
 
 
 
@@ -92,7 +93,7 @@ import { AccessPartyAccountComponent } from './party-account/access-party-accoun
 		ProgressBarModule,
     DialogModule,
     ConfirmDialogModule,
-    CheckboxModule
+    CheckboxModule,CalendarModule
   ]
 })
 export class EntityModule { }

@@ -26,12 +26,12 @@ import { AccessPartyAccountComponent } from './party-account/access-party-accoun
 
 
 const routes: Routes = [
-  {path: 'profile',component:ProfileComponent},
+  {path: 'profile',data: {breadcrumb: 'Profile'},component:ProfileComponent},
   { path: 'item', data: {breadcrumb: 'List'},component:ItemComponent},
   {path: 'itemCreate',data: {breadcrumb: 'Create'},component:ItemCreateComponent},
   {path: 'itemUpdate',data: {breadcrumb: 'Edit'},component:UpdateItemComponent},
   {path: 'itemView',data: {breadcrumb: 'View'},component:ItemViewComponent},
-  {path: 'partyAccount',data: {breadcrumb: 'List'},component:PartyAccountComponent},
+  {path: 'partyAccount',data: {breadcrumb: 'PartyAccount'},component:PartyAccountComponent},
   {path: 'partyAccountCreate',data: {breadcrumb: 'Create'},component:CreatePartyAccountComponent},
   {path: 'partyAccountAccess',data: {breadcrumb: 'Access'},component:AccessPartyAccountComponent},
   {path: 'othersAccount',data: {breadcrumb: 'List'},component:OthersAccountComponent},
@@ -50,7 +50,7 @@ const routes: Routes = [
   {path: 'itemLevelCeate',data: {breadcrumb: 'Create'},component:ItemLevelCreateComponent},
 
   {path: 'stockLocations',component:StockLocationsComponent},
-  {path: 'openingBalance',component:OpeningBalanceComponent}
+  {path: 'openingBalance', data:{breadcrumb:'OpeningBalance'},component:OpeningBalanceComponent}
 
 ];
 

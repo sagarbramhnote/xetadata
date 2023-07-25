@@ -15,11 +15,13 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ProfileComponent } from './entity/profile/profile.component';
 
 
+
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
         ProfileComponent
+      
     ],
     imports: [
         AppRoutingModule,
