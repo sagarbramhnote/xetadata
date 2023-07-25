@@ -40,6 +40,9 @@ import { UpdateOtherAccountComponent } from './others-account/update-other-accou
 import { CheckboxModule } from 'primeng/checkbox';
 import { CreatePartyAccountComponent } from './party-account/create-party-account/create-party-account.component';
 import { AccessPartyAccountComponent } from './party-account/access-party-account/access-party-account.component';
+
+import { CalendarModule } from 'primeng/calendar';
+
 import { UomsCreateComponent } from './uoms/uoms-create/uoms-create.component';
 import { StockLocationsCreateComponent } from './stock-locations/stock-locations-create/stock-locations-create.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -49,6 +52,7 @@ import { TelephoneProfileComponent } from './profile/telephone-profile/telephone
 import { EmailIDProfileComponent } from './profile/email-id-profile/email-id-profile.component';
 import { PostalAddressProfileComponent } from './profile/postal-address-profile/postal-address-profile.component';
 import { GovtIDProfileComponent } from './profile/govt-id-profile/govt-id-profile.component';
+
 
 
 
@@ -107,7 +111,7 @@ import { GovtIDProfileComponent } from './profile/govt-id-profile/govt-id-profil
 		ProgressBarModule,
     DialogModule,
     ConfirmDialogModule,
-    CheckboxModule
+    CheckboxModule,CalendarModule
   ]
 })
 export class EntityModule { }
