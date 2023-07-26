@@ -52,6 +52,8 @@ import { EmailIDProfileComponent } from './profile/email-id-profile/email-id-pro
 import { PostalAddressProfileComponent } from './profile/postal-address-profile/postal-address-profile.component';
 import { GovtIDProfileComponent } from './profile/govt-id-profile/govt-id-profile.component';
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
+import { WrittenchequecreateComponent } from './write-cheque/writtenchequecreate/writtenchequecreate.component';
+import { RecievechequecreateComponent } from './recieve-cheque/recievechequecreate/recievechequecreate.component';
 
 
 
@@ -89,7 +91,9 @@ import { OpeningBalanceComponent } from './opening-balance/opening-balance.compo
          TelephoneProfileComponent,
          EmailIDProfileComponent,
          PostalAddressProfileComponent,
-         GovtIDProfileComponent
+         GovtIDProfileComponent,
+         WrittenchequecreateComponent,
+         RecievechequecreateComponent
 
 
 

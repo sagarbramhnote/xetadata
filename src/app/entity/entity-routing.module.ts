@@ -25,6 +25,8 @@ import { AccessPartyAccountComponent } from './party-account/access-party-accoun
 import { UomsCreateComponent } from './uoms/uoms-create/uoms-create.component';
 import { StockLocationsCreateComponent } from './stock-locations/stock-locations-create/stock-locations-create.component';
 import { ProfileComponent } from './profile/profile.component';
+import { WrittenchequecreateComponent } from './write-cheque/writtenchequecreate/writtenchequecreate.component';
+import { RecievechequecreateComponent } from './recieve-cheque/recievechequecreate/recievechequecreate.component';
 
 
 const routes: Routes = [
@@ -42,8 +44,10 @@ const routes: Routes = [
   {path: 'othersAccountCreate',data: {breadcrumb: 'Create'},component:CreateOtherAccountComponent},
   {path: 'othersAccountUpdate',data: {breadcrumb: 'Edit'},component:UpdateOtherAccountComponent},
   {path: 'UOMs', data: {breadcrumb: 'List'},component:UOMsComponent},
-  {path: 'writeCheque',component:WriteChequeComponent},
-  {path: 'recieveCheque',component:RecieveChequeComponent},
+  {path: 'writeCheque',data: {breadcrumb: 'List'},component:WriteChequeComponent},
+  {path: 'writtenChequecreate',data: {breadcrumb: 'Create'},component:WrittenchequecreateComponent},
+  {path: 'recieveCheque',data: {breadcrumb: 'List'},component:RecieveChequeComponent},
+  {path: 'recieveChequeCreate', data: {breadcrumb: 'Create'} ,component:RecievechequecreateComponent},
 
   {path: 'tags', data: {breadcrumb: 'List'},component:TagsComponent},
   {path: 'tagCreate',data: {breadcrumb: 'Create'},component:TagCreateComponent},
