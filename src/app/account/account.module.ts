@@ -30,7 +30,6 @@ import { CreateVoucherComponent } from './create-voucher/create-voucher.componen
 import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.component';
 import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
 import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
-import { CalendarModule } from 'primeng/calendar';
 import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
@@ -42,7 +41,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     TransferComponent,
     TransferregisterComponent,
     JournalVoucherComponent,
-    JournalvouchercreateComponent
+    JournalvouchercreateComponent,
     NewJournalVoucherComponent,
     CreateVoucherComponent,
     PurchaseReturnsComponent,
