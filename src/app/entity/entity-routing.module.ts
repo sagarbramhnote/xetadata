@@ -20,11 +20,12 @@ import { ItemLevelCreateComponent } from './item-levels/item-level-create/item-l
 
 import { CreateOtherAccountComponent } from './others-account/create-other-account/create-other-account.component';
 import { UpdateOtherAccountComponent } from './others-account/update-other-account/update-other-account.component';
-import { CreatePartyAccountComponent } from './party-account/create-party-account/create-party-account.component';
 import { AccessPartyAccountComponent } from './party-account/access-party-account/access-party-account.component';
 import { UomsCreateComponent } from './uoms/uoms-create/uoms-create.component';
 import { StockLocationsCreateComponent } from './stock-locations/stock-locations-create/stock-locations-create.component';
 import { ProfileComponent } from './profile/profile.component';
+import { WrittenchequecreateComponent } from './write-cheque/writtenchequecreate/writtenchequecreate.component';
+import { RecievechequecreateComponent } from './recieve-cheque/recievechequecreate/recievechequecreate.component';
 
 
 const routes: Routes = [
@@ -36,14 +37,15 @@ const routes: Routes = [
   {path: 'itemUpdate',data: {breadcrumb: 'Edit'},component:UpdateItemComponent},
   {path: 'itemView',data: {breadcrumb: 'View'},component:ItemViewComponent},
   {path: 'partyAccount',data: {breadcrumb: 'PartyAccount'},component:PartyAccountComponent},
-  {path: 'partyAccountCreate',data: {breadcrumb: 'Create'},component:CreatePartyAccountComponent},
   {path: 'partyAccountAccess',data: {breadcrumb: 'Access'},component:AccessPartyAccountComponent},
   {path: 'othersAccount',data: {breadcrumb: 'List'},component:OthersAccountComponent},
   {path: 'othersAccountCreate',data: {breadcrumb: 'Create'},component:CreateOtherAccountComponent},
   {path: 'othersAccountUpdate',data: {breadcrumb: 'Edit'},component:UpdateOtherAccountComponent},
   {path: 'UOMs', data: {breadcrumb: 'List'},component:UOMsComponent},
-  {path: 'writeCheque',component:WriteChequeComponent},
-  {path: 'recieveCheque',component:RecieveChequeComponent},
+  {path: 'writeCheque',data: {breadcrumb: 'List'},component:WriteChequeComponent},
+  {path: 'writtenChequecreate',data: {breadcrumb: 'Create'},component:WrittenchequecreateComponent},
+  {path: 'recieveCheque',data: {breadcrumb: 'List'},component:RecieveChequeComponent},
+  {path: 'recieveChequeCreate', data: {breadcrumb: 'Create'} ,component:RecievechequecreateComponent},
 
   {path: 'tags', data: {breadcrumb: 'List'},component:TagsComponent},
   {path: 'tagCreate',data: {breadcrumb: 'Create'},component:TagCreateComponent},

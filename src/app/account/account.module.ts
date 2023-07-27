@@ -21,14 +21,20 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
 import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.component';
 import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
+import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
+import { CalendarModule } from 'primeng/calendar';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 @NgModule({
   declarations: [
     SalesComponent,
     PurchaseComponent,
+    purchaseReturn
     PurchaseReturnsComponent,
     PurchaseReturnViewComponent
+    SalesCreateComponent
+
   ],
   imports: [
     CommonModule,
@@ -47,7 +53,10 @@ import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-
 		ProgressBarModule,
     DialogModule,
     ConfirmDialogModule,
-    CheckboxModule
+    CheckboxModule,
+    CalendarModule,
+    InputSwitchModule
+
   ]
 })
 export class AccountModule { }

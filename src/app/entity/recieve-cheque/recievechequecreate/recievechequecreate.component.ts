@@ -15,16 +15,15 @@ import { SaveReceiptService } from 'src/app/services/save-receipt.service';
 import { ChequeListService } from 'src/app/services/cheque-list.service';
 import { SaveChequeService } from 'src/app/services/save-cheque.service';
 import { GlobalConstants } from 'src/app/global/global-constants';
-import { Table } from 'primeng/table/public_api';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-recieve-cheque',
-    templateUrl: './recieve-cheque.component.html',
-    styleUrls: ['./recieve-cheque.component.scss'],
+    selector: 'app-recievechequecreate',
+    templateUrl: './recievechequecreate.component.html',
+    styleUrls: ['./recievechequecreate.component.scss'],
     providers: [ConfirmationService, MessageService],
 })
-export class RecieveChequeComponent implements OnInit {
+export class RecievechequecreateComponent implements OnInit {
     selectedDate: Date = new Date();
 
     displayModal = false;
@@ -448,6 +447,7 @@ export class RecieveChequeComponent implements OnInit {
                     this.inProgress = false;
                     this.displayModal = false;
                     this.loadCheques(0, 0);
+                    this.router.navigate(['entity/recieveCheque']);
                     return;
                 } else if (v == null) {
                     this.inProgress = false;
@@ -526,17 +526,8 @@ export class RecieveChequeComponent implements OnInit {
             },
         });
     }
-
-    // my methods
-
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal(
-            (event.target as HTMLInputElement).value,
-            'contains'
-        );
-    }
-
-    navigateToCreateItems1() {
-        this.router.navigate(['entity/recieveChequeCreate']);
+    //my methods
+    navigateToListchequeswritten() {
+        this.router.navigate(['entity/recieveCheque']);
     }
 }
