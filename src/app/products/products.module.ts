@@ -14,18 +14,30 @@ import { ToastModule } from 'primeng/toast';
 import { DropdownModule } from 'primeng/dropdown';
 import { ProductsComponent } from './products.component';
 import { ProductsRoutingModule } from './products-routing.module';
+import { ProductsEditComponent } from './products-edit/products-edit.component';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RippleModule } from 'primeng/ripple';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
 
 
 
 
 @NgModule({
   declarations: [
-    ProductsComponent
+    ProductsComponent,
+    ProductsEditComponent
+    
+    
 
   ],
   imports: [
-    CommonModule,
+    
     ProductsRoutingModule,
+    CommonModule,
+    
     TableModule,
     ProgressSpinnerModule,
     ToastModule,
@@ -35,7 +47,13 @@ import { ProductsRoutingModule } from './products-routing.module';
     RadioButtonModule,
     InputTextModule,
     ToggleButtonModule,
-    DropdownModule
+    DropdownModule,
+		RippleModule,
+		ProgressBarModule,
+    DialogModule,
+    ConfirmDialogModule,
+    CheckboxModule
+    
   ]
 })
 export class ProductsModule { }

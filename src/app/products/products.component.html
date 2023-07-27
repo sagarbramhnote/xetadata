@@ -1,54 +1,52 @@
-<div class="grid">
-	<div class="col-12">
-		<div class="card">
-            <p-toast key="tst"></p-toast>
-            <p-table [value]="product" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-gridlines" 
-    selectionMode="single" scrollHeight="500px" 
-         dataKey="person" selectionMode="single" [paginator]="true" responsiveLayout="scroll">
-        
-        <ng-template pTemplate="header"> 
+<div class="card">
+    <p-table #dt [value]="product" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['id','itemname','uom.uom','usercode','itemfatype']">
+        <ng-template pTemplate="caption">
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                </span>
+                <!-- <button (click)="navigateToCreateItems()" pButton class="p-button-raised p-button-primary" icon="pi pi-plus" label="Add New"></button> -->
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
             <tr>
-                <th>Id</th>
-                <th>Item</th>
-                <th>uom</th>
-                <th>Salable</th>
-                <th>Advertise</th>
-                <th>Modify</th>
+                <!-- <th class="white-space-nowrap" style="width:10%">Id</th> -->
+                <th pSortableColumn="id" class="white-space-nowrap" style="width:10%">Id <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="itemdef.itemname" class="white-space-nowrap" style="width:15%">Item <p-sortIcon field="itemdef.itemname"></p-sortIcon></th>
+                <th pSortableColumn="itemdef.uom.uom" class="white-space-nowrap" style="width:15%">uom<p-sortIcon field="itemdef.uom.uom"></p-sortIcon></th>
+                <th pSortableColumn="inclinps" class="white-space-nowrap" style="width:15%">Salable <p-sortIcon field="inclinps"></p-sortIcon></th>
+                <th pSortableColumn="advertise" class="white-space-nowrap" style="width:15%">Advertise <p-sortIcon field="advertise"></p-sortIcon></th>
+                <th class="white-space-nowrap" style="width:15%">Modify </th>
+
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-inv let-i="rowIndex">
+        <ng-template pTemplate="body" let-v let-i="rowIndex">
             <tr>
-                
-                <td>{{inv.id}}</td>
-                <td>{{inv.itemdef.itemname}}</td>
-                <td>{{inv.itemdef.uom.uom}}</td>
-                <td>{{inv.inclinps}}</td>
-                <td>{{inv.advertise}}</td>
+                <td>{{v.id}}</td>
+                <td>{{v.itemdef.itemname}}</td>
+                <td>{{v.itemdef.uom.uom}}</td>
+                <td>{{v.inclinps}}</td>
+                <td>{{v.advertise}}</td>
 
                 <td>
-                    
-                    <div>
-                    <button pButton class="p-button-sm" >EDIT</button>
-                    </div>
-                </td>
 
+                    <div class="grid">
+                        <div class="col-12">
+                            
+                            <button  pButton icon="pi pi-pencil" class="p-button-sm p-button-info p-button-raised" (click)="handleEditItem(i)" label="Edit"></button>
+                        </div>
+                        </div>
+                    
+                    
+                </td>
+                
             </tr>
         </ng-template>
-
-
-        <!-- <ng-template [ngIf]="inProgress">
-            <div class="flex justify-content-center align-items-center absolute z-5 h-full w-full top-0 left-0" id="modal">
-                <p-progressSpinner></p-progressSpinner>
-            </div>
-        </ng-template> -->
-
     </p-table>
-
-            
-        </div>
-    </div>
 </div>
 
-<div class="flex justify-content-center mb-2">
-    <!-- <p-toggleButton [(ngModel)]="showForm" onLabel="Cancel" offLabel="New" (onChange)="handleNew($event)"></p-toggleButton> -->
-</div>
+        
+        
