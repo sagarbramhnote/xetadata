@@ -1,1 +1,58 @@
-<p>sales works!</p>
+<!-- <h5>ITEMS / LIST</h5> -->
+<div class="card">
+    <p-table #dt [value]="sanitizedInvoiceList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['id','date','vendor','taxablevalue','tax','aftertaxvalue']">
+        <ng-template pTemplate="caption">
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                </span>
+                <button (click)="navigateToCreateSales()" pButton class="p-button-raised p-button-primary" icon="pi pi-plus" label="Add New"></button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- <th>Id</th> -->
+                <th pSortableColumn="id" class="white-space-nowrap" style="width:10%">Id<p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="date" class="white-space-nowrap" style="width:22%">Date<p-sortIcon field="date"></p-sortIcon></th>
+                <th pSortableColumn="vendor" class="white-space-nowrap" style="width:15%">Customer<p-sortIcon field="vendor"></p-sortIcon></th>
+                <th pSortableColumn="taxablevalue" class="white-space-nowrap" style="width:12%">Taxable Value<p-sortIcon field="taxablevalue"></p-sortIcon></th>
+                <th pSortableColumn="tax" class="white-space-nowrap" style="width:12%">Tax<p-sortIcon field="tax"></p-sortIcon></th>
+                <th pSortableColumn="aftertaxvalue" class="white-space-nowrap" style="width:12%">Value<p-sortIcon field="aftertaxvalue"></p-sortIcon></th>
+                <th class="white-space-nowrap">Modify</th> 
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-inv let-i="rowIndex">
+            <tr>
+                <td>{{inv.id}}</td>
+                <td>{{inv.date}}</td>
+                <td>{{inv.vendor}}</td>
+                <!-- <td>{{inv.taxablevalue}}</td> -->
+                <td >{{inv.taxablevalue | number:'1.2-2'}}</td>
+                <td >{{inv.tax | number:'1.2-2'}}</td>
+                <td >{{inv.aftertaxvalue | number:'1.2-2'}}</td>
+                <td>
+                    <div class="grid">
+                        <div class="col-12">
+                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary"  label="View"></button>
+                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary"  label="Print"></button>
+                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary"  label="Send Invoive"></button>
+                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary"  label="Sale Return"></button>
+                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary"  label="Options"></button>
+
+                  
+                        </div>
+                        </div>
+                    <!-- <div >
+                        <button pButton icon="pi pi-external-link" class="p-button-sm" (click)="handleViewItem(v)">View</button>
+                        <button pButton icon="pi pi-pencil" class="p-button-sm" (click)="handleEditItem(v)">Edit</button>
+                    </div> -->
+                    
+                </td>
+                
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
