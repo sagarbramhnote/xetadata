@@ -586,7 +586,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Sale Return',
                         icon: 'pi pi-fw pi-user',
-                        routerLink: ['/account/sales'],
+                        routerLink: ['/account/sales-return'],
                     },
                     {
                         label: 'Purcheses Return',
@@ -621,7 +621,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Journal Voucher',
                         icon: 'pi pi-fw pi-user',
-                        routerLink: ['/account/sales'],
+                        routerLink: ['/account/journal-voucher'],
                     },
                     {
                         label: 'Line Production',
@@ -636,7 +636,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Transfer',
                         icon: 'pi pi-fw pi-user',
-                        routerLink: ['/account/sales'],
+                        routerLink: ['/account/transfer'],
                     },
                     {
                         label: 'New Journal Voucher',

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AccountRoutingModule } from './account-routing.module';
 import { SalesComponent } from './sales/sales.component';
 import { PurchaseComponent } from './purchase/purchase.component';
@@ -19,6 +18,13 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
+import { SalesReturnComponent } from './sales-return/sales-return.component';
+import { SalesreturnviewComponent } from './sales-return/salesreturnview/salesreturnview.component';
+import { TransferComponent } from './transfer/transfer.component';
+import { TransferregisterComponent } from './transfer/transferregister/transferregister.component';
+import { CalendarModule } from 'primeng/calendar';
+import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
+import { JournalvouchercreateComponent } from './journal-voucher/journalvouchercreate/journalvouchercreate.component';
 import { NewJournalVoucherComponent } from './new-journal-voucher/new-journal-voucher.component';
 import { CreateVoucherComponent } from './create-voucher/create-voucher.component';
 import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.component';
@@ -27,19 +33,21 @@ import { SalesCreateComponent } from './sales/sales-create/sales-create.componen
 import { CalendarModule } from 'primeng/calendar';
 import { InputSwitchModule } from 'primeng/inputswitch';
 
-
-
 @NgModule({
   declarations: [
     SalesComponent,
     PurchaseComponent,
+    SalesReturnComponent,
+    SalesreturnviewComponent,
+    TransferComponent,
+    TransferregisterComponent,
+    JournalVoucherComponent,
+    JournalvouchercreateComponent
     NewJournalVoucherComponent,
     CreateVoucherComponent,
     PurchaseReturnsComponent,
     PurchaseReturnViewComponent,
     SalesCreateComponent
-
-
   ],
   imports: [
     CommonModule,
@@ -58,9 +66,10 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 		ProgressBarModule,
     DialogModule,
     ConfirmDialogModule,
+    CheckboxModule,
+    CalendarModule
     CheckboxModule,CalendarModule,
     InputSwitchModule
-
   ]
 })
 export class AccountModule { }

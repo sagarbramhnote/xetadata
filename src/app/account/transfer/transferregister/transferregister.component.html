@@ -1,0 +1,118 @@
+<div class="card">
+
+    <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+        <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+            <span class="text-900 text-xl font-bold mb-4 block">transferregister</span>
+        </span>
+    </div>
+    <div class="grid">
+
+        <div class="col-12 lg:col-10">
+            <div class="grid formgrid p-fluid">
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="date" class="font-medium text-900">Date</label>
+                    <p-calendar [(ngModel)]="selectedDate" [ngModelOptions]="{standalone: true}" [showTime]="true"
+                        [showSeconds]="true" inputId="time" appendTo="body" (onSelect)="dateSelected($event)"
+                        [required]="true">
+                    </p-calendar>
+                </div>
+
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="item" class="font-medium text-900">Item</label>
+
+                    <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="filteredItems"
+                        (completeMethod)="filterItems($event)" field="itemname" [multiple]="false" class="autocomplete"
+                        (onSelect)="handleOnSelectItem($event)" [style]="{'width':'100%'}"
+                        [inputStyle]="{'width':'100%'}" [placeholder]="placeholderItem"
+                        [ngModelOptions]="{standalone: true}" (ngModelChange)="itemChange($event)" [required]="true"
+                        #selectItem="ngModel" [forceSelection]="true">
+
+                        <ng-template let-selectedItem pTemplate="item">
+                            <div>{{selectedItem.itemname}} - {{selectedItem.id}}</div>
+                            <div>{{selectedItem.uom.uom}}</div>
+                        </ng-template>
+
+                    </p-autoComplete>
+                    <ng-template [ngIf]="selectItem.errors">
+                        <small id="username2-help" class="p-error block">you must select an item</small>
+                    </ng-template>
+
+                </div>
+
+
+
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="fromlocation" class="font-medium text-900">From Location</label>
+                    <p-autoComplete [(ngModel)]="selectedFromLocation" [suggestions]="filteredFromLocations"
+                        (completeMethod)="filterFromLocations($event)" field="location" [multiple]="false"
+                        class="autocomplete" (onSelect)="handleOnSelectFromLocation($event)" [style]="{'width':'100%'}"
+                        [inputStyle]="{'width':'100%'}" [placeholder]="placeholderFromLocation"
+                        [ngModelOptions]="{standalone: true}" (ngModelChange)="fromLocationChange($event)"
+                        [required]="true" #selectFromLocation="ngModel" [forceSelection]="true" [minLength]="1">
+
+                        <ng-template let-selectedItem pTemplate="item">
+                            <div>{{selectedItem.location}}</div>
+                        </ng-template>
+
+                    </p-autoComplete>
+                    <ng-template [ngIf]="selectFromLocation.errors">
+                        <small id="username2-help" class="p-error block">you must select from location</small>
+                    </ng-template>
+
+                </div>
+
+
+                <!-- <div class="field mb-4 col-12 md:col-6">
+                        <label for="itemname" class="font-medium text-900">Item</label>
+                    <div>{{selectedItem.itemname}}  {{selectedItem.uom.uom}}</div>
+                 
+                <div>
+                    <div>Available Quantity</div>
+                    <div>{{selectedItemQuantity}}</div>
+                </div>
+            </div> -->
+
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="enterquantity" class="font-medium text-900">Enter Quantity</label>
+
+                    <input type="number" min="0" #selectQty="ngModel" pInputText class="p-inputtext-sm"
+                        placeholder="enter quantity" [(ngModel)]="selectedQty" [ngModelOptions]="{standalone: true}"
+                        autocomplete="off" required>
+                    <ng-template [ngIf]="selectQty.errors">
+                        <small id="username2-help" class="p-error block">you must enter quantity</small>
+                    </ng-template>
+
+                </div>
+
+
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="tolocation" class="font-medium text-900">To Location</label>
+                    <p-autoComplete [(ngModel)]="selectedToLocation" [suggestions]="filteredToLocations"
+                        (completeMethod)="filterToLocations($event)" field="location" [multiple]="false"
+                        class="autocomplete" (onSelect)="handleOnSelectToLocation($event)" [style]="{'width':'100%'}"
+                        [inputStyle]="{'width':'100%'}" [placeholder]="placeholderToLocation"
+                        [ngModelOptions]="{standalone: true}" (ngModelChange)="toLocationChange($event)"
+                        [required]="true" #selectToLocation="ngModel" [forceSelection]="true">
+
+                        <ng-template let-selectedItem pTemplate="item">
+                            <div>{{selectedItem.location}}</div>
+                        </ng-template>
+
+                    </p-autoComplete>
+                    <ng-template [ngIf]="selectToLocation.errors">
+                        <small id="username2-help" class="p-error block">you must select to location</small>
+                    </ng-template>
+
+                </div>
+            </div>
+        </div>
+        <div class="ui-g-12" style="text-align: right">
+            <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
+            <button style="margin-left: 10px" pButton class="w-auto mt-3" icon="pi pi-check"
+                (click)="handleSaveTransfer()" label="save"></button>
+            <button style="margin-left: 10px" pButton class="w-auto mt-3 p-button-danger" icon="pi pi-times"
+                (click)="navigateToListtransfer()" label="Cancel"></button>
+        </div>
+
+        <p-toast></p-toast>
+    </div>
