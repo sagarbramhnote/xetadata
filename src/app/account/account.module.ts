@@ -24,6 +24,12 @@ import { NewJournalVoucherComponent } from './new-journal-voucher/new-journal-vo
 import { CreateVoucherComponent } from './create-voucher/create-voucher.component';
 import { ReplaceZeroWithEmptyPipe } from '../pipes/replace-zero-with-empty-for-cs.pipe.spec';
 import { ReplaceZeroWithEmptyForCSPipe } from '../pipes/replace-zero-with-empty-for-cs.pipe';
+import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.component';
+import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
+import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
+import { CalendarModule } from 'primeng/calendar';
+import { InputSwitchModule } from 'primeng/inputswitch';
+
 
 
 @NgModule({
@@ -34,6 +40,10 @@ import { ReplaceZeroWithEmptyForCSPipe } from '../pipes/replace-zero-with-empty-
     CreateVoucherComponent,
     ReplaceZeroWithEmptyPipe,
     ReplaceZeroWithEmptyForCSPipe
+    PurchaseReturnsComponent,
+    PurchaseReturnViewComponent,
+    SalesCreateComponent
+
 
   ],
   imports: [
@@ -54,6 +64,9 @@ import { ReplaceZeroWithEmptyForCSPipe } from '../pipes/replace-zero-with-empty-
     DialogModule,
     ConfirmDialogModule,
     CheckboxModule,CalendarModule
+    CalendarModule,
+    InputSwitchModule
+
   ]
 })
 export class AccountModule { }

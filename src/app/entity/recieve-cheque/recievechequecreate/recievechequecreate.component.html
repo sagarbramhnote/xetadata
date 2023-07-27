@@ -1,0 +1,83 @@
+<div class="card">
+
+    <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+        <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+            <span class="text-900 text-xl font-bold mb-4 block">RecieveChequeCreate</span>
+        </span>
+    </div>
+    <div class="grid">
+
+        <div class="col-12 lg:col-10">
+            <div class="grid formgrid p-fluid">
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="itemname" class="font-medium text-900">Date</label>
+                    <p-calendar [(ngModel)]="selectedDate" [ngModelOptions]="{ standalone: true }" [showTime]="true"
+                        [showSeconds]="true" inputId="time" appendTo="body" (onSelect)="dateSelected($event)"
+                        [required]="true">
+                    </p-calendar>
+                </div>
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="itemname" class="font-medium text-900">Cheque Number</label>
+                    <input type="text" #selectNumber="ngModel" pInputText class="p-inputtext-sm"
+                        placeholder="cheque number" [(ngModel)]="selectedNumber" [ngModelOptions]="{ standalone: true }"
+                        autocomplete="off" required />
+                    <ng-template [ngIf]="selectNumber.errors">
+                        <small id="username2-help" class="p-error block">you must enter cheque number</small>
+                    </ng-template>
+                </div>
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="itemname" class="font-medium text-900">Party</label>
+                        <p-autoComplete [(ngModel)]="selectedParty" [suggestions]="filteredParties"
+                            (completeMethod)="filterParties($event)" field="accounthead" [multiple]="false"
+                            class="autocomplete" (onSelect)="handleOnSelectParty($event)" [style]="{ width: '100%' }"
+                            [inputStyle]="{ width: '100%' }" [placeholder]="placeholderParty"
+                            [ngModelOptions]="{ standalone: true }" (ngModelChange)="partyChange($event)"
+                            [required]="true" #selectParty="ngModel" [forceSelection]="true">
+                            <ng-template let-selectedParty pTemplate="item">
+                                <div>
+                                    {{ selectedParty.accounthead }} -
+                                    {{ selectedParty.id }}
+                                </div>
+                                <div>{{ selectedParty.endpoint }}</div>
+                            </ng-template>
+                        </p-autoComplete>
+                        <ng-template [ngIf]="selectParty.errors">
+                            <small id="username2-help" class="p-error block">you must select a party</small>
+                        </ng-template>
+                    </div>
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="bank" class="font-medium text-900">Bank</label>
+                                           <input type="text" #selectBankName="ngModel" pInputText class="p-inputtext-sm"
+                            placeholder="bank name on cheque" [(ngModel)]="selectedBankName"
+                            [ngModelOptions]="{standalone: true}" autocomplete="off" required>
+                        <ng-template [ngIf]="selectBankName.errors">
+                            <small id="username2-help" class="p-error block">you must enter bank name on cheque</small>
+                        </ng-template>
+                    </div>
+
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="amount" class="font-medium text-900">Amount</label>
+                        <input type="number" min="0" #selectVal="ngModel" pInputText class="p-inputtext-sm"
+                            placeholder="enter amount" [(ngModel)]="selectedVal" [ngModelOptions]="{ standalone: true }"
+                            autocomplete="off" required />
+                        <ng-template [ngIf]="selectVal.errors">
+                            <small id="username2-help" class="p-error block">you must enter an amount</small>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui-g-12" style="text-align: right">
+            <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
+            <button style="margin-left: 10px" pButton class="w-auto mt-3" icon="pi pi-check" (click)="handleSaveCheque()"
+                label="save"></button>
+            <button style="margin-left: 10px" pButton class="w-auto mt-3 p-button-danger" icon="pi pi-times"
+                (click)="navigateToListchequeswritten()" label="Cancel"></button>
+        </div>
+        
+        <p-toast></p-toast>
+    
+    </div>
+
+   
+
