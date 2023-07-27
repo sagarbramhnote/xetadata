@@ -19,6 +19,11 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
+import { CalendarModule } from 'primeng/calendar';
+import { NewJournalVoucherComponent } from './new-journal-voucher/new-journal-voucher.component';
+import { CreateVoucherComponent } from './create-voucher/create-voucher.component';
+import { ReplaceZeroWithEmptyPipe } from '../pipes/replace-zero-with-empty-for-cs.pipe.spec';
+import { ReplaceZeroWithEmptyForCSPipe } from '../pipes/replace-zero-with-empty-for-cs.pipe';
 import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.component';
 import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
 import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
@@ -26,13 +31,19 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputSwitchModule } from 'primeng/inputswitch';
 
 
+
 @NgModule({
   declarations: [
     SalesComponent,
     PurchaseComponent,
+    NewJournalVoucherComponent,
+    CreateVoucherComponent,
+    ReplaceZeroWithEmptyPipe,
+    ReplaceZeroWithEmptyForCSPipe
     PurchaseReturnsComponent,
     PurchaseReturnViewComponent,
     SalesCreateComponent
+
 
   ],
   imports: [
@@ -52,7 +63,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 		ProgressBarModule,
     DialogModule,
     ConfirmDialogModule,
-    CheckboxModule,
+    CheckboxModule,CalendarModule
     CalendarModule,
     InputSwitchModule
 

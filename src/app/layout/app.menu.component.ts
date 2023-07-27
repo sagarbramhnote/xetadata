@@ -640,8 +640,8 @@ export class AppMenuComponent implements OnInit {
                     },
                     {
                         label: 'New Journal Voucher',
-                        icon: 'pi pi-fw pi-user',
-                        routerLink: ['/account/sales'],
+                        icon: 'pi pi-link',
+                        routerLink: ['/account/new-journal-voucher'],
                     }
                     
                 ]
