@@ -21,8 +21,7 @@ import { ReplaceZeroWithEmptyForCSPipe } from './pipes/replace-zero-with-empty-f
     declarations: [
         AppComponent,
         LoginComponent,
-        ReplaceZeroWithEmptyPipe,
-        ReplaceZeroWithEmptyForCSPipe
+
 
     ],
     imports: [
