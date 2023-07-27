@@ -1,0 +1,355 @@
+
+<div class="card">
+
+    <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+        <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+            <span class="text-900 text-xl font-bold mb-4 block">Create Journal Voucher</span>
+                </span>
+                <!-- <button style="margin-left: 10px;" (click)="navigateToListItems()" pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-fw pi-align-left" label="List"></button> -->
+            </div>
+            
+<div class="card">
+    <div>Date</div>
+    <p-calendar 
+    [(ngModel)]="selectedDate"
+    [ngModelOptions]="{standalone: true}" 
+    [showTime]="true" [showSeconds]="true" 
+    inputId="time" 
+    appendTo="body" (onSelect)="dateSelected($event)" 
+    [required]="true">
+    </p-calendar> 
+
+    <br>
+    <br>
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                
+            <div class="debitamount1">Debit Account:</div>
+           
+                
+                <input type="number" min="0"  #selectDebitAmt="ngModel" pInputText class="p-inputtext-sm" 
+        placeholder="enter debit" [(ngModel)]="selectedDebitAmount" 
+        [ngModelOptions]="{standalone: true}"  autocomplete="off" (ngModelChange)="debitAmountChange($event)"
+        required>
+          
+            <br>
+
+            <div class="debitaccount">
+                <p-autoComplete
+                [(ngModel)]="selectedDebitAccount"
+                [suggestions]="filteredDebitAccounts" 
+                (completeMethod)="filterDebits($event)"
+                field="accounthead" 
+                [multiple]="false" class="autocomplete" 
+                (onSelect)="handleOnSelectDebitAccount($event)"
+                [style]="{'width':'100%'}"
+                [inputStyle]="{'width':'100%'}" 
+                [placeholder]="placeholderDebitAccount" 
+                [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="debitAccountChange($event)"
+                [required]="true" #selectParty="ngModel" 
+                [forceSelection]="true">
+
+                <ng-template let-selectedParty pTemplate="item">
+                    <div>{{selectedParty.accounthead}} - {{selectedParty.id}}</div>
+                    <div>{{selectedParty.endpoint}}</div>
+                </ng-template>
+
+                </p-autoComplete> 
+            </div>
+            <br>
+
+            <div class="creditamount1">Credit Account:</div>
+         
+            <div class="creditamount2">
+
+                <input type="number" min="0"  #selectCreditAmt="ngModel" pInputText class="p-inputtext-sm" 
+        placeholder="enter credit" [(ngModel)]="selectedCreditAmount" 
+        [ngModelOptions]="{standalone: true}"  autocomplete="off" (ngModelChange)="creditAmountChange($event)"
+        required>
+            </div>
+
+            <br>
+            <div class="creditaccount">
+                <p-autoComplete
+                [(ngModel)]="selectedCreditAccount"
+                [suggestions]="filteredCreditAccounts" 
+                (completeMethod)="filterCredits($event)"
+                field="accounthead" 
+                [multiple]="false" class="autocomplete" 
+                (onSelect)="handleOnSelectCreditAccount($event)"
+                [style]="{'width':'100%'}"
+                [inputStyle]="{'width':'100%'}" 
+                [placeholder]="placeholderCreditAccount" 
+                [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="creditAccountChange($event)"
+                [required]="true" #selectParty="ngModel" 
+                [forceSelection]="true">
+
+                <ng-template let-selectedParty pTemplate="item">
+                    <div>{{selectedParty.accounthead}} - {{selectedParty.id}}</div>
+                    <div>{{selectedParty.endpoint}}</div>
+                </ng-template>
+
+                </p-autoComplete>
+               
+
+            </div>
+            </div>
+          
+            <div>Text Here:
+            <br>
+                <textarea pInputTextarea [(ngModel)]="selectedNarration"[ngModelOptions]="{standalone: true}"
+                (ngModelChange)="narrationChange($event)"></textarea>
+    
+
+            </div>
+<div>          
+    <p-button (click)="showNewVoucherDialog()" icon="pi pi-external-link" 
+    styleClass="p-button-sm p-button-info p-button-raised"
+    label="New Voucher"></p-button>
+  </div>
+            
+  <div class="card">
+    <p-table [value]="selectedVouchers" [scrollable]="true"  
+    selectionMode="single" scrollHeight="200px" 
+     (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm">
+        
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>uom</th>
+                <th>Rate</th>
+                <th>Amount</th>
+                <th>Modify</th> 
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-v let-i="rowIndex">
+            <tr>
+                <td>{{v.item.itemname}}</td>
+                <td>{{v.quantity}}</td>
+                <td>{{v.item.uom.uom}}</td>
+                <td>{{v.rate}}</td>
+                <td>{{v.quantity * v.rate}}</td>
+                <!-- <td>{{v.rate }}</td>
+                <td>{{v.quantity * v.rate}}</td> -->
+                
+                    <div class="displayline">
+                        <button pButton class="p-button-sm p-button-info p-button-raised"
+                         (click)="handleEditVoucher(v)">EDIT</button>
+                        <button pButton class="p-button-sm p-button-danger p-button-raised" 
+                        (click)="handleDeleteVoucher(i)">DEL</button>
+                    </div>
+                    
+                
+                
+            </tr>
+
+           
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <tr>
+              <td colspan="4">Total</td>
+              <td>{{getTotalAmount() | number:'1.2-2'}}</td>
+            </tr>
+        </ng-template>
+</p-table>
+
+
+            <p-dialog header="Create New Voucher" [(visible)]="displaySubModal"
+            [style]="{width: '400px'}" [modal]="true"
+            [draggable]="false" [resizable]="false">
+            
+
+
+            <div class="namebox">
+                
+                <div>
+                    <div>Item</div>
+                    <p-autoComplete
+                        [(ngModel)]="voucher.item"
+                        [suggestions]="filteredItems" 
+                        (completeMethod)="filterItems($event)"
+                        field="itemname" 
+                        [multiple]="false" class="autocomplete" 
+                        (onSelect)="handleOnSelectItem($event)"
+                        [style]="{'width':'100%'}"
+                        [inputStyle]="{'width':'40%'}" 
+                        [placeholder]="placeholderItem" 
+                        [ngModelOptions]="{standalone: true}"
+                        (ngModelChange)="itemChange($event)"
+                        [required]="true" #selectItem="ngModel" 
+                        [forceSelection]="true">
+
+                        <ng-template let-selectedItem pTemplate="item">
+                            <div>{{selectedItem.itemname}} - {{selectedItem.id}}</div>
+                            <div>{{selectedItem.uom.uom}}</div>
+                        </ng-template>
+
+                    </p-autoComplete>
+                    <ng-template [ngIf]="selectItem.errors">
+                        <small id="username2-help" class="p-error block">you must select an item</small>
+                    </ng-template>
+
+                </div>
+
+                <div class="displayline">
+                    <div>
+                        <div>quantity</div>
+                        <input type="number" min="0" #selectQty="ngModel" pInputText class="p-inputtext-sm" 
+                    placeholder="enter quantity" [(ngModel)]="voucher.quantity" 
+                    [ngModelOptions]="{standalone: true}"  autocomplete="off" 
+                    required>
+                    <ng-template [ngIf]="selectQty.errors">
+                        <small id="username2-help" class="p-error block">you must enter quantity</small>
+                    </ng-template>
+
+                    </div>
+
+                    <div>{{voucher.item?.uom.uom}}</div>
+
+                    
+                </div>
+
+                
+                <div class="displayline">
+                    <div>
+                        <div>rate</div>
+                        <input type="number" min="0"  #selectUIR="ngModel" pInputText class="p-inputtext-sm" 
+                    placeholder="enter rate" [(ngModel)]="voucher.rate" 
+                    [ngModelOptions]="{standalone: true}"  autocomplete="off" (ngModelChange)="uirChange($event)"
+                    required>
+                    <ng-template [ngIf]="selectUIR.errors">
+                        <small id="username2-help" class="p-error block">you must enter rate</small>
+                    </ng-template>
+
+                    </div>
+
+                    <div></div>
+
+                    
+
+                </div>
+
+            </div>
+
+            <ng-template pTemplate="footer">
+                <p-button icon="pi pi-check" (click)="handleAddVoucher()" label="Ok" styleClass="p-button-text p-button-info p-button-raised"></p-button>
+            </ng-template>
+
+            </p-dialog>
+                    
+
+                <p-dialog header="Edit Purchase Voucher" [(visible)]="displaySubEditModal" 
+                [modal]="true"[style]="{width: '400px'}" [modal]="true"
+                [draggable]="false" [resizable]="false">
+
+                <div >
+                
+                    <div>
+                        <div>Item</div>
+                        <p-autoComplete
+                            [(ngModel)]="voucher.item"
+                            [suggestions]="filteredItems" 
+                            (completeMethod)="filterItems($event)"
+                            field="itemname" 
+                            [multiple]="false" class="autocomplete" 
+                            (onSelect)="handleOnSelectItem($event)"
+                            [style]="{'width':'100%'}"
+                            [inputStyle]="{'width':'100%'}" 
+                            [placeholder]="placeholderItem" 
+                            [ngModelOptions]="{standalone: true}"
+                            (ngModelChange)="itemChange($event)"
+                            [required]="true" #selectItem="ngModel" 
+                            [forceSelection]="true">
+        
+                            <ng-template let-selectedItem pTemplate="item">
+                                <div>{{selectedItem.itemname}} - {{selectedItem.id}}</div>
+                                <div>{{selectedItem.uom.uom}}</div>
+                            </ng-template>
+        
+                        </p-autoComplete>
+                        <ng-template [ngIf]="selectItem.errors">
+                            <small id="username2-help" class="p-error block">you must select an item</small>
+                        </ng-template>
+        
+                    </div>
+    
+                    <div class="displayline">
+                        <div>
+                            <div>quantity</div>
+                            <input type="number" #selectQty="ngModel" pInputText class="p-inputtext-sm" 
+                        placeholder="enter quantity" [(ngModel)]="voucher.quantity" 
+                        [ngModelOptions]="{standalone: true}"  autocomplete="off" 
+                        required>
+                        <ng-template [ngIf]="selectQty.errors">
+                            <small id="username2-help" class="p-error block">you must enter quantity</small>
+                        </ng-template>
+        
+                        </div>
+    
+                        <div>{{voucher.item.uom.uom}}</div>
+                        <div></div>
+        
+                    </div>
+    
+                    
+    
+    
+                    <div>
+                        <div>rate</div>
+                        <input type="number" #selectUIR="ngModel" pInputText class="p-inputtext-sm" 
+                    placeholder="enter rate" [(ngModel)]="voucher.rate" 
+                    [ngModelOptions]="{standalone: true}"  autocomplete="off" (ngModelChange)="uirChange($event)"
+                    required>
+                    <ng-template [ngIf]="selectUIR.errors">
+                        <small id="username2-help" class="p-error block">you must enter rate</small>
+                    </ng-template>
+    
+                    </div>
+    
+                 
+                    
+    
+    
+                </div>
+                <ng-template pTemplate="footer">
+                    <p-button icon="pi pi-check" (click)="handleUpdateVoucher()" label="Ok" 
+                    styleClass="p-button-text p-button-sm p-button-info p-button-raised"></p-button>
+                </ng-template>
+               
+                
+                <!-- <ng-template pTemplate="footer">
+                    <p-button icon="pi pi-check" (click)="handleSaveJournalVoucher()" label="Save" styleClass="p-button-text"></p-button>
+                </ng-template> -->
+                </p-dialog>
+          
+             
+                
+            </div>
+                
+            
+            <div class="ui-g-12" style= " text-align:right">
+                <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
+                        <button style="margin-left: 10px;"
+                         pButton class="w-auto mt-3 p-button-info p-button-raised" 
+                         icon="pi pi-check" (click)="handleSaveJournalVoucher()" label="Create"></button>
+                       
+                         <button style="margin-left: 10px;" pButton class="w-auto mt-3 p-button-danger p-button-raised " icon="pi pi-times" (click)="navigateToListItems()" label="Cancel"></button>
+        
+                    </div>
+           
+      
+                    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+                    <ng-template [ngIf]="inProgress">
+                        <div class="overlay" id="modal">
+                            <p-progressSpinner></p-progressSpinner>
+                        </div>
+                    </ng-template>
+
+  
+
+   <p-toast></p-toast>
+</div>
+    

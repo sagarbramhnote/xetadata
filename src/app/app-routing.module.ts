@@ -20,9 +20,10 @@ const routes: Routes = [
             { path: 'contacts', loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule), canActivate:[authenticationGuard()]},
             { path: 'messages', loadChildren: () => import('./messages/messages.module').then(m => m.MessagesModule), canActivate:[authenticationGuard()]},
             { path: 'recipients',component: RecipientsComponent, canActivate:[authenticationGuard()]},
-            { path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule), canActivate:[authenticationGuard()]},
+            { path: 'products', data: { breadcrumb: 'Products' },loadChildren: () => import('./products/products.module').then(m => m.ProductsModule), canActivate:[authenticationGuard()]},
             { path: 'entity',data: { breadcrumb: 'Entity' }, loadChildren: () => import('./entity/entity.module').then(m => m.EntityModule), canActivate:[authenticationGuard()]},
             { path: 'account',data: { breadcrumb: 'Account' }, loadChildren: () => import('./account/account.module').then(m => m.AccountModule), canActivate:[authenticationGuard()]},
+            { path: 'report',data: { breadcrumb: 'Report' }, loadChildren: () => import('./reports/report.module').then(m => m.ReportModule), canActivate:[authenticationGuard()]},
 
 
         ]

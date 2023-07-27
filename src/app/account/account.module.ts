@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AccountRoutingModule } from './account-routing.module';
 import { SalesComponent } from './sales/sales.component';
 import { PurchaseComponent } from './purchase/purchase.component';
@@ -26,7 +25,13 @@ import { TransferregisterComponent } from './transfer/transferregister/transferr
 import { CalendarModule } from 'primeng/calendar';
 import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
 import { JournalvouchercreateComponent } from './journal-voucher/journalvouchercreate/journalvouchercreate.component';
-
+import { NewJournalVoucherComponent } from './new-journal-voucher/new-journal-voucher.component';
+import { CreateVoucherComponent } from './create-voucher/create-voucher.component';
+import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.component';
+import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
+import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
+import { CalendarModule } from 'primeng/calendar';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
   declarations: [
@@ -38,6 +43,11 @@ import { JournalvouchercreateComponent } from './journal-voucher/journalvoucherc
     TransferregisterComponent,
     JournalVoucherComponent,
     JournalvouchercreateComponent
+    NewJournalVoucherComponent,
+    CreateVoucherComponent,
+    PurchaseReturnsComponent,
+    PurchaseReturnViewComponent,
+    SalesCreateComponent
   ],
   imports: [
     CommonModule,
@@ -58,6 +68,8 @@ import { JournalvouchercreateComponent } from './journal-voucher/journalvoucherc
     ConfirmDialogModule,
     CheckboxModule,
     CalendarModule
+    CheckboxModule,CalendarModule,
+    InputSwitchModule
   ]
 })
 export class AccountModule { }

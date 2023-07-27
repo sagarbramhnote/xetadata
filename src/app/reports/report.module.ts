@@ -4,40 +4,33 @@ import { TableModule } from 'primeng/table';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToggleButtonModule } from 'primeng/togglebutton';
-
 import { ToastModule } from 'primeng/toast';
-
 import { DropdownModule } from 'primeng/dropdown';
-import { ProductsComponent } from './products.component';
-import { ProductsRoutingModule } from './products-routing.module';
-import { ProductsEditComponent } from './products-edit/products-edit.component';
-import { CheckboxModule } from 'primeng/checkbox';
+import { ReportRoutingModule} from './report-routing.module';
 import { RippleModule } from 'primeng/ripple';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
-
-
+import { CheckboxModule } from 'primeng/checkbox';
+import { CalendarModule } from 'primeng/calendar';
+import { StockRegisterComponent } from './stock-register/stock-register.component';
 
 
 @NgModule({
   declarations: [
-    ProductsComponent,
-    ProductsEditComponent
-    
-    
 
+
+
+  
+    StockRegisterComponent
   ],
   imports: [
-    
-    ProductsRoutingModule,
     CommonModule,
-    
+    ReportRoutingModule,
     TableModule,
     ProgressSpinnerModule,
     ToastModule,
@@ -52,8 +45,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 		ProgressBarModule,
     DialogModule,
     ConfirmDialogModule,
-    CheckboxModule
-    
+    CheckboxModule,CalendarModule,
+    ReactiveFormsModule
   ]
 })
-export class ProductsModule { }
+export class ReportModule { }

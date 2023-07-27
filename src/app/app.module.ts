@@ -12,13 +12,16 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ReplaceZeroWithEmptyPipe } from './pipes/replace-zero-with-empty-for-cs.pipe.spec';
+import { ReplaceZeroWithEmptyForCSPipe } from './pipes/replace-zero-with-empty-for-cs.pipe';
 
 
 
 @NgModule({
     declarations: [
         AppComponent,
-        LoginComponent
+        LoginComponent,
+
 
     ],
     imports: [
