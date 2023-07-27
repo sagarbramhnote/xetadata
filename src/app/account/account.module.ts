@@ -19,12 +19,16 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
+import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.component';
+import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
 
 
 @NgModule({
   declarations: [
     SalesComponent,
-    PurchaseComponent
+    PurchaseComponent,
+    PurchaseReturnsComponent,
+    PurchaseReturnViewComponent
   ],
   imports: [
     CommonModule,
