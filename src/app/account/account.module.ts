@@ -30,9 +30,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
   declarations: [
     SalesComponent,
     PurchaseComponent,
-    purchaseReturn
     PurchaseReturnsComponent,
-    PurchaseReturnViewComponent
+    PurchaseReturnViewComponent,
     SalesCreateComponent
 
   ],
