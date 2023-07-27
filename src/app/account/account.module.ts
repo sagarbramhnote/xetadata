@@ -19,12 +19,25 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
+import { SalesReturnComponent } from './sales-return/sales-return.component';
+import { SalesreturnviewComponent } from './sales-return/salesreturnview/salesreturnview.component';
+import { TransferComponent } from './transfer/transfer.component';
+import { TransferregisterComponent } from './transfer/transferregister/transferregister.component';
+import { CalendarModule } from 'primeng/calendar';
+import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
+import { JournalvouchercreateComponent } from './journal-voucher/journalvouchercreate/journalvouchercreate.component';
 
 
 @NgModule({
   declarations: [
     SalesComponent,
-    PurchaseComponent
+    PurchaseComponent,
+    SalesReturnComponent,
+    SalesreturnviewComponent,
+    TransferComponent,
+    TransferregisterComponent,
+    JournalVoucherComponent,
+    JournalvouchercreateComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +56,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 		ProgressBarModule,
     DialogModule,
     ConfirmDialogModule,
-    CheckboxModule
+    CheckboxModule,
+    CalendarModule
   ]
 })
 export class AccountModule { }
