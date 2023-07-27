@@ -67,7 +67,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     DialogModule,
     ConfirmDialogModule,
     CheckboxModule,
-    CalendarModule
+    CalendarModule,
     CheckboxModule,CalendarModule,
     InputSwitchModule
   ]
