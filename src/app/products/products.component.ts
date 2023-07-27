@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, FilterService, MessageService } from 'primeng/api';
 import { XetaSuccess } from '../global/xeta-success';
 import { Xetaerror } from '../global/xetaerror';
 import { ProductServiceListService } from '../services/product-service-list.service';
 import { HttpClient } from '@angular/common/http';
+import { Table } from 'primeng/table';
+import { Router } from '@angular/router';
+import { EventBusServiceService } from '../global/event-bus-service.service';
 
 @Component({
   selector: 'app-products',
@@ -28,7 +31,9 @@ export class ProductsComponent {
   buttonText:string = 'Save'
 
 
-  constructor(private httpClient:HttpClient) {}
+  constructor(private router:Router,private httpClient:HttpClient,private eventBusService:EventBusServiceService,private confirmationService:ConfirmationService, private messageService: MessageService,private filterService: FilterService) { }
+
+
 
   ngOnInit(): void {
     this.loadProduct(0,0)
@@ -64,6 +69,8 @@ export class ProductsComponent {
           this.loading = false
           return
         }
+        
+
         // else if(v == null) { 
         //   this.loading = false
         //   this.showErrorViaToast('A null object has been returned. An undefined error has occurred.')
@@ -121,4 +128,23 @@ export class ProductsComponent {
   //   console.log('ADDRESSES',this.postalAddresses)
   //   //this.displayNewModal = true
   // }
+
+
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
+}
+
+navigateToCreateItems(){
+  
+   this.router.navigate(['products/edit'])
+}
+
+
+
+handleEditItem(i:any){
+  localStorage.setItem('editItem', JSON.stringify(i));
+  this.router.navigate(['products/edit'])
+  
+}
+
 }
