@@ -715,7 +715,53 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'General Ledger',
                         icon: 'pi pi-fw pi-align-left',
-                    }
+                        routerLink: ['/report/openingBalance'],
+                    },
+                    {
+                        label: 'Trial Balance',
+                        icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/report/openingBalance'],
+                    },
+                    {
+                        label: 'Stock Register',
+                        icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/report/stockRegister'],
+                    },
+                    {
+                        label: 'Trailing Final Accounts',
+                        icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/report/openingBalance'],
+                    },
+                    {
+                        label: 'Recipe Cost List',
+                        icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/report/openingBalance'],
+                    },
+                    {
+                        label: 'Final Accounts',
+                        icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/report/openingBalance'],
+                    },
+                    {
+                        label: 'Item Movement Register',
+                        icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/report/openingBalance'],
+                    },
+                    {
+                        label: 'Sale Invoice Ageing List',
+                        icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/report/openingBalance'],
+                    },
+                    {
+                        label: 'Purchase Invoice Ageing List',
+                        icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/report/openingBalance'],
+                    },
+                    {
+                        label: 'Resource Tracker',
+                        icon: 'pi pi-fw pi-align-left',
+                        routerLink: ['/report/openingBalance'],
+                    },
                 ]
             },
             {
