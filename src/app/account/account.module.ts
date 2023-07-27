@@ -19,12 +19,22 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
+import { CalendarModule } from 'primeng/calendar';
+import { NewJournalVoucherComponent } from './new-journal-voucher/new-journal-voucher.component';
+import { CreateVoucherComponent } from './create-voucher/create-voucher.component';
+import { ReplaceZeroWithEmptyPipe } from '../pipes/replace-zero-with-empty-for-cs.pipe.spec';
+import { ReplaceZeroWithEmptyForCSPipe } from '../pipes/replace-zero-with-empty-for-cs.pipe';
 
 
 @NgModule({
   declarations: [
     SalesComponent,
-    PurchaseComponent
+    PurchaseComponent,
+    NewJournalVoucherComponent,
+    CreateVoucherComponent,
+    ReplaceZeroWithEmptyPipe,
+    ReplaceZeroWithEmptyForCSPipe
+
   ],
   imports: [
     CommonModule,
@@ -43,7 +53,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 		ProgressBarModule,
     DialogModule,
     ConfirmDialogModule,
-    CheckboxModule
+    CheckboxModule,CalendarModule
   ]
 })
 export class AccountModule { }
