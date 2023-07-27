@@ -19,12 +19,16 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
+import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
+import { CalendarModule } from 'primeng/calendar';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 @NgModule({
   declarations: [
     SalesComponent,
-    PurchaseComponent
+    PurchaseComponent,
+    SalesCreateComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +47,10 @@ import { CheckboxModule } from 'primeng/checkbox';
 		ProgressBarModule,
     DialogModule,
     ConfirmDialogModule,
-    CheckboxModule
+    CheckboxModule,
+    CalendarModule,
+    InputSwitchModule
+
   ]
 })
 export class AccountModule { }
