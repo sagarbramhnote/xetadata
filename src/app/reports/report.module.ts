@@ -18,6 +18,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
 import { StockRegisterComponent } from './stock-register/stock-register.component';
+import { StockRegisterViewComponent } from './stock-register/stock-register-view/stock-register-view.component';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { StockRegisterComponent } from './stock-register/stock-register.componen
 
 
   
-    StockRegisterComponent
+    StockRegisterComponent,
+             StockRegisterViewComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +49,8 @@ import { StockRegisterComponent } from './stock-register/stock-register.componen
     DialogModule,
     ConfirmDialogModule,
     CheckboxModule,CalendarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TooltipModule
   ]
 })
 export class ReportModule { }

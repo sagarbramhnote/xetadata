@@ -28,15 +28,23 @@ export class PurchaseReturnViewComponent implements OnInit{
   displayViewModal:boolean = false;
   viewTotal:number = 0
   
-  constructor(private eventBusService:EventBusServiceService,private httpClient:HttpClient,private confirmationService:ConfirmationService, private messageService: MessageService) { }
+  constructor(private router:Router,private eventBusService:EventBusServiceService,private httpClient:HttpClient,private confirmationService:ConfirmationService, private messageService: MessageService) { }
  
  
   ngOnInit(): void {
-    const sanitizedInvoiceList= localStorage.getItem('purchaseReturnView');
-    if (sanitizedInvoiceList !== null) {
-      this.sanitizedInvoiceList = JSON.parse(sanitizedInvoiceList);
-      console.log('PurchaseReturn TO BE View',this.sanitizedInvoiceList)
-      this.displayEditModal = true;
+    const list= localStorage.getItem('purchaseReturnView');
+    if (list !== null) {
+      this.selectedInvoice = JSON.parse(list);
+      console.log('PARTY',this.selectedInvoice.partyaccounthead.accounthead)
+    this.viewPartyName = this.selectedInvoice.partyaccounthead.accounthead 
+    this.displayViewModal = true
+
+    this.viewTotal = 0
+    for (let index = 0; index < this.selectedInvoice.vouchers.length; index++) {
+      const voucher = this.selectedInvoice.vouchers[index];
+      let a:number = voucher.quantity * voucher.rateaftertaxes
+      this.viewTotal = this.viewTotal + a
+    }
     }
     this.loadInvoices(0,0)
   }
@@ -44,7 +52,9 @@ export class PurchaseReturnViewComponent implements OnInit{
   selectedInvoice:any = {}
   viewPartyName:any;
 
-
+  navigateToStockList(){
+    this.router.navigate(['account/purchasereturn'])
+  }
 
   sanitizeInvoices() {
     for (let index = 0; index < this.purchaseReturnList.length; index++) {
@@ -148,26 +158,7 @@ export class PurchaseReturnViewComponent implements OnInit{
     }
   }
 
-  // handleView(invoice:any) {
-  //   console.log('INVOICE',invoice)
-  //   this.selectedInvoice = invoice
-  //   this.displayViewModal = true
-  // }
 
-  handleView(invoice:any) {
-    console.log('INVOICE',invoice)
-    this.selectedInvoice = invoice
-    console.log('PARTY',this.selectedInvoice.partyaccounthead.accounthead)
-    this.viewPartyName = this.selectedInvoice.partyaccounthead.accounthead 
-    this.displayViewModal = true
-
-    this.viewTotal = 0
-    for (let index = 0; index <this.selectedInvoice.vouchers.length; index++) {
-      const voucher = this.selectedInvoice.vouchers[index];
-      let a:number = voucher.quantity * voucher.rateaftertaxes
-      this.viewTotal = this.viewTotal + a
-    }
-  }
 
 }
 
