@@ -19,7 +19,6 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
-import { CalendarModule } from 'primeng/calendar';
 import { NewJournalVoucherComponent } from './new-journal-voucher/new-journal-voucher.component';
 import { CreateVoucherComponent } from './create-voucher/create-voucher.component';
 import { ReplaceZeroWithEmptyPipe } from '../pipes/replace-zero-with-empty-for-cs.pipe.spec';
@@ -39,7 +38,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     NewJournalVoucherComponent,
     CreateVoucherComponent,
     ReplaceZeroWithEmptyPipe,
-    ReplaceZeroWithEmptyForCSPipe
+    ReplaceZeroWithEmptyForCSPipe,
     PurchaseReturnsComponent,
     PurchaseReturnViewComponent,
     SalesCreateComponent
@@ -63,8 +62,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 		ProgressBarModule,
     DialogModule,
     ConfirmDialogModule,
-    CheckboxModule,CalendarModule
-    CalendarModule,
+    CheckboxModule,CalendarModule,
     InputSwitchModule
 
   ]
