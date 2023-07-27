@@ -14,7 +14,7 @@ const routes: Routes = [
   {path: 'salesCreate', data: {breadcrumb: 'Create Sales'},component:SalesCreateComponent},
   {path: 'purchase', data: {breadcrumb: 'Purchase'},component:PurchaseComponent},
   {path: 'new-journal-voucher', data: {breadcrumb: 'journalVoucher'},component:NewJournalVoucherComponent},
-  {path: 'createVoucher', data: {breadcrumb: 'newVoucher'},component:CreateVoucherComponent}
+  {path: 'createVoucher', data: {breadcrumb: 'newVoucher'},component:CreateVoucherComponent},
   {path: 'purchasereturn', data: {breadcrumb: 'List'},component:PurchaseReturnsComponent},
   {path: 'purchaseReturnView', data: {breadcrumb: 'View'},component:PurchaseReturnViewComponent}
 
