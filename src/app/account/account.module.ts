@@ -19,6 +19,8 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
+import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.component';
+import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
 import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
 import { CalendarModule } from 'primeng/calendar';
 import { InputSwitchModule } from 'primeng/inputswitch';
@@ -28,7 +30,11 @@ import { InputSwitchModule } from 'primeng/inputswitch';
   declarations: [
     SalesComponent,
     PurchaseComponent,
+    purchaseReturn
+    PurchaseReturnsComponent,
+    PurchaseReturnViewComponent
     SalesCreateComponent
+
   ],
   imports: [
     CommonModule,
