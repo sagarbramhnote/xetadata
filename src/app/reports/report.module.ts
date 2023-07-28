@@ -18,6 +18,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
 import { StockRegisterComponent } from './stock-register/stock-register.component';
+import { SalesInvoiceAgeingComponent } from './sales-invoice-ageing/sales-invoice-ageing.component';
 
 import { TrailingFinalAccountsComponent } from './trailing-final-accounts/trailing-final-accounts.component';
 
@@ -31,7 +32,9 @@ import { TooltipModule } from 'primeng/tooltip';
 
               StockRegisterComponent,
               TrailingFinalAccountsComponent,
-             StockRegisterViewComponent
+             StockRegisterViewComponent,
+             StockRegisterComponent,
+             SalesInvoiceAgeingComponent
 
   ],
   imports: [
