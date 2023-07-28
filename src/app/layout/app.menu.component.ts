@@ -750,7 +750,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Sale Invoice Ageing List',
                         icon: 'pi pi-fw pi-align-left',
-                        routerLink: ['/report/openingBalance'],
+                        routerLink: ['/report/salesinvoiceageing'],
                     },
                     {
                         label: 'Purchase Invoice Ageing List',
