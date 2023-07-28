@@ -28,28 +28,7 @@ export class DashboardComponent {
   private _invSub:any
   private _wnvSub:any
 
-  constructor(private httpClient:HttpClient,private confirmationService:ConfirmationService, private messageService: MessageService) { 
-
-    this.basicData = {
-      labels: ['Creditors', 'Debtors', 'Cash', 'Bank', 'Cheques'],
-      datasets: [
-          {
-              label: '',
-              backgroundColor: [
-                '#EC407A',
-                '#AB47BC',
-                '#42A5F5',
-                '#7E57C2',
-                '#66BB6A',
-                '#FFCA28',
-                '#26A69A'
-            ],
-              data: [0, 0, 0, 0, 0]
-          }
-      ]
-    };
-
-  }
+  constructor(private httpClient:HttpClient,private confirmationService:ConfirmationService, private messageService: MessageService) {  }
 
   ngOnInit(): void {
     this.loadLiquidityReport()
@@ -95,7 +74,7 @@ export class DashboardComponent {
             labels: ['Creditors', 'Debtors', 'Cash', 'Bank', 'Cheques'],
             datasets: [
                 {
-                    label: '',
+                    label: 'Position',
                     backgroundColor: [
                       '#EC407A',
                       '#AB47BC',
