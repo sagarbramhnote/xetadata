@@ -29,14 +29,8 @@ import { TooltipModule } from 'primeng/tooltip';
 @NgModule({
   declarations: [
 
- trailling-final-ac,
               StockRegisterComponent,
               TrailingFinalAccountsComponent,
-
-
-
-  
-    StockRegisterComponent,
              StockRegisterViewComponent
 
   ],
