@@ -1,0 +1,119 @@
+
+<div class="card">
+    <p-table #dt [value]="generalLedger" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll" (onRowSelect)="onRowSelect($event)" selectionMode="single"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['trdatetime','accounthead','debit','credit','balance','vid','vtype']">
+        <ng-template pTemplate="caption">
+           
+    <div class="grid">
+        <div class="col-12 lg:col-10">
+            <div class="grid formgrid p-fluid">
+              <div class="field mb-4 col-12 md:col-12">
+                <div>Select Account</div>
+                <p-autoComplete
+                    [(ngModel)]="selectedAccount"
+                    [suggestions]="filteredAccounts" 
+                    (completeMethod)="filterAccounts($event)"
+                    field="accounthead" 
+                    [multiple]="false" class="autocomplete" 
+                    (onSelect)="handleOnSelectAccount($event)"
+                    [style]="{'width':'100%'}"
+                    [inputStyle]="{'width':'100%'}" 
+                    [placeholder]="placeholderAccount" 
+                    [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="accountChange($event)"
+                    [required]="true" #selectAccount="ngModel" 
+                    [forceSelection]="true">
+    
+                    <ng-template let-selectedParty pTemplate="item">
+                        <div>{{selectedParty.accounthead}} - {{selectedParty.id}}</div>
+                        <div>{{selectedParty.endpoint}}</div>
+                    </ng-template>
+    
+                </p-autoComplete>
+                <ng-template [ngIf]="selectAccount.errors">
+                    <small id="username2-help" class="p-error block">you must select an account</small>
+                </ng-template>
+    
+            </div>
+        
+                <div class="field mb-4 col-12 md:col-6">
+              
+                    <div>From Date</div>
+                    <p-calendar 
+                    [(ngModel)]="selectedFromDate"
+                    [ngModelOptions]="{standalone: true}" 
+                    [showTime]="true" [showSeconds]="true" 
+                    inputId="fromdate" 
+                    appendTo="body" (onSelect)="fromDateSelected($event)" 
+                    [required]="true">
+                    </p-calendar>
+                    
+                </div>
+      
+                <div class="field mb-4 col-12 md:col-6">
+                    <div>To Date</div>
+                    <p-calendar 
+                    [(ngModel)]="selectedToDate"
+                    [ngModelOptions]="{standalone: true}" 
+                    [showTime]="true" [showSeconds]="true" 
+                    inputId="todate" 
+                    appendTo="body" (onSelect)="toDateSelected($event)" 
+                    [required]="true">
+                    </p-calendar>
+                    
+                </div>
+                <div class="field md:col-1">
+                    <button pButton class="p-button-sm" (click)="getGeneralLedger()">GET</button>
+                </div>
+                </div>
+                </div>
+                </div>
+            
+
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                </span>
+                <div class="grid">
+                    <div class="col-12">
+                   <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="newExportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                    </div>
+                    </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="trdatetime" class="white-space-nowrap" style="width:10%">Date <p-sortIcon field="trdatetime"></p-sortIcon></th>
+                <th pSortableColumn="accounthead" class="white-space-nowrap" style="width:20%">Account <p-sortIcon field="accounthead"></p-sortIcon></th>
+                <th pSortableColumn="debit" class="white-space-nowrap" style="width:15%">Debit <p-sortIcon field="debit"></p-sortIcon></th>
+                <th pSortableColumn="credit" class="white-space-nowrap" style="width:15%">Credit<p-sortIcon field="credit"></p-sortIcon></th>
+                <th pSortableColumn="balance" class="white-space-nowrap" style="width:10%">Balance <p-sortIcon field="balance"></p-sortIcon></th>
+                <th pSortableColumn="vid" class="white-space-nowrap" style="width:12%">vid <p-sortIcon field="vid"></p-sortIcon></th>
+                <th pSortableColumn="vtype" class="white-space-nowrap" style="width:12%">vtype <p-sortIcon field="vtype"></p-sortIcon></th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-inv let-i="rowIndex">
+            <tr>
+                <td>{{inv.trdatetime | date:'dd-MM-yyyy'}}</td>
+                <td>{{inv.accounthead}}</td>
+                <td>{{inv.debit }}</td>
+                <td>{{inv.credit }}</td>
+                <td>{{inv.balance}} &nbsp; {{inv.baltype}}</td>
+                <td>{{inv.vid}}</td>
+                <td>{{inv.vtype}}</td>
+                
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+<ng-template [ngIf]="inProgress">
+    <div class="overlay" id="modal">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
+</ng-template>

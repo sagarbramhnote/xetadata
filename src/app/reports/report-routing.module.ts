@@ -5,6 +5,7 @@ import { StockRegisterComponent } from './stock-register/stock-register.componen
 import { TrailingFinalAccountsComponent } from './trailing-final-accounts/trailing-final-accounts.component';
 
 import { StockRegisterViewComponent } from './stock-register/stock-register-view/stock-register-view.component';
+import { GeneralLedgerComponent } from './general-ledger/general-ledger.component';
 
 
 
@@ -16,6 +17,8 @@ const routes: Routes = [
   {path: 'trailingFinalAccount',data: {breadcrumb: 'Fianal Account'},component:TrailingFinalAccountsComponent},
 
   {path: 'stockRegisterView',data: {breadcrumb: 'Stock Register'},component:StockRegisterViewComponent},
+  {path: 'generalLedger',data: {breadcrumb: 'General Ledger'},component:GeneralLedgerComponent},
+
 
 
 
