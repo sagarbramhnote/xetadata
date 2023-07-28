@@ -715,7 +715,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'General Ledger',
                         icon: 'pi pi-fw pi-align-left',
-                        routerLink: ['/report/openingBalance'],
+                        routerLink: ['/report/generalLedger'],
                     },
                     {
                         label: 'Trial Balance',
