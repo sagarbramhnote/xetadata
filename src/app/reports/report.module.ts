@@ -18,15 +18,14 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
 import { StockRegisterComponent } from './stock-register/stock-register.component';
+import { TrailingFinalAccountsComponent } from './trailing-final-accounts/trailing-final-accounts.component';
 
 
 @NgModule({
   declarations: [
 
-
-
-  
-    StockRegisterComponent
+              StockRegisterComponent,
+              TrailingFinalAccountsComponent
   ],
   imports: [
     CommonModule,
