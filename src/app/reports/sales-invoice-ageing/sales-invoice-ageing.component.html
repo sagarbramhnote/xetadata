@@ -1,0 +1,122 @@
+<div class="card">
+    <p-table #dt [value]="invoiceList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['invnum','trdatetime','partyname','debit','received','receivable','numdays']">
+        <ng-template pTemplate="caption">
+            Sale Invoice Ageing List as on {{today | date:'fullDate'}}
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                </span>
+                <div class="grid">
+                    <div class="col-12">
+                        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-primary mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="newExportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                    </div>
+                </div>            
+            </div>
+        </ng-template>
+
+
+        <ng-template pTemplate="header"> 
+            <tr>
+                <th pSortableColumn="invnum">
+                    Invoice Id
+                        <p-sortIcon field="invnum"></p-sortIcon>
+                </th>
+                
+                <th style="width: 200px;" pSortableColumn="trdatetime">
+                    Date
+                        <p-sortIcon field="trdatetime"></p-sortIcon>
+                </th>
+                
+                <th pSortableColumn="partyname">
+                    Party & Contact
+                        <p-sortIcon field="partyname"></p-sortIcon>
+                </th>
+                
+                <th pSortableColumn="debit">
+                    Value
+                        <p-sortIcon field="debit"></p-sortIcon>
+                </th>
+                <th pSortableColumn="received">
+                    Received
+                        <p-sortIcon field="received"></p-sortIcon>
+                </th>
+                <th pSortableColumn="receivable">
+                    Receivable
+                        <p-sortIcon field="receivable"></p-sortIcon>
+                </th>
+                <th pSortableColumn="numdays">
+                    Days
+                        <p-sortIcon field="numdays"></p-sortIcon>
+                </th>
+                
+                <!--<th pSortableColumn="reorder">
+                    <div class="flex justify-content-between align-items-center">
+                        Reorder Level
+                        <p-sortIcon field="itemdetail.reorderquantity"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="status">
+                    <div class="flex justify-content-between align-items-center">
+                        Status
+                        <p-sortIcon field="status"></p-sortIcon>
+                    </div>
+                </th> -->
+                <!-- <th>Actions</th> -->
+            </tr>
+        </ng-template>
+
+
+        <ng-template pTemplate="body" let-inv let-i="rowIndex">
+            <tr>
+                
+                <td>{{inv.invnum}}</td>
+                <td>{{ inv.trdatetime | date:'dd-MMM-yyyy hh:mm a' }}</td>
+                <td>{{inv.partyname}} - {{inv.endpoint}}</td>
+                <td>
+                    <div class="my-right-text">
+                        {{inv.debit }}
+                     </div>
+                </td>
+                
+                <td>
+                    <div class="my-right-text">
+                        {{inv.received}}
+                     </div>
+                </td> 
+                <td>
+                    <div class="my-right-text">
+                        {{inv.receivable }}
+                     </div>
+                </td>
+                <td>{{inv.numdays | number: '1.0-2'}}</td>
+                </tr>
+        
+        </ng-template>
+
+   
+        <ng-template pTemplate="footer">
+            <tr>
+              <td colspan="6">Total</td>
+              <td>{{getTotalAmount() | number:'1.2-2'}}</td>
+            </tr>
+          </ng-template>
+        
+
+        
+    </p-table>
+
+    
+
+    
+   
+</div>
+
+            
+            
+            
+            
+            
