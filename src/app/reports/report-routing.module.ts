@@ -15,15 +15,9 @@ const routes: Routes = [
 
   {path: 'stockRegister',data: {breadcrumb: 'Stock Register'},component:StockRegisterComponent},
   {path: 'salesinvoiceageing',data: {breadcrumb: 'Sales Invoice Ageing-List'},component:SalesInvoiceAgeingComponent},
-
-
-
   {path: 'trailingFinalAccount',data: {breadcrumb: 'Fianal Account'},component:TrailingFinalAccountsComponent},
-
   {path: 'stockRegisterView',data: {breadcrumb: 'Stock Register'},component:StockRegisterViewComponent},
   {path: 'generalLedger',data: {breadcrumb: 'General Ledger'},component:GeneralLedgerComponent},
-
-
 
 
 
