@@ -745,7 +745,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Item Movement Register',
                         icon: 'pi pi-fw pi-align-left',
-                        routerLink: ['/report/openingBalance'],
+                        routerLink: ['/report/itemMovementRegister'],
                     },
                     {
                         label: 'Sale Invoice Ageing List',

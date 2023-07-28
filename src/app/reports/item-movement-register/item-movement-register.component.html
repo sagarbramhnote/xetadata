@@ -1,0 +1,71 @@
+
+<div class="card">
+    <p-table #dt [value]="stockList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll" (onRowSelect)="onRowSelect($event)" selectionMode="single"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['item','item_name','uom','purchase','pret','consume','produce','sale','sret','qty','org','amount']">
+        <ng-template pTemplate="caption">
+            Item Movement Register as on {{today | date:'fullDate'}}
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                </span>
+                <div class="grid">
+                    <div class="col-12">
+                        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-primary mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="newExportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                    </div>
+                    </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="item" class="white-space-nowrap">Id <p-sortIcon field="item"></p-sortIcon></th>
+                <th pSortableColumn="item_name" class="white-space-nowrap">Item <p-sortIcon field="item_name"></p-sortIcon></th>
+                <th pSortableColumn="uom" class="white-space-nowrap">UOM <p-sortIcon field="uom"></p-sortIcon></th>
+                <th pSortableColumn="purchase" class="white-space-nowrap">Purchase<p-sortIcon field="purchase"></p-sortIcon></th>
+                <th pSortableColumn="pret" class="white-space-nowrap"> P Return <p-sortIcon field="pret"></p-sortIcon></th>
+                <th pSortableColumn="consume" class="white-space-nowrap">Consume <p-sortIcon field="consume"></p-sortIcon></th>
+                <th pSortableColumn="produce" class="white-space-nowrap">Produce <p-sortIcon field="produce"></p-sortIcon></th>
+                <th pSortableColumn="sale" class="white-space-nowrap">Sale / Issue <p-sortIcon field="sale"></p-sortIcon></th>
+                <th pSortableColumn="sret" class="white-space-nowrap"> S Return <p-sortIcon field="sret"></p-sortIcon></th>
+                <th pSortableColumn="qty" class="white-space-nowrap">Quantity <p-sortIcon field="qty"></p-sortIcon></th>
+                <th pSortableColumn="org" class="white-space-nowrap">Rate <p-sortIcon field="org"></p-sortIcon></th>
+                <th pSortableColumn="amount" class="white-space-nowrap">Value <p-sortIcon field="amount"></p-sortIcon></th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-inv let-i="rowIndex">
+            <tr>
+                
+                <td>{{inv.item}}</td>
+                <td>{{inv.item_name}}</td>
+                <td>{{inv.uom}}</td>
+                <td>{{inv.purchase }}</td>
+                <td>{{inv.pret }}</td>
+                <td>{{inv.consume }}</td>
+                <td>{{inv.produce }}</td>
+                <td>{{inv.sale }}</td>
+                <td>{{inv.sret }}</td>
+                <td>{{inv.qty }}</td>
+                <td>{{inv.org }}</td>
+                <td style="text-align: right;">{{inv.amount}}</td>
+                
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <tr>
+              <td colspan="4">Total</td>
+              <td>{{getTotalAmount() | number:'1.2-2'}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+<ng-template [ngIf]="inProgress">
+    <div class="overlay" id="modal">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
+</ng-template>
