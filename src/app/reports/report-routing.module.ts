@@ -13,7 +13,7 @@ import { StockRegisterViewComponent } from './stock-register/stock-register-view
 const routes: Routes = [
 
   {path: 'stockRegister',data: {breadcrumb: 'Stock Register'},component:StockRegisterComponent},
-  {path: 'salesinvoiceageing',data: {breadcrumb: 'Sales Invoice Ageing-List'},component:SalesInvoiceAgeingComponent}
+  {path: 'salesinvoiceageing',data: {breadcrumb: 'Sales Invoice Ageing-List'},component:SalesInvoiceAgeingComponent},
 
 
 
