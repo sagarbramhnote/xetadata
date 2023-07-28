@@ -740,7 +740,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Final Accounts',
                         icon: 'pi pi-fw pi-align-left',
-                        routerLink: ['/report/openingBalance'],
+                        routerLink: ['/report/finalaccount'],
                     },
                     {
                         label: 'Item Movement Register',
