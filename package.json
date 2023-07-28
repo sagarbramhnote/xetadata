@@ -30,7 +30,13 @@
     "file-saver": "^2.0.5",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.31",
+<<<<<<< HEAD
     "moment": "^2.29.4",
+=======
+
+    "moment": "^2.29.4",
+
+>>>>>>> 5d537afb1192aa9f1bb2cffcd6aeeb2eab0090f0
     "primeflex": "^3.2.1",
     "primeicons": "6.0.1",
     "primeng": "15.2.0",
@@ -39,7 +45,14 @@
     "quill": "^1.3.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+<<<<<<< HEAD
     "xlsx": "^0.18.5",
+=======
+
+    "xlsx": "^0.18.5",
+
+
+>>>>>>> 5d537afb1192aa9f1bb2cffcd6aeeb2eab0090f0
     "zone.js": "~0.12.0"
   },
   "devDependencies": {
