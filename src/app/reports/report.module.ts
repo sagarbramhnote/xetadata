@@ -24,6 +24,7 @@ import { TrailingFinalAccountsComponent } from './trailing-final-accounts/traili
 
 import { StockRegisterViewComponent } from './stock-register/stock-register-view/stock-register-view.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { FialAccountComponent } from './fial-account/fial-account.component';
 
 
 
@@ -34,7 +35,8 @@ import { TooltipModule } from 'primeng/tooltip';
               TrailingFinalAccountsComponent,
              StockRegisterViewComponent,
              StockRegisterComponent,
-             SalesInvoiceAgeingComponent
+             SalesInvoiceAgeingComponent,
+             FialAccountComponent
 
   ],
   imports: [
