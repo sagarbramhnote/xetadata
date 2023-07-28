@@ -1,0 +1,70 @@
+<div class="card">
+
+
+    <p-table [value]="unprocessedData" [scrollable]="true"  
+    selectionMode="single" scrollHeight="500px" 
+         selectionMode="single" 
+        styleClass="p-datatable-gridlines" styleClass="p-datatable-sm">
+
+        <ng-template pTemplate="caption">
+            <div class="table-header">
+                <!-- Final Accounts as on {{today | date:'fullDate'}}    -->
+                Trailing 12 Month statement of operations and balance sheet
+            </div>
+            <br>
+            <div class="flex">
+                <!-- <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button> -->
+                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="newExportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                <!-- <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button> -->
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header"> 
+            <tr>
+                <!-- <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th> -->
+
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-inv let-i="rowIndex">
+            <tr>
+                <!-- <td *ngFor="let col of columns">
+                    {{rowData[col.field] | replaceZeroWithEmpty}}
+                </td> -->
+
+                <td>{{inv.title}}</td>
+                <td>{{inv.a}}</td>
+                <td>{{inv.b}}</td>
+                <td>{{inv.c}}</td>
+                <td>{{inv.d}}</td>
+                <td>{{inv.e}}</td>
+                <td>{{inv.f}}</td>
+                <td>{{inv.g}}</td>
+                <td>{{inv.h}}</td>
+                <td>{{inv.i}}</td>
+                <td>{{inv.j}}</td>
+                <td>{{inv.k}}</td>
+                <td>{{inv.l}}</td>
+
+
+            </tr>
+        </ng-template>
+    </p-table>
+
+    </div>
