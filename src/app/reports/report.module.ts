@@ -39,9 +39,6 @@ import { ItemMovementRegisterComponent } from './item-movement-register/item-mov
               StockRegisterComponent,
               TrailingFinalAccountsComponent,
              StockRegisterViewComponent,
-
-             StockRegisterComponent,
-             SalesInvoiceAgeingComponent,
              FialAccountComponent,
              GeneralLedgerComponent,
              SalesInvoiceAgeingComponent,
