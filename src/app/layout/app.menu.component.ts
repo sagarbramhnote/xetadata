@@ -729,8 +729,8 @@ export class AppMenuComponent implements OnInit {
                     },
                     {
                         label: 'Trailing Final Accounts',
-                        icon: 'pi pi-fw pi-align-left',
-                        routerLink: ['/report/openingBalance'],
+                        icon: 'pi pi-book',
+                        routerLink: ['/report/trailingFinalAccount'],
                     },
                     {
                         label: 'Recipe Cost List',

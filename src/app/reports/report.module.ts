@@ -20,15 +20,22 @@ import { CalendarModule } from 'primeng/calendar';
 import { StockRegisterComponent } from './stock-register/stock-register.component';
 import { SalesInvoiceAgeingComponent } from './sales-invoice-ageing/sales-invoice-ageing.component';
 
+import { TrailingFinalAccountsComponent } from './trailing-final-accounts/trailing-final-accounts.component';
+
+import { StockRegisterViewComponent } from './stock-register/stock-register-view/stock-register-view.component';
+import { TooltipModule } from 'primeng/tooltip';
+
+
 
 @NgModule({
   declarations: [
 
+              StockRegisterComponent,
+              TrailingFinalAccountsComponent,
+             StockRegisterViewComponent,
+             StockRegisterComponent,
+             SalesInvoiceAgeingComponent
 
-
-  
-    StockRegisterComponent,
-              SalesInvoiceAgeingComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +55,8 @@ import { SalesInvoiceAgeingComponent } from './sales-invoice-ageing/sales-invoic
     DialogModule,
     ConfirmDialogModule,
     CheckboxModule,CalendarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TooltipModule
   ]
 })
 export class ReportModule { }

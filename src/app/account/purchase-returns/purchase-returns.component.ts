@@ -158,7 +158,7 @@ navigateToCreatePurchaseReturn(){
 
 
   handleView(invoice:any) {
-    localStorage.setItem('purchaseReturnView', JSON.stringify(this.sanitizedInvoiceList));
+    localStorage.setItem('purchaseReturnView', JSON.stringify(invoice));
     this.router.navigate(['account/purchaseReturnView'])
   }
 
