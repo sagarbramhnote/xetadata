@@ -1,1 +1,52 @@
-<p>stock-register works!</p>
+
+<div class="card">
+    <p-table #dt [value]="stockList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll" (onRowSelect)="onRowSelect($event)" selectionMode="single"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['id','item','uom','quantity','reorder','status']">
+        <ng-template pTemplate="caption">
+            Stock Balance Register as on {{today | date:'fullDate'}}
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                </span>
+                <div class="grid">
+                    <div class="col-12">
+                        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-primary mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="newExportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                    </div>
+                    </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="id" class="white-space-nowrap" style="width:10%">Id <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="item" class="white-space-nowrap" style="width:20%">Item <p-sortIcon field="item"></p-sortIcon></th>
+                <th pSortableColumn="uom" class="white-space-nowrap" style="width:15%">UOM <p-sortIcon field="uom"></p-sortIcon></th>
+                <th pSortableColumn="quantity" class="white-space-nowrap" style="width:15%">Quantity<p-sortIcon field="quantity"></p-sortIcon></th>
+                <th pSortableColumn="reorder" class="white-space-nowrap" style="width:10%">Reorder Level <p-sortIcon field="reorder"></p-sortIcon></th>
+                <th pSortableColumn="status" class="white-space-nowrap" style="width:12%">Status <p-sortIcon field="status"></p-sortIcon></th>
+                <th class="white-space-nowrap">Actions </th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-inv let-i="rowIndex">
+            <tr>
+                <td>{{inv.id}}</td>
+                <td>{{inv.item}}</td>
+                <td>{{inv.uom}}</td>
+                <td>{{inv.quantity}}</td>
+                <td>{{inv.reorder}}</td>
+                <td><span [class]="'customer-badge status-' + inv.status">{{inv.status}}</span></td>
+                <td>
+                    <div class="grid">
+                        <div class="col-12">
+                            <button  pButton icon="pi pi-external-link" class="mr-2 p-button-success p-button-sm p-button-raised" (click)="handleView(inv)" label="View"></button>
+                        </div>
+                        </div>
+                </td>
+                
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

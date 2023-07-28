@@ -18,14 +18,27 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
 import { StockRegisterComponent } from './stock-register/stock-register.component';
+
 import { TrailingFinalAccountsComponent } from './trailing-final-accounts/trailing-final-accounts.component';
+
+import { StockRegisterViewComponent } from './stock-register/stock-register-view/stock-register-view.component';
+import { TooltipModule } from 'primeng/tooltip';
+
 
 
 @NgModule({
   declarations: [
 
+ trailling-final-ac,
               StockRegisterComponent,
-              TrailingFinalAccountsComponent
+              TrailingFinalAccountsComponent,
+
+
+
+  
+    StockRegisterComponent,
+             StockRegisterViewComponent
+
   ],
   imports: [
     CommonModule,
@@ -45,7 +58,8 @@ import { TrailingFinalAccountsComponent } from './trailing-final-accounts/traili
     DialogModule,
     ConfirmDialogModule,
     CheckboxModule,CalendarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TooltipModule
   ]
 })
 export class ReportModule { }
