@@ -19,15 +19,32 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
 import { StockRegisterComponent } from './stock-register/stock-register.component';
 import { PurchaseInvoiceAgeingListComponent } from './purchase-invoice-ageing-list/purchase-invoice-ageing-list.component';
+import { SalesInvoiceAgeingComponent } from './sales-invoice-ageing/sales-invoice-ageing.component';
+
+import { TrailingFinalAccountsComponent } from './trailing-final-accounts/trailing-final-accounts.component';
+
+import { StockRegisterViewComponent } from './stock-register/stock-register-view/stock-register-view.component';
+import { TooltipModule } from 'primeng/tooltip';
+
+import { FialAccountComponent } from './fial-account/fial-account.component';
+
+import { GeneralLedgerComponent } from './general-ledger/general-ledger.component';
+import { ItemMovementRegisterComponent } from './item-movement-register/item-movement-register.component';
+
+
 
 
 @NgModule({
   declarations: [
 
-
-
-  
-    StockRegisterComponent,
+              StockRegisterComponent,
+              TrailingFinalAccountsComponent,
+              StockRegisterViewComponent,
+              FialAccountComponent,
+              GeneralLedgerComponent,
+              SalesInvoiceAgeingComponent,
+              ItemMovementRegisterComponent,
+              StockRegisterComponent,
               PurchaseInvoiceAgeingListComponent
   ],
   imports: [
@@ -48,7 +65,8 @@ import { PurchaseInvoiceAgeingListComponent } from './purchase-invoice-ageing-li
     DialogModule,
     ConfirmDialogModule,
     CheckboxModule,CalendarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TooltipModule
   ]
 })
 export class ReportModule { }

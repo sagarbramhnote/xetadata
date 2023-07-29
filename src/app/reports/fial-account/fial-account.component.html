@@ -1,0 +1,133 @@
+<style>
+    .displayline {
+        display: grid;
+        grid-template-areas: 'qty uom am';
+        gap: 5px;
+    }
+</style>
+<div class="card">
+    <p-table #dt [value]="finalAccounts" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['dahid','dac','debit','cahid','cac','credit']">
+        <ng-template pTemplate="caption">
+            <div class="table-header">
+                <!-- Final Accounts as on {{today | date:'fullDate'}}    -->
+                Statement of operations and balance sheet
+            </div><br>
+
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                </span>
+            </div>
+            
+            <br>
+            <div class="displayline">
+                <div>
+                    <div>
+                        <div>From Date</div>
+                        <p-calendar 
+                        [(ngModel)]="selectedFromDate"
+                        [ngModelOptions]="{standalone: true}" 
+                        [showTime]="true" [showSeconds]="true" 
+                        inputId="fromdate" 
+                        appendTo="body" (onSelect)="fromDateSelected($event)" 
+                        [required]="true">
+                        </p-calendar>
+                    </div>
+                </div>
+                <div>
+                    <div>
+
+                      <div>To Date</div>
+                        <p-calendar 
+                        [(ngModel)]="selectedToDate"
+                        [ngModelOptions]="{standalone: true}" 
+                        [showTime]="true" [showSeconds]="true" 
+                        inputId="todate" 
+                        appendTo="body" (onSelect)="toDateSelected($event)" 
+                        [required]="true">
+                        </p-calendar>
+                        
+                    </div>
+                </div>
+
+                <div>
+                    <button pButton class="p-button-sm" (click)="getFinalAccounts()">GET</button>
+                </div>
+
+            </div>
+                
+
+
+                <br><br>
+    
+
+                <div class="flex">
+                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="newExportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                </div>
+        </ng-template>
+
+        <!-- <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="dahid" class="white-space-nowrap" style="width:10%"> <p-sortIcon field="dahid"></p-sortIcon></th>
+                <th pSortableColumn="dac" class="white-space-nowrap" style="width:20%"> <p-sortIcon field="dac"></p-sortIcon></th>
+                <th pSortableColumn="debit" class="white-space-nowrap" style="width:15%"> <p-sortIcon field="debit"></p-sortIcon></th>
+                <th pSortableColumn="cahid" class="white-space-nowrap" style="width:15%"><p-sortIcon field="cahid"></p-sortIcon></th>
+                <th pSortableColumn="cac" class="white-space-nowrap" style="width:10%"> <p-sortIcon field="cac"></p-sortIcon></th>
+                <th pSortableColumn="credit" class="white-space-nowrap" style="width:12%"> <p-sortIcon field="credit"></p-sortIcon></th>
+                
+
+            </tr>
+        </ng-template> -->
+    
+
+        
+
+        <ng-template pTemplate="header"> 
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-inv let-i="rowIndex">
+            <tr>
+                <td>{{inv.dahid}}</td>
+                <!-- <td *ngIf="inv.dahid !== 'title'">{{inv.dahid}}</td>
+                <td *ngIf="inv.dahid === 'title'" [pRowSpanGroup]="2">Title</td> -->
+                <td>{{inv.dac}}</td>
+                <td>
+                    <div class="my-right-text">{{inv.debit }}</div>
+                </td>
+                
+                
+                <td>{{inv.cahid}}</td>
+                <td>{{inv.cac}}</td> 
+                <td>
+                    <div class="my-right-text">{{inv.credit }}</div>
+                </td>
+                
+            </tr>
+        </ng-template>
+   
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+
+<ng-template [ngIf]="inProgress">
+    <div class="overlay" id="modal">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
+</ng-template>
+
+
+
+
+    </p-table>
+</div>
