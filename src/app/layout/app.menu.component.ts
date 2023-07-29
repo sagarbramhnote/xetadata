@@ -755,7 +755,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Purchase Invoice Ageing List',
                         icon: 'pi pi-fw pi-align-left',
-                        routerLink: ['/report/openingBalance'],
+                        routerLink: ['/report/purchaseInvoice'],
                     },
                     {
                         label: 'Resource Tracker',

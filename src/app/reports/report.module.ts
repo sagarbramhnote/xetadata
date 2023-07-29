@@ -18,6 +18,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
 import { StockRegisterComponent } from './stock-register/stock-register.component';
+import { PurchaseInvoiceAgeingListComponent } from './purchase-invoice-ageing-list/purchase-invoice-ageing-list.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { StockRegisterComponent } from './stock-register/stock-register.componen
 
 
   
-    StockRegisterComponent
+    StockRegisterComponent,
+              PurchaseInvoiceAgeingListComponent
   ],
   imports: [
     CommonModule,
