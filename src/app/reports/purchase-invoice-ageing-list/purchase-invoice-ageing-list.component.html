@@ -3,7 +3,7 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
         [globalFilterFields]="['invnum','trdatetime','partyname','credit','paid','payable','numdays']">
         <ng-template pTemplate="caption">
-            Stock Balance Register as on {{today | date:'fullDate'}}
+            Purchase Invoice Ageing List as on {{today | date:'fullDate'}}
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
                 <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
                     <i class="pi pi-search"></i>
@@ -26,7 +26,6 @@
                 <th pSortableColumn="paid" class="white-space-nowrap" style="width:10%">Paid<p-sortIcon field="paid"></p-sortIcon></th>
                 <th pSortableColumn="payable" class="white-space-nowrap" style="width:10%">Payable<p-sortIcon field="payable"></p-sortIcon></th>
                 <th pSortableColumn="numdays" class="white-space-nowrap" style="width:12%">Days<p-sortIcon field="numdays"></p-sortIcon></th>
-                <th class="white-space-nowrap"></th>
 
             </tr>
         </ng-template>
@@ -59,15 +58,15 @@
         </ng-template>
         <ng-template pTemplate="footer">
             <tr>
-              <td colspan="4">Total</td>
+              <td colspan="5">Total</td>
               <td>{{getTotalAmount() | number:'1.2-2'}}</td>
             </tr>
           </ng-template>
     </p-table>
-
+</div>
 <ng-template [ngIf]="inProgress">
     <div class="overlay" id="modal">
         <p-progressSpinner></p-progressSpinner>
     </div>
 </ng-template>
-</div>
+
