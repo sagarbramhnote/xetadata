@@ -715,7 +715,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'General Ledger',
                         icon: 'pi pi-fw pi-align-left',
-                        routerLink: ['/report/openingBalance'],
+                        routerLink: ['/report/generalLedger'],
                     },
                     {
                         label: 'Trial Balance',
@@ -740,27 +740,27 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Final Accounts',
                         icon: 'pi pi-fw pi-align-left',
-                        routerLink: ['/report/openingBalance'],
+                        routerLink: ['/report/finalaccount'],
                     },
                     {
                         label: 'Item Movement Register',
                         icon: 'pi pi-fw pi-align-left',
-                        routerLink: ['/report/openingBalance'],
+                        routerLink: ['/report/itemMovementRegister'],
                     },
                     {
                         label: 'Sale Invoice Ageing List',
                         icon: 'pi pi-fw pi-align-left',
-                        routerLink: ['/report/openingBalance'],
+                        routerLink: ['/report/salesinvoiceageing'],
                     },
                     {
                         label: 'Purchase Invoice Ageing List',
                         icon: 'pi pi-fw pi-align-left',
-                        routerLink: ['/report/openingBalance'],
+                        routerLink: ['/report/purchaseInvoice'],
                     },
                     {
                         label: 'Resource Tracker',
                         icon: 'pi pi-fw pi-align-left',
-                        routerLink: ['/report/openingBalance'],
+                        routerLink: ['/report/resourcetracker'],
                     },
                 ]
             },

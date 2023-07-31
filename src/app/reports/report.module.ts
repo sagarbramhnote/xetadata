@@ -18,12 +18,26 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
 import { StockRegisterComponent } from './stock-register/stock-register.component';
+import { PurchaseInvoiceAgeingListComponent } from './purchase-invoice-ageing-list/purchase-invoice-ageing-list.component';
+import { SalesInvoiceAgeingComponent } from './sales-invoice-ageing/sales-invoice-ageing.component';
 
 import { TrailingFinalAccountsComponent } from './trailing-final-accounts/trailing-final-accounts.component';
 
 import { StockRegisterViewComponent } from './stock-register/stock-register-view/stock-register-view.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { RecipeCostListComponent } from './recipe-cost-list/recipe-cost-list.component';
+
+
+
+import { FialAccountComponent } from './fial-account/fial-account.component';
+
+import { GeneralLedgerComponent } from './general-ledger/general-ledger.component';
+
+import { ResourceTrackerComponent } from './resource-tracker/resource-tracker.component';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ToolbarModule } from 'primeng/toolbar';
+
+import { ItemMovementRegisterComponent } from './item-movement-register/item-movement-register.component';
 
 
 
@@ -35,10 +49,22 @@ import { RecipeCostListComponent } from './recipe-cost-list/recipe-cost-list.com
               StockRegisterComponent,
               TrailingFinalAccountsComponent,
              StockRegisterViewComponent,
-             RecipeCostListComponent,
+             RecipeCostListComponent
         
             
             ],
+             GeneralLedgerComponent,
+             SalesInvoiceAgeingComponent,
+             ResourceTrackerComponent,
+             StockRegisterViewComponent,
+              FialAccountComponent,
+              GeneralLedgerComponent,
+              SalesInvoiceAgeingComponent,
+              ItemMovementRegisterComponent,
+              StockRegisterComponent,
+              PurchaseInvoiceAgeingListComponent
+  ],
+
   imports: [
     CommonModule,
     ReportRoutingModule,
@@ -58,7 +84,8 @@ import { RecipeCostListComponent } from './recipe-cost-list/recipe-cost-list.com
     ConfirmDialogModule,
     CheckboxModule,CalendarModule,
     ReactiveFormsModule,
-    TooltipModule
+    TooltipModule,
+    FileUploadModule,ToolbarModule
   ]
 })
 export class ReportModule { }
