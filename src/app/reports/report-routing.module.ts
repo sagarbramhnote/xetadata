@@ -33,7 +33,7 @@ const routes: Routes = [
  
   {path: 'resourcetracker',data: {breadcrumb: 'Resource Tracker'},component:ResourceTrackerComponent},
  
-  {path: 'itemMovementRegister',data: {breadcrumb: 'Item Movement Register'},component:ItemMovementRegisterComponent}
+  {path: 'itemMovementRegister',data: {breadcrumb: 'Item Movement Register'},component:ItemMovementRegisterComponent},
 
    {path: 'recipeCostList',data: {breadcrumb: 'Recipe List'},component:RecipeCostListComponent},
 
