@@ -1,1 +1,19 @@
-<p>dashboard workssss!</p>
+
+<div class="grid p-fluid">
+
+    <div class="col-12 lg:col-6">
+        <div class="card">
+            <h5>LIQUIDITY POSITION</h5>
+            <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+        </div>
+    </div>
+
+    <div class="col-12 lg:col-6">
+        <div class="card">
+            <h5>Weekly Sales</h5>
+            <p-chart type="line" [data]="weeklySalesData" [options]="weeklySalesOptions"></p-chart>
+        </div>
+    </div>
+
+    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+</div>

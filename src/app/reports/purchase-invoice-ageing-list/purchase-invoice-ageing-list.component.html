@@ -1,0 +1,73 @@
+<div class="card">
+    <p-table #dt [value]="invoiceList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll" (onRowSelect)="onRowSelect($event)" selectionMode="single"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['invnum','trdatetime','partyname','credit','paid','payable','numdays']">
+        <ng-template pTemplate="caption">
+            Stock Balance Register as on {{today | date:'fullDate'}}
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                </span>
+                <div class="grid">
+                    <div class="col-12">
+                        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-primary mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="newExportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                    </div>
+                    </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="invnum" class="white-space-nowrap" style="width:10%">Invoice Id <p-sortIcon field="invnum"></p-sortIcon></th>
+                <th pSortableColumn="trdatetime" class="white-space-nowrap" style="width:20%">Date<p-sortIcon field="trdatetime"></p-sortIcon></th>
+                <th pSortableColumn="partyname" class="white-space-nowrap" style="width:15%">Party & Contact<p-sortIcon field="partyname"></p-sortIcon></th>
+                <th pSortableColumn="credit" class="white-space-nowrap" style="width:15%">Value<p-sortIcon field="credit"></p-sortIcon></th>
+                <th pSortableColumn="paid" class="white-space-nowrap" style="width:10%">Paid<p-sortIcon field="paid"></p-sortIcon></th>
+                <th pSortableColumn="payable" class="white-space-nowrap" style="width:10%">Payable<p-sortIcon field="payable"></p-sortIcon></th>
+                <th pSortableColumn="numdays" class="white-space-nowrap" style="width:12%">Days<p-sortIcon field="numdays"></p-sortIcon></th>
+                <th class="white-space-nowrap"></th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-inv let-i="rowIndex">
+            <tr>
+                
+                <td>{{inv.invnum}}</td>
+                <td>{{ inv.trdatetime | date:'dd-MMM-yyyy hh:mm a' }}</td>
+                <td>{{inv.partyname}} - {{inv.endpoint}}</td>
+                <td>
+                    <div class="my-right-text">
+                        {{inv.credit}}
+                     </div>
+                </td>
+                
+                <td>
+                    <div class="my-right-text">
+                        {{inv.paid}}
+                     </div>
+                </td> 
+                <td>
+                    <div class="my-right-text">
+                        {{inv.payable}}
+                     </div>
+                </td>
+                <td>{{inv.numdays | number: '1.0-2'}}</td>
+                
+                
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <tr>
+              <td colspan="4">Total</td>
+              <td>{{getTotalAmount() | number:'1.2-2'}}</td>
+            </tr>
+          </ng-template>
+    </p-table>
+
+<ng-template [ngIf]="inProgress">
+    <div class="overlay" id="modal">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
+</ng-template>
+</div>

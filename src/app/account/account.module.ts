@@ -32,6 +32,7 @@ import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-
 import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
 
+
 @NgModule({
   declarations: [
     SalesComponent,
@@ -46,7 +47,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     CreateVoucherComponent,
     PurchaseReturnsComponent,
     PurchaseReturnViewComponent,
-    SalesCreateComponent
+    SalesCreateComponent,
+
   ],
   imports: [
     CommonModule,

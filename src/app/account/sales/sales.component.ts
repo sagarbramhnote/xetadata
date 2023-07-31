@@ -31,6 +31,7 @@ onGlobalFilter(table: Table, event: Event) {
 }
 
 navigateToCreateSales(){
+//  localStorage.removeItem('createSaleVoucher')
   this.router.navigate(['account/salesCreate'])
 }
 
