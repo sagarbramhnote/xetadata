@@ -11,6 +11,9 @@ import { StockRegisterViewComponent } from './stock-register/stock-register-view
 import { FialAccountComponent } from './fial-account/fial-account.component';
 
 import { GeneralLedgerComponent } from './general-ledger/general-ledger.component';
+ 
+import { ResourceTrackerComponent } from './resource-tracker/resource-tracker.component';
+ 
 import { ItemMovementRegisterComponent } from './item-movement-register/item-movement-register.component';
 
 
@@ -25,11 +28,15 @@ const routes: Routes = [
   {path: 'stockRegisterView',data: {breadcrumb: 'Stock Register'},component:StockRegisterViewComponent},
   {path: 'finalaccount',data: {breadcrumb: 'Final Account'},component:FialAccountComponent},
   {path: 'generalLedger',data: {breadcrumb: 'General Ledger'},component:GeneralLedgerComponent},
+ 
+  {path: 'resourcetracker',data: {breadcrumb: 'Resource Tracker'},component:ResourceTrackerComponent},
+ 
   {path: 'itemMovementRegister',data: {breadcrumb: 'Item Movement Register'},component:ItemMovementRegisterComponent}
 
 
 
 
+ 
 
 
 

@@ -29,7 +29,13 @@ import { TooltipModule } from 'primeng/tooltip';
 import { FialAccountComponent } from './fial-account/fial-account.component';
 
 import { GeneralLedgerComponent } from './general-ledger/general-ledger.component';
+
+import { ResourceTrackerComponent } from './resource-tracker/resource-tracker.component';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ToolbarModule } from 'primeng/toolbar';
+
 import { ItemMovementRegisterComponent } from './item-movement-register/item-movement-register.component';
+
 
 
 
@@ -39,7 +45,11 @@ import { ItemMovementRegisterComponent } from './item-movement-register/item-mov
 
               StockRegisterComponent,
               TrailingFinalAccountsComponent,
-              StockRegisterViewComponent,
+             StockRegisterViewComponent,
+             GeneralLedgerComponent,
+             SalesInvoiceAgeingComponent,
+             ResourceTrackerComponent,
+             StockRegisterViewComponent,
               FialAccountComponent,
               GeneralLedgerComponent,
               SalesInvoiceAgeingComponent,
@@ -66,7 +76,8 @@ import { ItemMovementRegisterComponent } from './item-movement-register/item-mov
     ConfirmDialogModule,
     CheckboxModule,CalendarModule,
     ReactiveFormsModule,
-    TooltipModule
+    TooltipModule,
+    FileUploadModule,ToolbarModule
   ]
 })
 export class ReportModule { }
