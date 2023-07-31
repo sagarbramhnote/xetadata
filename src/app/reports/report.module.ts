@@ -49,10 +49,7 @@ import { ItemMovementRegisterComponent } from './item-movement-register/item-mov
               StockRegisterComponent,
               TrailingFinalAccountsComponent,
              StockRegisterViewComponent,
-             RecipeCostListComponent
-        
-            
-            ],
+             RecipeCostListComponent,                  
              GeneralLedgerComponent,
              SalesInvoiceAgeingComponent,
              ResourceTrackerComponent,
