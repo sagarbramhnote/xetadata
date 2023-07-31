@@ -760,7 +760,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Resource Tracker',
                         icon: 'pi pi-fw pi-align-left',
-                        routerLink: ['/report/openingBalance'],
+                        routerLink: ['/report/resourcetracker'],
                     },
                 ]
             },

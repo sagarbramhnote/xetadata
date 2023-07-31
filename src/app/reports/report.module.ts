@@ -25,6 +25,9 @@ import { TrailingFinalAccountsComponent } from './trailing-final-accounts/traili
 import { StockRegisterViewComponent } from './stock-register/stock-register-view/stock-register-view.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { GeneralLedgerComponent } from './general-ledger/general-ledger.component';
+import { ResourceTrackerComponent } from './resource-tracker/resource-tracker.component';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ToolbarModule } from 'primeng/toolbar';
 
 
 
@@ -35,7 +38,8 @@ import { GeneralLedgerComponent } from './general-ledger/general-ledger.componen
               TrailingFinalAccountsComponent,
              StockRegisterViewComponent,
              GeneralLedgerComponent,
-             SalesInvoiceAgeingComponent
+             SalesInvoiceAgeingComponent,
+             ResourceTrackerComponent
 
 
   ],
@@ -58,7 +62,8 @@ import { GeneralLedgerComponent } from './general-ledger/general-ledger.componen
     ConfirmDialogModule,
     CheckboxModule,CalendarModule,
     ReactiveFormsModule,
-    TooltipModule
+    TooltipModule,
+    FileUploadModule,ToolbarModule
   ]
 })
 export class ReportModule { }
