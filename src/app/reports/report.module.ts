@@ -23,6 +23,9 @@ import { TrailingFinalAccountsComponent } from './trailing-final-accounts/traili
 
 import { StockRegisterViewComponent } from './stock-register/stock-register-view/stock-register-view.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { RecipeCostListComponent } from './recipe-cost-list/recipe-cost-list.component';
+
+
 
 
 
@@ -31,9 +34,11 @@ import { TooltipModule } from 'primeng/tooltip';
 
               StockRegisterComponent,
               TrailingFinalAccountsComponent,
-             StockRegisterViewComponent
-
-  ],
+             StockRegisterViewComponent,
+             RecipeCostListComponent,
+        
+            
+            ],
   imports: [
     CommonModule,
     ReportRoutingModule,
