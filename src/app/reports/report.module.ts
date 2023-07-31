@@ -25,6 +25,9 @@ import { TrailingFinalAccountsComponent } from './trailing-final-accounts/traili
 
 import { StockRegisterViewComponent } from './stock-register/stock-register-view/stock-register-view.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { RecipeCostListComponent } from './recipe-cost-list/recipe-cost-list.component';
+
+
 
 import { FialAccountComponent } from './fial-account/fial-account.component';
 
@@ -46,6 +49,10 @@ import { ItemMovementRegisterComponent } from './item-movement-register/item-mov
               StockRegisterComponent,
               TrailingFinalAccountsComponent,
              StockRegisterViewComponent,
+             RecipeCostListComponent
+        
+            
+            ],
              GeneralLedgerComponent,
              SalesInvoiceAgeingComponent,
              ResourceTrackerComponent,
@@ -57,6 +64,7 @@ import { ItemMovementRegisterComponent } from './item-movement-register/item-mov
               StockRegisterComponent,
               PurchaseInvoiceAgeingListComponent
   ],
+
   imports: [
     CommonModule,
     ReportRoutingModule,

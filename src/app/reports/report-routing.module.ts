@@ -7,6 +7,8 @@ import { SalesInvoiceAgeingComponent } from './sales-invoice-ageing/sales-invoic
 import { TrailingFinalAccountsComponent } from './trailing-final-accounts/trailing-final-accounts.component';
 
 import { StockRegisterViewComponent } from './stock-register/stock-register-view/stock-register-view.component';
+import { RecipeCostListComponent } from './recipe-cost-list/recipe-cost-list.component';
+
 
 import { FialAccountComponent } from './fial-account/fial-account.component';
 
@@ -32,6 +34,9 @@ const routes: Routes = [
   {path: 'resourcetracker',data: {breadcrumb: 'Resource Tracker'},component:ResourceTrackerComponent},
  
   {path: 'itemMovementRegister',data: {breadcrumb: 'Item Movement Register'},component:ItemMovementRegisterComponent}
+
+   {path: 'recipeCostList',data: {breadcrumb: 'Recipe List'},component:RecipeCostListComponent},
+
 
 
 
