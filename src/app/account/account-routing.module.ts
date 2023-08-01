@@ -17,6 +17,10 @@ import { ViewSalesComponent } from './sales/view-sales/view-sales.component';
 import { SendInvoiceSalesComponent } from './sales/send-invoice-sales/send-invoice-sales.component';
 import { OptionSalesComponent } from './sales/option-sales/option-sales.component';
 import { ReturnSalessComponent } from './sales/return-saless/return-saless.component';
+import { ConsumptionComponent } from './consumption/consumption.component';
+import { CreateConsumptionComponent } from './consumption/create-consumption/create-consumption.component';
+import { ViewConsumptionComponent } from './consumption/view-consumption/view-consumption.component';
+import { EditConsumptionComponent } from './consumption/edit-consumption/edit-consumption.component';
 
 const routes: Routes = [
   {path: 'sales', data: {breadcrumb: 'Sales'},component:SalesComponent},
@@ -33,10 +37,20 @@ const routes: Routes = [
   {path: 'createVoucher', data: {breadcrumb: 'newVoucher'},component:CreateVoucherComponent},
   {path: 'purchasereturn', data: {breadcrumb: 'List'},component:PurchaseReturnsComponent},
   {path: 'purchaseReturnView', data: {breadcrumb: 'View'},component:PurchaseReturnViewComponent},
+
   {path: 'salesView', data: {breadcrumb: 'View Sales'},component:ViewSalesComponent},
   {path: 'salesSendInvoice', data: {breadcrumb: 'Send Invoice Sales'},component:SendInvoiceSalesComponent},
   {path: 'salesOptions', data: {breadcrumb: 'Options Sales'},component:OptionSalesComponent},
   {path: 'salesReturns', data: {breadcrumb: 'Sale Return Invoice'},component:ReturnSalessComponent},
+
+  
+  {path: 'consumption', data: {breadcrumb: 'List'},component:ConsumptionComponent},
+  
+  {path: 'create-consumption', data: {breadcrumb: 'Create Consumption'},component:CreateConsumptionComponent},
+
+  {path: 'view-consumption', data: {breadcrumb: 'View Consumption'},component:ViewConsumptionComponent},
+  
+  {path: 'edit-consumption', data: {breadcrumb: 'Edit Consumotion'},component:EditConsumptionComponent},
 
 
 

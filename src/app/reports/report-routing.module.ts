@@ -7,10 +7,15 @@ import { SalesInvoiceAgeingComponent } from './sales-invoice-ageing/sales-invoic
 import { TrailingFinalAccountsComponent } from './trailing-final-accounts/trailing-final-accounts.component';
 
 import { StockRegisterViewComponent } from './stock-register/stock-register-view/stock-register-view.component';
+import { RecipeCostListComponent } from './recipe-cost-list/recipe-cost-list.component';
+
 
 import { FialAccountComponent } from './fial-account/fial-account.component';
 
 import { GeneralLedgerComponent } from './general-ledger/general-ledger.component';
+ 
+import { ResourceTrackerComponent } from './resource-tracker/resource-tracker.component';
+ 
 import { ItemMovementRegisterComponent } from './item-movement-register/item-movement-register.component';
 
 
@@ -25,11 +30,18 @@ const routes: Routes = [
   {path: 'stockRegisterView',data: {breadcrumb: 'Stock Register'},component:StockRegisterViewComponent},
   {path: 'finalaccount',data: {breadcrumb: 'Final Account'},component:FialAccountComponent},
   {path: 'generalLedger',data: {breadcrumb: 'General Ledger'},component:GeneralLedgerComponent},
-  {path: 'itemMovementRegister',data: {breadcrumb: 'Item Movement Register'},component:ItemMovementRegisterComponent}
+ 
+  {path: 'resourcetracker',data: {breadcrumb: 'Resource Tracker'},component:ResourceTrackerComponent},
+ 
+  {path: 'itemMovementRegister',data: {breadcrumb: 'Item Movement Register'},component:ItemMovementRegisterComponent},
+
+   {path: 'recipeCostList',data: {breadcrumb: 'Recipe List'},component:RecipeCostListComponent},
 
 
 
 
+
+ 
 
 
 

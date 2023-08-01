@@ -1,0 +1,138 @@
+<div class="card">
+    <p-table #dt [value]="resources" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['timezone','itemname','uom','serialno','batchno','expirydate','quantity','invoice_number','source','party','title']">
+        <ng-template pTemplate="caption">
+            <!-- resource resource-tracker{{today | date:'fullDate'}} -->
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search"
+                        class="w-full" />
+                </span>
+                <div class="grid">
+                    <div class="col-12">
+                        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                            class="p-button-primary mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="newExportPdf()"
+                            class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- <th>TR Date</th> -->
+                <th pSortableColumn="timezone" class="white-space-nowrap" style="width: 40%">
+                    <div class="flex justify-content-between align-items-center" class="white-space-nowrap"
+                        style="width: 30%">
+                        Tr Date
+                        <p-sortIcon field="timezone"></p-sortIcon>
+                        <!-- <p-columnFilter type="text" field="item" display="menu" class="ml-auto"></p-columnFilter> -->
+                    </div>
+                </th>
+                <!-- <th>Item</th> -->
+                <th pSortableColumn="itemname">
+                    <div class="flex justify-content-between align-items-center">
+                        Item
+                        <p-sortIcon field="item"></p-sortIcon>
+                        <!-- <p-columnFilter type="text" field="item" display="menu" class="ml-auto"></p-columnFilter> -->
+                    </div>
+                </th>
+                <!-- <th>UOM</th> -->
+                <th pSortableColumn="uom">
+                    <div class="flex justify-content-between align-items-center">
+                        UOM
+                        <p-sortIcon field="uom"></p-sortIcon>
+                        <!-- <p-columnFilter type="text" field="item" display="menu" class="ml-auto"></p-columnFilter> -->
+                    </div>
+                </th>
+                <!-- <th>Serial</th> -->
+                <th pSortableColumn="serialno">
+                    <div class="flex justify-content-between align-items-center">
+                        Serial
+                        <p-sortIcon field="serialno"></p-sortIcon>
+                        <!-- <p-columnFilter type="text" field="item" display="menu" class="ml-auto"></p-columnFilter> -->
+                    </div>
+                </th>
+                <!-- <th>Batch</th> -->
+                <th pSortableColumn="batchno">
+                    <div class="flex justify-content-between align-items-center">
+                        Batch
+                        <p-sortIcon field="batchno"></p-sortIcon>
+                        <!-- <p-columnFilter type="text" field="item" display="menu" class="ml-auto"></p-columnFilter> -->
+                    </div>
+                </th>
+                <th pSortableColumn="expirydate" class="white-space-nowrap" style="width: 30%">
+                    <div class="flex justify-content-between align-items-center">
+                        Expiry Date
+                        <p-sortIcon field="expirydate"></p-sortIcon>
+                        <!-- <p-columnFilter type="text" field="item" display="menu" class="ml-auto"></p-columnFilter> -->
+                    </div>
+                </th>
+                <!-- <th>Quantity</th> -->
+                <th pSortableColumn="quantity">
+                    <div class="flex justify-content-between align-items-center">
+                        Quantity
+                        <p-sortIcon field="quantity"></p-sortIcon>
+                        <!-- <p-columnFilter type="text" field="item" display="menu" class="ml-auto"></p-columnFilter> -->
+                    </div>
+                </th>
+                <!-- <th>Invoice Number</th> -->
+                <th pSortableColumn="invoice_number" class="white-space-nowrap" style="width: 10%">
+                    <div class="flex justify-content-between align-items-center">
+                        Inv No
+                        <p-sortIcon field="invoice_number"></p-sortIcon>
+                        <!-- <p-columnFilter type="text" field="item" display="menu" class="ml-auto"></p-columnFilter> -->
+                    </div>
+                </th>
+                <!-- <th>Source</th> -->
+                <th pSortableColumn="source">
+                    <div class="flex justify-content-between align-items-center">
+                        Source
+                        <p-sortIcon field="source"></p-sortIcon>
+                        <!-- <p-columnFilter type="text" field="item" display="menu" class="ml-auto"></p-columnFilter> -->
+                    </div>
+                </th>
+                <!-- <th>Party</th> -->
+                <th pSortableColumn="party">
+                    <div class="flex justify-content-between align-items-center">
+                        Party
+                        <p-sortIcon field="party"></p-sortIcon>
+                        <!-- <p-columnFilter type="text" field="item" display="menu" class="ml-auto"></p-columnFilter> -->
+                    </div>
+                </th>
+                <!-- <th>Title</th> -->
+                <th pSortableColumn="title">
+                    <div class="flex justify-content-between align-items-center">
+                        Title
+                        <p-sortIcon field="title"></p-sortIcon>
+                        <!-- <p-columnFilter type="text" field="item" display="menu" class="ml-auto"></p-columnFilter> -->
+                    </div>
+                </th>
+
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-inv let-i="rowIndex">
+            <tr>
+
+                <td>{{inv.timezone | date:'dd-MMM-yyyy hh:mm a'}}</td>
+                <td>{{inv.itemname}}</td>
+                <td>{{inv.uom}}</td>
+                <td>{{inv.serialno}}</td>
+                <td>{{inv.batchno}}</td>
+
+                <td>{{ inv.expirydate }}</td>
+                <td>{{inv.quantity }}</td>
+                <td>{{inv.invoice_number}}</td>
+                <td>{{inv.source}}</td>
+                <td>{{inv.party}}</td>
+                <td>{{inv.title}}</td>
+
+            </tr>
+        </ng-template>
+    </p-table>
