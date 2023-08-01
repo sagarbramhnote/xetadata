@@ -31,6 +31,10 @@ import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.co
 import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
 import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { ConsumptionComponent } from './consumption/consumption.component';
+import { CreateConsumptionComponent } from './consumption/create-consumption/create-consumption.component';
+import { ViewConsumptionComponent } from './consumption/view-consumption/view-consumption.component';
+import { EditConsumptionComponent } from './consumption/edit-consumption/edit-consumption.component';
 
 
 @NgModule({
@@ -48,6 +52,10 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     PurchaseReturnsComponent,
     PurchaseReturnViewComponent,
     SalesCreateComponent,
+    ConsumptionComponent,
+    CreateConsumptionComponent,
+    ViewConsumptionComponent,
+    EditConsumptionComponent,
 
   ],
   imports: [
