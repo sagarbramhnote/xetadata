@@ -31,6 +31,10 @@ import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.co
 import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
 import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { ViewSalesComponent } from './sales/view-sales/view-sales.component';
+import { SendInvoiceSalesComponent } from './sales/send-invoice-sales/send-invoice-sales.component';
+import { OptionSalesComponent } from './sales/option-sales/option-sales.component';
+import { ReturnSalessComponent } from './sales/return-saless/return-saless.component';
 
 
 @NgModule({
@@ -48,6 +52,10 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     PurchaseReturnsComponent,
     PurchaseReturnViewComponent,
     SalesCreateComponent,
+    ViewSalesComponent,
+    SendInvoiceSalesComponent,
+    OptionSalesComponent,
+    ReturnSalessComponent,
 
   ],
   imports: [

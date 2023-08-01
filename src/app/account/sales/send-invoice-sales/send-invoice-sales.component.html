@@ -1,0 +1,61 @@
+
+
+    <!-- <p>Select Telephone</p> -->
+
+    <div class="card">
+        <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+            <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                <span class="text-900 text-xl font-bold mb-4 block">Send Invoice</span>
+                    </span>
+                </div>
+        <p-table [value]="filteredEndpoints" [(selection)]="selectedEndpoint" dataKey="recordid" responsiveLayout="scroll" scrollHeight="200px">
+            <ng-template pTemplate="header">
+                <label class="font-medium text-900">Select Telephone</label>
+                <tr>
+                    <th style="width: 3rem"></th>
+                    <th>Endpoint</th>
+                    
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td>
+                        <p-tableRadioButton [value]="product"></p-tableRadioButton>
+                    </td>
+                    <td>{{product.endpointdetail}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    
+<br>
+    <div class="grid">
+        <div class="col-12 lg:col-10">
+            <div class="grid formgrid p-fluid">
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="itemname" class="font-medium text-900">SHORT NAME</label>
+                    <input type="text" pInputText [(ngModel)]="whatsappShortName"
+                     placeholder="Enter short name"/>
+               </div>
+            </div>
+        </div>
+     </div>
+
+        <div class="ui-g-12" style= " text-align:right">
+            <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
+                    <button style="margin-left: 10px;" pButton class="w-auto mt-3" icon="pi pi-check" (click)="sendInvoice()" label="Ok"></button>
+                    <button style="margin-left: 10px;" pButton class="w-auto mt-3 p-button-danger" icon="pi pi-times" (click)="navigateToSales()" label="Cancel"></button>
+        
+                </div>
+</div>
+
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+
+<ng-template [ngIf]="inProgress">
+    <div class="overlay" id="modal">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
+</ng-template>
+
+<p-toast></p-toast>

@@ -2,72 +2,69 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, FilterService, MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
 import { EventBusServiceService } from 'src/app/global/event-bus-service.service';
 import { GlobalConstants } from 'src/app/global/global-constants';
 import { XetaSuccess } from 'src/app/global/xeta-success';
 import { Xetaerror } from 'src/app/global/xetaerror';
-import { InvoiceListService } from 'src/app/services/invoice-list.service';
 import { PersonService } from 'src/app/services/person.service';
-import { ProfileService } from 'src/app/services/profile.service';
-import { Search } from 'src/app/services/search';
+import { SendHTMLInvoiceLinkService } from 'src/app/services/send-htmlinvoice-link.service';
 
 @Component({
-  selector: 'app-sales',
-  templateUrl: './sales.component.html',
-  styleUrls: ['./sales.component.scss'],
+  selector: 'app-send-invoice-sales',
+  templateUrl: './send-invoice-sales.component.html',
+  styleUrls: ['./send-invoice-sales.component.scss'],
   providers: [ConfirmationService,MessageService]
 
 })
-export class SalesComponent {
+export class SendInvoiceSalesComponent {
 
   constructor(private router:Router,private httpClient:HttpClient,private eventBusService:EventBusServiceService,private confirmationService:ConfirmationService, private messageService: MessageService,private filterService: FilterService) { }
 
-  sanitizedInvoiceList:any[] = []
-  lo:any
+  inProgress:boolean = false
 
 
-onGlobalFilter(table: Table, event: Event) {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
+navigateToSales(){
+  this.router.navigate(['account/sales'])
 }
+selectedEndpoint:any = {}
+whatsappShortName:string = ""
 
-navigateToCreateSales(){
-  this.router.navigate(['account/salesCreate'])
-}
+invoice:any
+pid:any
+base64Invoice:string = ''
 
 ngOnInit(): void {
-
-  this.lo = GlobalConstants.loginObject
-  this.loadInvoices(0,0)
-
-  this.loadEntity()
+  this.lo = GlobalConstants.loginObject;
+  if (!this.lo.hasOwnProperty('whatsappshortname')) {
+    this.lo.whatsappshortname = '';
+  }
+  this.whatsappShortName = this.lo.whatsappshortname;
+  
+  const item = localStorage.getItem('salesSendInvoice');
+  if (item !== null) {
+    this.invoice = JSON.parse(item);
+    console.log('PAH',this.invoice.partyaccounthead)
+    this.pid = this.invoice.partyaccounthead.id
+  
+    this.loadParty(this.pid)
+  
+    this.base64Invoice = btoa(this.makeHtmlString(this.invoice))
 
 }
+}
 
-inProgress:boolean = false
+filteredEndpoints:any[] = []
 _ahlSub:any
-private _invSub:any
-saleList:any = []
-totalRecords:number = 0
+selectedPartyPerson:any = {}
 
-selectedPerson:any = {}
-selectedEntityName:string = ""
-selectedEntityAddress:string = ""
-selectedEntityTelephone:string = ""
-selectedEntityEmail:string = ""
-selectedEntityGSTNumber:string = ""
-selectedInvoiceDate:string = ""
-selectedInvoiceNumber:string = ""
-
-loadEntity() {
+loadParty(pid:any) {
     
   this.inProgress = true
   
-  a:ProfileService
-  let ahlService:ProfileService = new ProfileService(this.httpClient)
-  let criteria:any = {};
-  console.log('CRITERIA',criteria)
-  this._ahlSub = ahlService.fetchProfile(criteria).subscribe({
+  let ahlService:PersonService = new PersonService(this.httpClient)
+  let criteria:any = {id:pid};
+  console.log('CRITERIA IN LOAD',JSON.stringify(criteria))
+  this._ahlSub = ahlService.fetchPerson(criteria).subscribe({
     complete:() => {console.info('complete')},
     error:(e) => {
       this.inProgress = false
@@ -84,84 +81,26 @@ loadEntity() {
       }
       else if(v.hasOwnProperty('success')) {
         let dataSuccess:XetaSuccess = <XetaSuccess>v;
-        this.selectedPerson = dataSuccess.success
-        //this.handleView()
-        this.selectedEntityName = this.selectedPerson.names[0].name
-
-        let telephones = this.selectedPerson.endpoints.filter((endpoint:any) => endpoint.type === 'telephone');
-        let addresses = this.selectedPerson.endpoints.filter((endpoint:any) => endpoint.type === 'address');
-
-        let address = '';
-        if (addresses.length > 0) {
-          let cd = addresses[0].detail;
-          this.selectedEntityAddress = cd.doorno + ' ' + cd.street + ' ' + cd.area + ' ' + cd.city + ' ' + cd.state + ' ' + cd.country + ' ' + cd.pincode
-        }
-        if (telephones.length > 0) {
-          this.selectedEntityTelephone = telephones[0].detail.telephone;
-        }
-
+        this.selectedPartyPerson = dataSuccess.success
+        let endpoints = this.selectedPartyPerson.endpoints
+        console.log('ENDPOINTS',endpoints)
+        this.filteredEndpoints = []
         
-        
-
-        console.log('NAME',this.selectedEntityName)
-        console.log('ADDRESS',this.selectedEntityAddress)
-        console.log('TELEPHONE',this.selectedEntityTelephone)
-        console.log('EMAIL',this.selectedEntityEmail)
-
-
-        this.selectedEntityGSTNumber = ""
-        this.selectedInvoiceDate = ""
-        this.selectedInvoiceNumber = ""
+        for (let index = 0; index < endpoints.length; index++) {
+          const element = endpoints[index];
+          if(element.type == 'telephone') {
+            element['recordid'] = index
+            element['endpointdetail'] = element.detail.telephone
+            this.filteredEndpoints.push(element) 
+          }
+          // if(element.type == 'emailid') {
+          //   element['recordid'] = index
+          //   element['endpointdetail'] = element.detail.emailid
+          //   this.filteredEndpoints.push(element)
+          // }
+        }
         this.inProgress = false
-        return
-
-      }
-      else if(v == null) { 
-        this.inProgress = false
-        this.confirm('A null object has been returned. An undefined error has occurred.')
-        return
-      }
-      else {
-        //alert('An undefined error has occurred.')
-        this.inProgress = false
-        this.confirm('An undefined error has occurred.')
-        return false
-      }
-    }
-  })
-
-}
-loadInvoices(offset:number,moreoffset:number) {
-
-  this.inProgress = true
-  let ahlService:InvoiceListService = new InvoiceListService(this.httpClient)
-  let criteria:Search = <Search>{searchtext:'',screen:'display',offset:moreoffset,searchtype:'sales',attribute:''};
-  console.log('CRITERIA',criteria)
-  this._invSub = ahlService.fetchInvoiceList(criteria).subscribe({
-    complete:() => {console.info('complete')},
-    error:(e) => {
-      this.inProgress = false
-      this.confirm('A server error occured while fetching account heads. '+e.message)
-      return
-    },
-    next:(v) => {
-      console.log('NEXT',v);
-      if (v.hasOwnProperty('error')) {
-        let dataError:Xetaerror = <Xetaerror>v; 
-        this.confirm(dataError.error)
-        this.inProgress = false
-        return
-      }
-      else if(v.hasOwnProperty('success')) {
-        let dataSuccess:XetaSuccess = <XetaSuccess>v;
-        this.saleList = []
-        this.saleList = dataSuccess.success
-        this.totalRecords = this.saleList.length
-        console.log('TOTAL RECORDS',this.totalRecords)
-        // this.items = this.masterCopy.slice(offset,this.recordsPerPage+offset);
-        this.sanitizedInvoiceList = []
-        this.sanitizeInvoices()
-        this.inProgress = false
+       
         return
       }
       else if(v == null) { 
@@ -179,39 +118,6 @@ loadInvoices(offset:number,moreoffset:number) {
   })
 
 }
-sanitizeInvoices() {
-  for (let index = 0; index < this.saleList.length; index++) {
-    const element = this.saleList[index];
-
-    let sanitInvoice:any = {}
-    sanitInvoice['id'] = element.id
-    sanitInvoice['date'] = element.date
-    sanitInvoice['vendor'] = element.partyaccounthead.accounthead
-
-    console.log('VENDOR',element.partyaccounthead.accounthead)
-    
-    let taxableValue:number = 0
-    let aftertaxValue:number = 0
-    let tax = 0
-    for (let j = 0; j < element.vouchers.length; j++) {
-      const voucher = element.vouchers[j];
-      let q = Math.abs(voucher.quantity)
-      taxableValue = (q*voucher.ratebeforetaxes)+taxableValue
-      aftertaxValue = (q*voucher.rateaftertaxes)+aftertaxValue
-    }
-
-    tax = aftertaxValue - taxableValue
-
-    sanitInvoice['taxablevalue'] = taxableValue
-    sanitInvoice['tax'] = tax
-    sanitInvoice['aftertaxvalue'] = aftertaxValue
-    sanitInvoice['invoice'] = element
-
-    this.sanitizedInvoiceList.push(sanitInvoice)
-    
-  }
-}
-
 
 confirm(msg:string) {
   this.confirmationService.confirm({
@@ -226,321 +132,18 @@ confirm(msg:string) {
   });
 }
 
-selectedInvoice:any = {}
-viewPartyName:any;
-viewTotal:number = 0
-
-handleView(invoice:any) { 
-  localStorage.setItem('salesVieww', JSON.stringify(invoice));
-  this.router.navigate(['account/salesView'])
-
-}
-
-
-handleNewPrint(invoice:any) {
-
-  this.loadPartyPerson(invoice.partyaccounthead.id,invoice)
-}
-
-selectedPartyPerson:any = {}
-
-loadPartyPerson(pid:any,invoice:any) {
-  
-  this.inProgress = true
-  
-  let ahlService:PersonService = new PersonService(this.httpClient)
-  let criteria:any = {id:pid};
-  console.log('CRITERIA IN PARTY PERSON LOAD',JSON.stringify(criteria))
-  this._ahlSub = ahlService.fetchPerson(criteria).subscribe({
-
-    complete:() => {console.info('complete')},
-    error:(e) => {
-      this.inProgress = false
-      this.confirm('A server error occured while fetching account heads. '+e.message)
-      return
-    },
-    next:(v) => {
-      console.log('NEXT',v);
-      if (v.hasOwnProperty('error')) {
-        let dataError:Xetaerror = <Xetaerror>v; 
-        this.confirm(dataError.error)
-        this.inProgress = false
-        return
-      }
-      else if(v.hasOwnProperty('success')) {
-
-        let dataSuccess:XetaSuccess = <XetaSuccess>v;
-        this.selectedPartyPerson = dataSuccess.success
-        console.log('SPP',JSON.stringify(this.selectedPartyPerson))
-
-        this.invoiceFields(this.selectedPartyPerson,invoice)
-
-        this.inProgress = false
-        return
-      }
-      else if(v == null) { 
-        this.inProgress = false
-        this.confirm('A null object has been returned. An undefined error has occurred.')
-        return
-      }
-      else {
-        //alert('An undefined error has occurred.')
-        this.inProgress = false
-        this.confirm('An undefined error has occurred.')
-        return false
-      }
-    }
-  })
-
-}
-
 selectedPartyName:string = ""
-selectedPartyTel:string = ""
-selectedPartyEmail:string = ""
-selectedPartyAddr:string = ""
 selectedPartyEndpoint:string = ""
 selectedPartyGSTCode:string = ""
-
-invoiceFields(person:any,invoice:any) {
-
-
-  for (const name of person.names) {
-    if (name.tags.some((tag: { tag: any; }) => tag.tag === 'SALEINVOICEBILLTO')) {
-      console.log(name.fullname);
-      if(name.hasOwnProperty("fullname")) {
-        this.selectedPartyName = name.fullname
-      }
-      else if (name.hasOwnProperty("name")) {
-        this.selectedPartyName = name.name
-      }
-      break
-    }
-  }
-  
-  for (const endpoint of person.endpoints) {
-    if (endpoint.type === 'telephone' && endpoint.detail.tags.some((tag: { tag: any; }) => tag.tag === 'SALEINVOICEBILLTO')) {
-      console.log(endpoint.detail.telephone);
-      this.selectedPartyTel = endpoint.detail.telephone
-      break
-    }
-  }
-
-  for (const endpoint of person.endpoints) {
-    if (endpoint.type === 'emailid' && endpoint.detail.tags.some((tag: { tag: any; }) => tag.tag === 'SALEINVOICEBILLTO')) {
-      console.log(endpoint.detail.telephone);
-      this.selectedPartyEmail = endpoint.detail.emailid
-      break
-    }
-  }
-
-  for (const endpoint of person.endpoints) {
-    if (endpoint.type === 'address' && endpoint.detail.tags.some((tag: { tag: any; }) => tag.tag === 'SALEINVOICEBILLTO')) {
-      console.log(endpoint.detail.telephone);
-      this.selectedPartyAddr = endpoint.detail.fulladdress
-      break
-    }
-  }
-
-
-  console.log('PARTY NAME',this.selectedPartyName)
-  console.log('PARTY TES',this.selectedPartyTel)
-  console.log('PARTY EMAIL',this.selectedPartyEmail)
-  console.log('PARTY ADDR',this.selectedPartyAddr)
-
-  this.selectedPartyEndpoint = [this.selectedPartyAddr, this.selectedPartyEmail, this.selectedPartyTel].filter(Boolean).join(" ");
-
-  
-  if(this.selectedPartyName === '') {
-    this.confirm('You must tag one name of your customer as SALEINVOICEBILLTO')
-    return
-  }
-
-  if(this.selectedPartyEndpoint === '') {
-    this.confirm('You must tag atleast an email, or telephone or address as SALEINVOICEBILLTO')
-    return
-  }
-
-
-  for (const govtid of person.govtids) {
-    if (govtid.tags.some((tag: { tag: any; }) => tag.tag === 'SALEINVOICEGSTNOPARTY')) {
-      console.log(govtid.idnumber);
-      this.selectedPartyGSTCode = govtid.idnumber
-      break
-    }
-  }
-
-  console.log('PARTY GST CODE',this.selectedPartyGSTCode)
-
-  this.loadEntityPerson(1,invoice)
-
-}
-
-
-selectedEntityPerson:any = {}
-
-
-loadEntityPerson(pid:any,invoice:any) {
-  
-  this.inProgress = true
-
-  let ahlService:ProfileService = new ProfileService(this.httpClient)
-  let criteria:any = {id:pid};
-  console.log('CRITERIA IN PARTY PERSON LOAD',JSON.stringify(criteria))
-  this._ahlSub = ahlService.fetchProfile(criteria).subscribe({
-
-    complete:() => {console.info('complete')},
-    error:(e) => {
-      this.inProgress = false
-      this.confirm('A server error occured while fetching account heads. '+e.message)
-      return
-    },
-    next:(v) => {
-      console.log('NEXT',v);
-      if (v.hasOwnProperty('error')) {
-        let dataError:Xetaerror = <Xetaerror>v; 
-        this.confirm(dataError.error)
-        this.inProgress = false
-        return
-      }
-      else if(v.hasOwnProperty('success')) {
-
-        let dataSuccess:XetaSuccess = <XetaSuccess>v;
-        this.selectedEntityPerson = dataSuccess.success
-        console.log('SEP',JSON.stringify(this.selectedEntityPerson))
-
-        this.invoiceFieldsEntity(this.selectedEntityPerson,invoice)
-
-        this.inProgress = false
-        return
-      }
-      else if(v == null) { 
-        this.inProgress = false
-        this.confirm('A null object has been returned. An undefined error has occurred.')
-        return
-      }
-      else {
-        //alert('An undefined error has occurred.')
-        this.inProgress = false
-        this.confirm('An undefined error has occurred.')
-        return false
-      }
-    }
-  })
-
-}
-
-
+selectedEntityName:string = ""
+selectedEntityAddress:string = ""
+selectedEntityTelephone:string = ""
+selectedEntityEmail:string = ""
+selectedEntityGSTNumber:string = ""
+selectedInvoiceDate:string = ""
+selectedInvoiceNumber:string = ""
 selectedPOFormattedDate:string = ''
 
-
-invoiceFieldsEntity(person:any,invoice:any) {
-
-  for (const name of person.names) {
-    if (name.tags.some((tag: { tag: any; }) => tag.tag === 'SALEINVOICECOMPANYNAME')) {
-      console.log(name.fullname);
-      if(name.hasOwnProperty("fullname")) {
-        this.selectedEntityName = name.fullname
-      }
-      else if (name.hasOwnProperty("name")) {
-        this.selectedEntityName = name.name
-      }
-      break
-    }
-  }
-
-  for (const endpoint of person.endpoints) {
-    if (endpoint.type === 'telephone' && endpoint.detail.tags.some((tag: { tag: any; }) => tag.tag === 'SALEINVOICE')) {
-      console.log(endpoint.detail.telephone);
-      this.selectedEntityTelephone = endpoint.detail.telephone
-      break
-    }
-  }
-
-  for (const endpoint of person.endpoints) {
-    if (endpoint.type === 'emailid' && endpoint.detail.tags.some((tag: { tag: any; }) => tag.tag === 'SALEINVOICE')) {
-      console.log(endpoint.detail.telephone);
-      this.selectedEntityEmail = endpoint.detail.emailid
-      break
-    }
-  }
-
-  for (const endpoint of person.endpoints) {
-    if (endpoint.type === 'address' && endpoint.detail.tags.some((tag: { tag: any; }) => tag.tag === 'SALEINVOICE')) {
-      console.log(endpoint.detail.telephone);
-      this.selectedEntityAddress = endpoint.detail.fulladdress
-      break
-    }
-  }
-
-  console.log('ENTITY NAME',this.selectedEntityName)
-  console.log('ENTITY TEL',this.selectedEntityTelephone)
-  console.log('ENTITY EMAIL',this.selectedEntityEmail)
-  console.log('ENTITY ADDR',this.selectedEntityAddress)
-
-  let entityConcat = [this.selectedEntityAddress, this.selectedEntityEmail, this.selectedEntityTelephone].filter(Boolean).join(" ");
-
-
-  if(this.selectedEntityName === '') {
-    this.confirm('You must tag one name of your customer as SALEINVOICE')
-    return
-  }
-
-  if(entityConcat === '') {
-    this.confirm('You must tag atleast an email, or telephone or address as SALEINVOICE')
-    return
-  }
-
-
-  for (const govtid of person.govtids) {
-    if (govtid.tags.some((tag: { tag: any; }) => tag.tag === 'SALEINVOICEGSTNOENTITY')) {
-      console.log(govtid.idnumber);
-      this.selectedEntityGSTNumber = govtid.idnumber
-      break
-    }
-  }
-
-
-  console.log('ENTITY GST CODE',this.selectedEntityGSTNumber)
-
-  console.log('INVOICE',invoice)
-
-  //this.selectedInvoiceNumber = invoice.id.toString()
-
-  this.selectedInvoiceNumber = invoice.id
-  
-
-  const dateString = "2023-02-19T17:03:07.849+0530";
-  
-  const date = new Date(invoice.date);
-  const formattedDate = date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
-  console.log(formattedDate); // Output: "19-02-2023"
-
-  this.selectedInvoiceDate = formattedDate
-
-  const podate = new Date(invoice.date);
-  const poFormattedDate = podate.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
-  console.log(poFormattedDate); // Output: "19-02-2023"
-
-  this.selectedPOFormattedDate = poFormattedDate
-
-
-  this.handlePrint(invoice)
-  
-}
-
-handlePrint(invoice:any) {
-
-  let final:string =  this.makeHtmlString(invoice)
-
-  console.log('A PRINT',final)
-
-  const newWindow = window.open("", "", "width=800,height=600");
-  newWindow?.document.write(final);
-  newWindow?.document.close();
-  newWindow?.focus();
-  newWindow?.print();
-
-}
 
 selectedPlaceOfSale:string = ""
 selectedEWayBillNo:string = ""
@@ -548,7 +151,6 @@ selectedPONO:string = ""
 selectedAmountInWords:string = ""
 selectedTotalDiscAmt:string = ""
 selectedPaymentMethods:string = ""
-
 
 makeHtmlString(invoice:any):string {
 
@@ -750,37 +352,107 @@ formatNumber(n:any):string {
   return formatted
 }
 
+lo:any
 
-//send invoice
-pid:any
-base64Invoice:string = ''
+sendInvoice() {
 
-handleSendInvoice(invoice:any) {
-  localStorage.setItem('salesSendInvoice', JSON.stringify(invoice));
+  this.lo.whatsappshortname = this.whatsappShortName;
+  GlobalConstants.loginObject = this.lo;
 
-  this.router.navigate(['account/salesSendInvoice'])
+  //console.log('A PRINT',this.base64Invoice)
+  // call api to send base64
+  console.log('WHATSAPP',this.selectedEndpoint)
+  //console.log('PID',this.pid)
+  // url
+  // pid
+  //console.log(window.location.href);
+
+  let url = window.location.href
+  //let domain = url.split("//")[-1].split("/")[0].split(":")[0]
+  const domain = new URL(url).hostname;
+
+  if (!this.selectedEndpoint || Object.keys(this.selectedEndpoint).length === 0) {
+    // this.selectedEndpoint is empty
+    this.confirm('You must select a telephone number')
+    return
+  }
+
+  if (this.selectedEndpoint === null) {
+    this.confirm('You must select a telephone number')
+    return
+  }
+  if(this.whatsappShortName === '') {
+    this.confirm('You must enter a short name')
+    return
+  }
+
+  let a:any = {
+    html:this.base64Invoice,
+    url:domain,
+    ahid:this.pid,
+    phone:this.selectedEndpoint.endpointdetail,
+    entityname:this.whatsappShortName
+  }
+
+  console.log('A',a)
+
+  
+
+  this.handleSendLink(a)
+  
 
 }
 
-//sales return
+_piSub:any
 
-handleReturn(inv:any) {
+handleSendLink(ch:any) {
+  this.inProgress = true
+  
+  let sah:SendHTMLInvoiceLinkService = new SendHTMLInvoiceLinkService(this.httpClient)
+  this._piSub = sah.sendInvoice(ch).subscribe({
+    complete:() => {console.info('complete')},
+    error:(e) => {
+      console.log('ERROR',e)
+      this.inProgress = false
+      this.confirm('A server error occured while sending invoice. '+e.message)
+      return;
+    },
+    next:(v) => {
+      console.log('NEXT',v);
+      if (v.hasOwnProperty('error')) {
+        let dataError:Xetaerror = <Xetaerror>v; 
+        //alert(dataError.error);
+        this.confirm(dataError.error)
+        this.inProgress = false
+        return;
+      }
+      else if(v.hasOwnProperty('success')) {
 
-  localStorage.setItem('salesReturnInvoice', JSON.stringify(inv));
+        this.inProgress = false
 
-  this.router.navigate(['account/salesReturns'])
+        this.selectedEndpoint =  null
+        this.pid = null
+        this.base64Invoice = ''
+        //this.loadCheques(0,0)
+        return;
+      }
+      else if(v == null) {
+
+        this.inProgress = false
+        this.confirm('A null object has been returned. An undefined error has occurred.')
+        return;
+      }
+      else {
+        //alert('An undefined error has occurred.')
+        this.inProgress = false
+        this.confirm('An undefined error has occurred.')
+        return
+      }
+    }
+  })
+
+  return
 
 }
 
-//options
-
-handleEWayBillNo(inv:any) {
-  localStorage.setItem('salesOptions', JSON.stringify(inv));
-
-  this.router.navigate(['account/salesOptions'])
-
 }
-
-
-}
-
