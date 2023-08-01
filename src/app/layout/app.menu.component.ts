@@ -606,7 +606,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Bank Reconcilation',
                         icon: 'pi pi-fw pi-user',
-                        routerLink: ['/account/sales'],
+                        routerLink: ['/account/back-reconciliation'],
                     },
                     {
                         label: 'Production',
