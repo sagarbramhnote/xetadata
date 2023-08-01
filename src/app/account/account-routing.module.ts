@@ -13,6 +13,10 @@ import { CreateVoucherComponent } from './create-voucher/create-voucher.componen
 import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.component';
 import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
 import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
+import { ConsumptionComponent } from './consumption/consumption.component';
+import { CreateConsumptionComponent } from './consumption/create-consumption/create-consumption.component';
+import { ViewConsumptionComponent } from './consumption/view-consumption/view-consumption.component';
+import { EditConsumptionComponent } from './consumption/edit-consumption/edit-consumption.component';
 
 const routes: Routes = [
   {path: 'sales', data: {breadcrumb: 'Sales'},component:SalesComponent},
@@ -29,6 +33,17 @@ const routes: Routes = [
   {path: 'createVoucher', data: {breadcrumb: 'newVoucher'},component:CreateVoucherComponent},
   {path: 'purchasereturn', data: {breadcrumb: 'List'},component:PurchaseReturnsComponent},
   {path: 'purchaseReturnView', data: {breadcrumb: 'View'},component:PurchaseReturnViewComponent},
+  
+  {path: 'consumption', data: {breadcrumb: 'List'},component:ConsumptionComponent},
+  
+  {path: 'create-consumption', data: {breadcrumb: 'Create Consumption'},component:CreateConsumptionComponent},
+
+  {path: 'view-consumption', data: {breadcrumb: 'View Consumption'},component:ViewConsumptionComponent},
+  
+  {path: 'edit-consumption', data: {breadcrumb: 'Edit Consumotion'},component:EditConsumptionComponent},
+
+
+
 
 
 
