@@ -13,6 +13,8 @@ import { CreateVoucherComponent } from './create-voucher/create-voucher.componen
 import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.component';
 import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
 import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
+import { BankReconciliationComponent } from './bank-reconciliation/bank-reconciliation.component';
+import { ViwBankReconciliationComponent } from './bank-reconciliation/viw-bank-reconciliation/viw-bank-reconciliation.component';
 
 const routes: Routes = [
   {path: 'sales', data: {breadcrumb: 'Sales'},component:SalesComponent},
@@ -29,6 +31,9 @@ const routes: Routes = [
   {path: 'createVoucher', data: {breadcrumb: 'newVoucher'},component:CreateVoucherComponent},
   {path: 'purchasereturn', data: {breadcrumb: 'List'},component:PurchaseReturnsComponent},
   {path: 'purchaseReturnView', data: {breadcrumb: 'View'},component:PurchaseReturnViewComponent},
+  {path: 'back-reconciliation', data: {breadcrumb: 'List'},component:BankReconciliationComponent },
+  {path: 'bank-reconciliation-view',data: {breadcrumb: 'View'},component:ViwBankReconciliationComponent},
+
 
 
 

@@ -31,6 +31,9 @@ import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.co
 import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
 import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { BankReconciliationComponent } from './bank-reconciliation/bank-reconciliation.component';
+import { ViwBankReconciliationComponent } from './bank-reconciliation/viw-bank-reconciliation/viw-bank-reconciliation.component';
+
 
 
 @NgModule({
@@ -48,6 +51,9 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     PurchaseReturnsComponent,
     PurchaseReturnViewComponent,
     SalesCreateComponent,
+    BankReconciliationComponent,
+    ViwBankReconciliationComponent,
+    
 
   ],
   imports: [
