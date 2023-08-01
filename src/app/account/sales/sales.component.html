@@ -36,19 +36,14 @@
                 <td>
                     <div class="grid">
                         <div class="col-12">
-                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary"  label="View"></button>
-                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary"  label="Print"></button>
-                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary"  label="Send Invoive"></button>
-                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary"  label="Sale Return"></button>
-                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary"  label="Options"></button>
-
-                  
+                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary" (click)="handleView(inv.invoice)" label="View"></button>
+                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary" (click)="handleNewPrint(inv.invoice)" label="Print"></button>
+                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary" (click)="handleSendInvoice(inv.invoice)" label="Send Invoive"></button>
+                            <ng-template [ngIf]="lo.digitalkey.salesreturns.new"><button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary" (click)="handleReturn(inv.invoice)" label="Sale Return"></button></ng-template>
+                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary" (click)="handleEWayBillNo(inv.invoice)" label="Options"></button>
+            
                         </div>
                         </div>
-                    <!-- <div >
-                        <button pButton icon="pi pi-external-link" class="p-button-sm" (click)="handleViewItem(v)">View</button>
-                        <button pButton icon="pi pi-pencil" class="p-button-sm" (click)="handleEditItem(v)">Edit</button>
-                    </div> -->
                     
                 </td>
                 
