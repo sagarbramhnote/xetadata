@@ -305,15 +305,8 @@ export class SalesReturnComponent implements OnInit {
     }
 
     handleView(invoice: any) {
-        localStorage.setItem(
-            'salesreturnview',
-            JSON.stringify(JSON.stringify(invoice))
-        );
+        localStorage.setItem('salesreturnview',JSON.stringify(invoice));
         this.router.navigate(['account/salesreturnview']);
     }
 
-    // handleView(invoice:any) {
-    //     localStorage.setItem('purchaseReturnView', JSON.stringify(invoice));
-    //     this.router.navigate(['account/purchaseReturnView'])
-    //   }
 }
