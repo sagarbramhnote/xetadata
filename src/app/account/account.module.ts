@@ -33,6 +33,15 @@ import { SalesCreateComponent } from './sales/sales-create/sales-create.componen
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { BankReconciliationComponent } from './bank-reconciliation/bank-reconciliation.component';
 import { ViwBankReconciliationComponent } from './bank-reconciliation/viw-bank-reconciliation/viw-bank-reconciliation.component';
+import { ViewSalesComponent } from './sales/view-sales/view-sales.component';
+import { SendInvoiceSalesComponent } from './sales/send-invoice-sales/send-invoice-sales.component';
+import { OptionSalesComponent } from './sales/option-sales/option-sales.component';
+import { ReturnSalessComponent } from './sales/return-saless/return-saless.component';
+import { ConsumptionComponent } from './consumption/consumption.component';
+import { CreateConsumptionComponent } from './consumption/create-consumption/create-consumption.component';
+import { ViewConsumptionComponent } from './consumption/view-consumption/view-consumption.component';
+import { EditConsumptionComponent } from './consumption/edit-consumption/edit-consumption.component';
+
 
 
 
@@ -53,7 +62,15 @@ import { ViwBankReconciliationComponent } from './bank-reconciliation/viw-bank-r
     SalesCreateComponent,
     BankReconciliationComponent,
     ViwBankReconciliationComponent,
-    
+    ViewSalesComponent,
+    SendInvoiceSalesComponent,
+    OptionSalesComponent,
+    ReturnSalessComponent,
+    ConsumptionComponent,
+    CreateConsumptionComponent,
+    ViewConsumptionComponent,
+    EditConsumptionComponent,
+
 
   ],
   imports: [
