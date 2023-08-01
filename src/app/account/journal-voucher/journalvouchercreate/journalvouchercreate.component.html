@@ -20,6 +20,10 @@
                     </p-calendar>
 
                 </div>
+                </div>
+                </div>
+                </div>
+
 
 
 
@@ -32,7 +36,10 @@
                     <label for="itemname" class="font-medium text-900">DEBIT</label> -->
 
                 <!-- <div>DEBIT</div> -->
+    <div class="grid">
 
+        <div class="col-12 lg:col-10">
+            <div class="grid formgrid p-fluid">
                 <div class="field mb-4 col-12 md:col-6">
                     <label for="debit" class="font-medium text-900">DEBIT</label>
 
@@ -93,12 +100,10 @@
 
                 <div class="field mb-4 col-12 md:col-6">
                     <label for="itemname" class="font-medium text-900"></label>
-
-
-                    <textarea pInputTextarea [(ngModel)]="selectedNarration" [ngModelOptions]="{standalone: true}"
-                        (ngModelChange)="narrationChange($event)"></textarea>
-
+                    <textarea class="p-inputtextarea"  [(ngModel)]="selectedNarration" [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="narrationChange($event)"></textarea>
                 </div>
+
             </div>
         </div>
     </div>
