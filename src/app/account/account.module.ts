@@ -31,12 +31,10 @@ import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.co
 import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
 import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
-
 import { ViewSalesComponent } from './sales/view-sales/view-sales.component';
 import { SendInvoiceSalesComponent } from './sales/send-invoice-sales/send-invoice-sales.component';
 import { OptionSalesComponent } from './sales/option-sales/option-sales.component';
 import { ReturnSalessComponent } from './sales/return-saless/return-saless.component';
-
 import { ConsumptionComponent } from './consumption/consumption.component';
 import { CreateConsumptionComponent } from './consumption/create-consumption/create-consumption.component';
 import { ViewConsumptionComponent } from './consumption/view-consumption/view-consumption.component';
@@ -59,12 +57,10 @@ import { EditConsumptionComponent } from './consumption/edit-consumption/edit-co
     PurchaseReturnsComponent,
     PurchaseReturnViewComponent,
     SalesCreateComponent,
-
     ViewSalesComponent,
     SendInvoiceSalesComponent,
     OptionSalesComponent,
     ReturnSalessComponent,
-
     ConsumptionComponent,
     CreateConsumptionComponent,
     ViewConsumptionComponent,
