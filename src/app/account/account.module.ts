@@ -39,6 +39,9 @@ import { ConsumptionComponent } from './consumption/consumption.component';
 import { CreateConsumptionComponent } from './consumption/create-consumption/create-consumption.component';
 import { ViewConsumptionComponent } from './consumption/view-consumption/view-consumption.component';
 import { EditConsumptionComponent } from './consumption/edit-consumption/edit-consumption.component';
+import { PurchaseCreateComponent } from './purchase/purchase-create/purchase-create.component';
+import { PurchaseViewComponent } from './purchase/purchase-view/purchase-view.component';
+import { PurchasePurchaseReturnComponent } from './purchase/purchase-purchase-return/purchase-purchase-return.component';
 
 
 
@@ -65,7 +68,9 @@ import { EditConsumptionComponent } from './consumption/edit-consumption/edit-co
     CreateConsumptionComponent,
     ViewConsumptionComponent,
     EditConsumptionComponent,
-
+    PurchaseCreateComponent,
+    PurchaseViewComponent,
+    PurchasePurchaseReturnComponent,
 
   ],
   imports: [

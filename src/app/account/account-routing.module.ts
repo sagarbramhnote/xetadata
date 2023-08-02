@@ -21,6 +21,9 @@ import { ConsumptionComponent } from './consumption/consumption.component';
 import { CreateConsumptionComponent } from './consumption/create-consumption/create-consumption.component';
 import { ViewConsumptionComponent } from './consumption/view-consumption/view-consumption.component';
 import { EditConsumptionComponent } from './consumption/edit-consumption/edit-consumption.component';
+import { PurchaseCreateComponent } from './purchase/purchase-create/purchase-create.component';
+import { PurchaseViewComponent } from './purchase/purchase-view/purchase-view.component';
+import { PurchasePurchaseReturnComponent } from './purchase/purchase-purchase-return/purchase-purchase-return.component';
 
 const routes: Routes = [
   {path: 'sales', data: {breadcrumb: 'Sales'},component:SalesComponent},
@@ -52,6 +55,9 @@ const routes: Routes = [
   
   {path: 'edit-consumption', data: {breadcrumb: 'Edit Consumotion'},component:EditConsumptionComponent},
 
+  {path: 'purchaseCreate', data: {breadcrumb: 'Create Purchase'},component:PurchaseCreateComponent},
+  {path: 'purchaseView', data: {breadcrumb: 'View Purchase'},component:PurchaseViewComponent},
+  {path: 'purchaseReturnn', data: {breadcrumb: 'Return Purchase'},component:PurchasePurchaseReturnComponent},
 
 
 
