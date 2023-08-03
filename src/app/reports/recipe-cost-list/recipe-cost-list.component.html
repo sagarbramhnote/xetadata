@@ -71,7 +71,7 @@
                         <button *ngIf="inv.basis.length == 0 && inv.itemsoos.length > 0" pButton class="p-button-sm" (click)="handleViewOOS(inv)">OUT OF STOCK ITEMS</button> -->
 
                         <button pButton class="p-button-sm p-button-raised p-button-success" (click)="handleView(inv)">BASIS</button>
-                        <button *ngIf="inv.itemsoos.length > 0" pButton class="p-button-sm p-button-raised p-button-info" (click)="handleViewOOS(inv)">OUT OF STOCK ITEMS</button>
+                        <button *ngIf="inv.itemsoos.length > 0" pButton class="p-button-sm p-button-raised p-button-success" (click)="handleViewOOS(inv)">OUT OF STOCK ITEMS</button>
 
                     </div>
                 </td>
@@ -79,7 +79,7 @@
             </tr>
         </ng-template>
     </p-table>
-    <p-dialog [(visible)]="displayBasisModal" [style]="{width: '70%'}"
+    <p-dialog [(visible)]="displayBasisModal" [style]="{width: '71%'}"
      header="Cost Detail" [modal]="true" class="p-fluid">
     
         <div>Item: {{itemname}} </div>
@@ -122,13 +122,13 @@
     </p-dialog>
 
     <p-dialog header="Items Out of Stock" [(visible)]="displayOOSModal"
-     [modal]="true" [style]="{width: '70%'}" class="p-fluid">
+     [modal]="true" [style]="{width: '71%'}" class="p-fluid">
 
         <div>Item: {{itemname}} </div>
         
 
         <p-table [value]="oosList" [scrollable]="true"  
-    selectionMode="single" scrollHeight="400px" 
+    selectionMode="single" scrollHeight="500px" 
         (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-gridlines">
         
         <ng-template pTemplate="header">
