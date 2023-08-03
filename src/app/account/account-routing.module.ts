@@ -8,11 +8,12 @@ import { TransferComponent } from './transfer/transfer.component';
 import { TransferregisterComponent } from './transfer/transferregister/transferregister.component';
 import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
 import { JournalvouchercreateComponent } from './journal-voucher/journalvouchercreate/journalvouchercreate.component';
-import { NewJournalVoucherComponent } from './new-journal-voucher/new-journal-voucher.component';
-import { CreateVoucherComponent } from './create-voucher/create-voucher.component';
+
 import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.component';
 import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
 import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
+import { NewJournalVoucherComponent } from './new-journal-voucher/new-journal-voucher.component';
+import { CreateVoucherComponent } from './new-journal-voucher/create-voucher/create-voucher.component';
 import { ProductionComponent } from './production/production.component';
 import { ProductionViewComponent } from './production/production-view/production-view.component';
 import { ProductionCreateComponent } from './production/production-create/production-create.component';
@@ -41,11 +42,10 @@ const routes: Routes = [
   {path: 'transferregister', data: {breadcrumb: 'Create'},component:TransferregisterComponent},
   {path: 'journal-voucher', data: {breadcrumb: 'List'},component: JournalVoucherComponent},
   {path: 'journalvouchercreate', data: {breadcrumb: 'Create'},component:JournalvouchercreateComponent},
-
-  {path: 'new-journal-voucher', data: {breadcrumb: 'journalVoucher'},component:NewJournalVoucherComponent},
-  {path: 'createVoucher', data: {breadcrumb: 'newVoucher'},component:CreateVoucherComponent},
   {path: 'purchasereturn', data: {breadcrumb: 'List'},component:PurchaseReturnsComponent},
   {path: 'purchaseReturnView', data: {breadcrumb: 'View'},component:PurchaseReturnViewComponent},
+  {path: 'newJournalVoucher', data: {breadcrumb: 'Journal Voucher'},component:NewJournalVoucherComponent},
+  {path: 'createVoucher', data: {breadcrumb: 'Create Voucher'},component:CreateVoucherComponent},
   {path: 'production', data: {breadcrumb: 'List'},component:ProductionComponent},
   {path: 'productionview', data: {breadcrumb: 'View'},component:ProductionViewComponent},
   {path: 'productioncreate', data: {breadcrumb: 'Create'},component:ProductionCreateComponent},
@@ -66,8 +66,6 @@ const routes: Routes = [
   {path: 'purchaseCreate', data: {breadcrumb: 'Create Purchase'},component:PurchaseCreateComponent},
   {path: 'purchaseView', data: {breadcrumb: 'View Purchase'},component:PurchaseViewComponent},
   {path: 'purchaseReturnn', data: {breadcrumb: 'Return Purchase'},component:PurchasePurchaseReturnComponent}
-
-
 
 
 

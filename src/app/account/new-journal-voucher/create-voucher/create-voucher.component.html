@@ -20,19 +20,19 @@
     </p-calendar> 
 
     <br>
-    <br>
-            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+    <br>    
+    <div class="col-12 lg:col-10">
+        <div class="grid formgrid p-fluid">
+    <div class="field mb-4 col-12 md:col-6">  Debit Account: 
+        
                 
-            <div class="debitamount1">Debit Account:</div>
-           
-                
+                         
                 <input type="number" min="0"  #selectDebitAmt="ngModel" pInputText class="p-inputtext-sm" 
         placeholder="enter debit" [(ngModel)]="selectedDebitAmount" 
         [ngModelOptions]="{standalone: true}"  autocomplete="off" (ngModelChange)="debitAmountChange($event)"
         required>
           
-            <br>
-
+        
             <div class="debitaccount">
                 <p-autoComplete
                 [(ngModel)]="selectedDebitAccount"
@@ -56,18 +56,15 @@
 
                 </p-autoComplete> 
             </div>
-            <br>
+             
 
-            <div class="creditamount1">Credit Account:</div>
-         
-            <div class="creditamount2">
-
+            </div>
+          
+            <div class="field mb-4 col-12 md:col-6" >Credit Account:
                 <input type="number" min="0"  #selectCreditAmt="ngModel" pInputText class="p-inputtext-sm" 
         placeholder="enter credit" [(ngModel)]="selectedCreditAmount" 
         [ngModelOptions]="{standalone: true}"  autocomplete="off" (ngModelChange)="creditAmountChange($event)"
         required>
-            </div>
-
             <br>
             <div class="creditaccount">
                 <p-autoComplete
@@ -94,13 +91,12 @@
                
 
             </div>
+              
+
             </div>
-          
-            <div>Text Here:
-            <br>
-                <textarea pInputTextarea [(ngModel)]="selectedNarration"[ngModelOptions]="{standalone: true}"
-                (ngModelChange)="narrationChange($event)"></textarea>
-    
+            </div>
+            <textarea pInputTextarea [(ngModel)]="selectedNarration"[ngModelOptions]="{standalone: true}"
+            (ngModelChange)="narrationChange($event)"></textarea>
 
             </div>
 <div>          
@@ -335,7 +331,7 @@
                          pButton class="w-auto mt-3 p-button-info p-button-raised" 
                          icon="pi pi-check" (click)="handleSaveJournalVoucher()" label="Create"></button>
                        
-                         <button style="margin-left: 10px;" pButton class="w-auto mt-3 p-button-danger p-button-raised " icon="pi pi-times" (click)="navigateToListItems()" label="Cancel"></button>
+                         <button style="margin-left: 10px;" pButton class="w-auto mt-3 p-button-danger p-button-raised " icon="pi pi-times" (click)="navigateNewJournalVoucher()" label="Cancel"></button>
         
                     </div>
            
