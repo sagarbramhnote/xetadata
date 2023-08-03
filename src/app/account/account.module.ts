@@ -25,12 +25,12 @@ import { TransferregisterComponent } from './transfer/transferregister/transferr
 import { CalendarModule } from 'primeng/calendar';
 import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
 import { JournalvouchercreateComponent } from './journal-voucher/journalvouchercreate/journalvouchercreate.component';
-import { NewJournalVoucherComponent } from './new-journal-voucher/new-journal-voucher.component';
-import { CreateVoucherComponent } from './create-voucher/create-voucher.component';
 import { PurchaseReturnsComponent } from './purchase-returns/purchase-returns.component';
 import { PurchaseReturnViewComponent } from './purchase-returns/purchase-return-view/purchase-return-view.component';
 import { SalesCreateComponent } from './sales/sales-create/sales-create.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { NewJournalVoucherComponent } from './new-journal-voucher/new-journal-voucher.component';
+import { CreateVoucherComponent } from './new-journal-voucher/create-voucher/create-voucher.component';
 import { ProductionComponent } from './production/production.component';
 import { ProductionViewComponent } from './production/production-view/production-view.component';
 import { ProductionCreateComponent } from './production/production-create/production-create.component';
@@ -50,7 +50,6 @@ import { PurchasePurchaseReturnComponent } from './purchase/purchase-purchase-re
 
 
 
-
 @NgModule({
   declarations: [
     SalesComponent,
@@ -61,11 +60,11 @@ import { PurchasePurchaseReturnComponent } from './purchase/purchase-purchase-re
     TransferregisterComponent,
     JournalVoucherComponent,
     JournalvouchercreateComponent,
-    NewJournalVoucherComponent,
-    CreateVoucherComponent,
     PurchaseReturnsComponent,
     PurchaseReturnViewComponent,
     SalesCreateComponent,
+    NewJournalVoucherComponent,
+    CreateVoucherComponent,
     ProductionComponent,
     ProductionViewComponent,
     ProductionCreateComponent,
