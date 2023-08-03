@@ -79,8 +79,9 @@
             </tr>
         </ng-template>
     </p-table>
-    <p-dialog header="Cost Detail" [(visible)]="displayBasisModal" [modal]="true" [style]="{width: '100%'}">
-
+    <p-dialog [(visible)]="displayBasisModal" [style]="{width: '70%'}"
+     header="Cost Detail" [modal]="true" class="p-fluid">
+    
         <div>Item: {{itemname}} </div>
         <div>Cost: {{cost}}</div>
 
@@ -120,13 +121,14 @@
         </p-table>
     </p-dialog>
 
-    <p-dialog header="Items Out of Stock" [(visible)]="displayOOSModal" [modal]="true" [style]="{width: '100%'}">
+    <p-dialog header="Items Out of Stock" [(visible)]="displayOOSModal"
+     [modal]="true" [style]="{width: '70%'}" class="p-fluid">
 
         <div>Item: {{itemname}} </div>
         
 
         <p-table [value]="oosList" [scrollable]="true"  
-    selectionMode="single" scrollHeight="500px" 
+    selectionMode="single" scrollHeight="400px" 
         (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-gridlines">
         
         <ng-template pTemplate="header">
