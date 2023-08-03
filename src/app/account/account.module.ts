@@ -47,6 +47,7 @@ import { EditConsumptionComponent } from './consumption/edit-consumption/edit-co
 import { PurchaseCreateComponent } from './purchase/purchase-create/purchase-create.component';
 import { PurchaseViewComponent } from './purchase/purchase-view/purchase-view.component';
 import { PurchasePurchaseReturnComponent } from './purchase/purchase-purchase-return/purchase-purchase-return.component';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 
@@ -104,7 +105,9 @@ import { PurchasePurchaseReturnComponent } from './purchase/purchase-purchase-re
     CheckboxModule,
     CalendarModule,
     CheckboxModule,
-    InputSwitchModule
+    InputSwitchModule,
+    TooltipModule,
+
   ]
 })
 export class AccountModule { }

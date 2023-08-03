@@ -20,6 +20,8 @@ import { SaveConsumptionService } from 'src/app/services/save-consumption.servic
 import { SaveProductionService } from 'src/app/services/save-production.service';
 import { StockLocationListService } from 'src/app/services/stock-location-list.service';
 import { Router } from '@angular/router';
+import { format, parseISO } from 'date-fns';
+
 
 @Component({
   selector: 'app-production',
@@ -63,7 +65,8 @@ export class ProductionComponent {
       const element = this.saleList[index];
 
       let sanitInvoice:any = {} 
-      sanitInvoice['date'] = element.date
+      sanitInvoice['date'] = this.parseDateNew(element.date)
+
       //sanitInvoice['vendor'] = element.partyaccounthead.accounthead
 
       //console.log('VENDOR',element.partyaccounthead.accounthead)
@@ -85,6 +88,12 @@ export class ProductionComponent {
       this.sanitizedInvoiceList.push(sanitInvoice)
       
     }
+  }
+
+  parseDateNew(dateString: string) {
+    const parsedDate = parseISO(dateString);
+    const formattedDate = format(parsedDate, 'dd-MMM-yyyy hh:mm a');
+    return formattedDate;
   }
 
   loadInvoices(offset:number,moreoffset:number) {

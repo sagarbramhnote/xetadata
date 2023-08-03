@@ -1,5 +1,5 @@
 <div class="card col-12">
-    <p-table [value]="selectedInvoice.vouchers" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll" scrollHeight="200px">
+    <p-table [value]="selectedInvoice.vouchers" [scrollable]="true" selectionMode="single" dataKey="id" editMode="row" responsiveLayout="scroll">
         <ng-template pTemplate="caption">
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
                 <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
@@ -17,7 +17,7 @@
                     <th>uom</th>
                     <th>Rate</th>
                     <th>Amount</th>
-                    <th>Modify</th>
+                    <!-- <th>Modify</th> -->
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-v let-i="rowIndex">
@@ -27,13 +27,13 @@
                     <td>{{v.object.uom.uom}}</td>
                     <td>{{v.originalrateaftertaxes}}</td>
                     <td>{{v.quantity * v.originalrateaftertaxes}} </td>
-                    <td>
+                    <!-- <td>
                         <div class="displayline">
                             <button pButton class="p-button-sm" (click)="handleEditVoucher(v)">EDIT</button>
                             <button pButton class="p-button-sm" (click)="handleDeleteVoucher(i)">DEL</button>
                         </div>
                         
-                    </td>
+                    </td> -->
                     
                 </tr>
             </ng-template>
