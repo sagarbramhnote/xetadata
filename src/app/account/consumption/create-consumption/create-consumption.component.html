@@ -1,1 +1,351 @@
-<p>create-consumption works!</p>
+<div class="card">
+    <p-table #dt [value]="selectedVouchers" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[10, 25, 50]" [globalFilterFields]="[
+            'itemname',
+            'quantity',
+            'uom',
+            'rate',
+            'amount'
+        ]">
+        <ng-template pTemplate="caption">
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search"
+                        class="w-full" />
+                </span>
+                <!-- <p-button (click)="showNewVoucherDialog()" icon="pi pi-external-link" label="New Voucher"></p-button> -->
+                <!-- <button (click)="showNewVoucherDialog()" pButton class="p-button-raised p-button-primary"
+                icon="pi pi-plus" label="Add New"></button> -->
+                <!-- <button   pButton class="p-button-raised p-button-primary"
+                    icon="pi pi-plus" label="Add New"  ></button> -->
+            </div>
+        </ng-template>
+
+           <!--  -->
+
+        <ng-template pTemplate="header">
+            <div>
+                <div>Date</div>
+                <p-calendar 
+                [(ngModel)]="selectedDate"
+                [ngModelOptions]="{standalone: true}" 
+                [showTime]="true" [showSeconds]="true" 
+                inputId="time" 
+                appendTo="body" (onSelect)="dateSelected($event)" 
+                [required]="true">
+                </p-calendar>
+                
+            </div>
+        <br>
+    <p-button (click)="showNewVoucherDialog()" icon="pi pi-external-link" 
+    styleClass="p-button-sm p-button-info p-button-raised"
+    label="New Voucher"></p-button>
+  
+
+            <tr>
+                <th pSortableColumn="itemname" class="white-space-nowrap" style="width: 30%">
+                    ItemNme <p-sortIcon field="itemname"></p-sortIcon>
+                </th>
+                <th pSortableColumn="quantity" class="white-space-nowrap" style="width: 25%">
+                    Qty
+                    <p-sortIcon field="quantity"></p-sortIcon>
+                </th>
+                <th pSortableColumn="uom" class="white-space-nowrap" style="width: 25%">
+                    Uom
+                    <p-sortIcon field="uom"></p-sortIcon>
+                </th>
+                <th pSortableColumn="rate" class="white-space-nowrap" style="width: 25%">
+                    Rate
+                    <p-sortIcon field="rate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="amount" class="white-space-nowrap" style="width: 25%">
+                    Amount
+                    <p-sortIcon field="amount"></p-sortIcon>
+                </th>
+                 
+                <th class="white-space-nowrap" style="width: 25%">Modify</th>
+            </tr>
+        </ng-template>
+ 
+        <ng-template pTemplate="body" let-v let-i="rowIndex">
+            <tr>
+                <td>{{v.object.itemname}}</td>
+                <td>{{v.quantity}}</td>
+                <td>{{v.object.uom.uom}}</td>
+                <td>0</td>
+                <td>0</td>
+                <td>
+                    <div class="displayline">
+                        <!-- <button pButton class="p-button-sm" (click)="handleEditVoucher(v)">EDIT</button>
+                        <button pButton class="p-button-sm" (click)="handleDeleteVoucher(i)">DEL</button> -->
+                    </div>
+                    
+                </td>
+                
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+    
+<!--  -->
+<div class="ui-g-12" style="text-align: right">
+    <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
+    <button style="margin-left: 10px" pButton class="w-auto mt-3" icon="pi pi-check" (click)="handleSaveSale()"
+        label="save"></button>
+        <button style="margin-left: 10px;" 
+        pButton class="w-auto mt-3 p-button-danger p-button-raised " icon="pi pi-times" (click)="navigateToListConsumprtions()" 
+        label="Cancel"></button>
+        
+    <!-- <button style="margin-left: 10px" pButton class="w-auto mt-3 p-button-danger" icon="pi pi-times"
+         label="Cancel"></button> -->
+</div>
+
+<p-toast></p-toast>
+
+<!-- //</div> -->
+ 
+<!-- <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="handleSaveSale()" label="Save" styleClass="p-button-text"></p-button>
+</ng-template> -->
+
+
+<!-- create consumption voucher strtas -->
+
+<!-- ends -->
+
+
+<!--voucher create starts here   -->
+<!-- <p-dialog header="Consumption Voucher1" [(visible)]="displaySubModal" [modal]="true" [style]="{width: '100vw',height:'100vw'}"
+[draggable]="false" [resizable]="false" [maximizable]="true">
+ -->
+
+ <p-dialog header="Create New Voucher" [(visible)]="displaySubModal"
+ [style]="{width: '100%'}" [modal]="true"
+ [draggable]="false" [resizable]="false">
+ 
+<div class="namebox">
+    
+    
+    
+        
+    <div class="grid">
+        <div class="col-12 lg:col-10">
+            <div class="grid formgrid p-fluid">
+                <div class="field mb-4 col-12 md:col-6">
+                
+
+        <div>Item</div>
+        <p-autoComplete
+            [(ngModel)]="selectedItem"
+            [suggestions]="filteredItems" 
+            (completeMethod)="filterItems($event)"
+            field="itemname" 
+            [multiple]="false" class="autocomplete" 
+            (onSelect)="handleOnSelectItem($event)"
+            [style]="{'width':'100%'}"
+            [inputStyle]="{'width':'100%'}" 
+            [placeholder]="placeholderItem" 
+            [ngModelOptions]="{standalone: true}"
+            (ngModelChange)="itemChange($event)"
+            [required]="true" #selectItem="ngModel" 
+            [forceSelection]="true">
+
+            <ng-template let-selectedItem pTemplate="item">
+                <div>{{selectedItem.itemname}} - {{selectedItem.id}}</div>
+                <div>{{selectedItem.uom.uom}}</div>
+                <div><span style="font-size: 10px;">{{ selectedItem.level1 }} > {{ selectedItem.level2 }} > {{selectedItem.level3}}</span></div>
+            </ng-template>
+
+        </p-autoComplete>
+        <ng-template [ngIf]="selectItem.errors">
+            <small id="username2-help" class="p-error block">you must select an item</small>
+        </ng-template>
+
+    </div>
+ 
+</div>
+</div>
+</div>
+    <!-- <div class="card flex justify-content-center gap-3"> -->
+        <div class="field mb-4 col-12 md:col-6">
+
+        <p-checkbox name="groupname" value="val1" label="Serial No" [(ngModel)]="selectedValues" [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="snoBoolChange($event)"></p-checkbox><br><br>
+        <p-checkbox name="groupname" value="val2" label="Batch No" [(ngModel)]="selectedValues" [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="bnoBoolChange($event)"></p-checkbox><br><br>
+        <p-checkbox name="groupname" value="val3" label="Expiry Date" [(ngModel)]="selectedValues" [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="edtBoolChange($event)"></p-checkbox><br><br>
+        <p-checkbox name="groupname" value="val4" label="Brand" [(ngModel)]="selectedValues" [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="brandBoolChange($event)"></p-checkbox>
+
+    </div>
+
+    <div class="card stocktable">
+        <p-table [value]="selectedStockBalances" [scrollable]="true"  
+        selectionMode="single" scrollHeight="200px" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm">
+            
+            <ng-template pTemplate="header">
+                
+                <tr>
+                    <th *ngFor="let col of sbcols">
+                        {{ col.field }}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-sb let-i="rowIndex">
+                
+                <tr>
+                    <td *ngFor="let col of sbcols">
+                        <ng-container *ngIf="col.field === 'inputqty'; else notInputqty">
+                          <input type="number" min="0" pInputText class="p-inputtext-sm" 
+                                 placeholder="enter quantity" 
+                                 autocomplete="off" (input)="onNewSearchChange($event,i,sb)"
+                                 [(ngModel)]="sb[col.field]" [ngModelOptions]="{standalone: true}">
+                        </ng-container>
+                        <ng-template #notInputqty>
+                          {{ sb[col.field] }}  
+                        </ng-template>
+                      </td>
+                </tr>
+
+            </ng-template>
+        </p-table>
+
+        <ng-template [ngIf]="inStockBalanceProgress">
+            <div class="stocktableprogress" id="modal">
+                <p-progressSpinner></p-progressSpinner>
+            </div>
+        </ng-template>
+        
+    </div>
+
+
+    <!-- <div class="card stocktable">
+        <p-table [value]="selectedStockLocationBalance" [scrollable]="true"  
+        selectionMode="single" scrollHeight="200px" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm">
+             -->
+             <div class="card">
+                <p-table [value]="selectedStockLocationBalance" [scrollable]="true"  
+                selectionMode="single" scrollHeight="200px" 
+                 (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm">
+              
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Location</th>
+                    <th>Avail Qty</th>
+                    <th>Input</th>
+                </tr> 
+            </ng-template>
+            <ng-template pTemplate="body" let-sb let-i="rowIndex">
+                <tr>
+                    <td>{{sb.location}}</td>
+                    <td>{{sb.quantity}}</td>
+                    <td>
+                        <input type="number" min="0" pInputText class="p-inputtext-sm" 
+                    placeholder="enter quantity" 
+                    autocomplete="off" (input)="onSearchSLBChange($event,i)">
+                        
+                    </td>
+                    
+                </tr>
+            </ng-template>
+        </p-table>
+
+        <ng-template [ngIf]="inStockBalanceProgress">
+            <div class="stocktableprogress" id="modal">
+                <p-progressSpinner></p-progressSpinner>
+            </div>
+        </ng-template>
+        
+    </div>
+
+    
+
+    <div class="fourline">
+        <!-- <div>
+            <div>quantity</div> -->
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="quantity" class="font-medium text-900">Quantity</label>
+
+            
+        <div>{{this.selectedQty}}</div>
+        
+        </div>
+
+        <div>{{selectedUOM}}</div>
+
+        <!-- <div>
+            <div>Account Map</div> -->
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="quantity" class="font-medium text-900">Account Map</label>
+
+            <p-autoComplete
+                [(ngModel)]="selectedAccountMap"
+                [suggestions]="filteredAccountMaps" 
+                (completeMethod)="filterAccountMaps($event)"
+                field="accounthead" 
+                [multiple]="false" class="autocomplete" 
+                (onSelect)="handleOnSelectAccountMap($event)"
+                [style]="{'width':'100%'}"
+                [inputStyle]="{'width':'100%'}" 
+                [placeholder]="placeholderAccountMap" 
+                [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="accountMapChange($event)"
+                [required]="true" #selectAccountMap="ngModel" 
+                [forceSelection]="true">
+                <ng-template let-selectedAccountMap pTemplate="item">
+                    <div>{{selectedAccountMap.accounthead}} - {{selectedAccountMap.id}}</div>
+                </ng-template>
+
+            </p-autoComplete>
+            <ng-template [ngIf]="selectAccountMap.errors">
+                <small id="username2-help" class="p-error block">you must select an account map</small>
+            </ng-template>
+
+        </div>
+
+        <div>
+            <!-- <div>Title</div>
+            <p-dropdown #selectTitleOption="ngModel" [options]="titleOptions" [(ngModel)]="selectedTitleOption" 
+            (ngModelChange)="titleOptionChange($event)" optionLabel="type" optionValue="type"  [ngModelOptions]="{standalone: true}" [required]="true" ></p-dropdown>
+            <ng-template [ngIf]="selectTitleOption.errors">
+                <small id="username2-help" class="p-error block">you must select a title</small>
+            </ng-template> -->
+        </div>
+
+    </div>
+
+    
+
+
+    
+    
+
+    
+
+    
+
+    
+
+
+
+    
+
+
+    
+
+</div>
+
+<ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="handleAddVoucher()" label="Ok" styleClass="p-button-text p-button-info p-button-raised"></p-button>
+</ng-template>
+
+<!-- 
+<ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="handleAddVoucher()" label="Ok" styleClass="p-button-text"></p-button>
+</ng-template>
+</p-dialog> -->
+
+<!--  -->

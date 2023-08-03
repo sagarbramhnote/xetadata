@@ -378,20 +378,27 @@ export class ConsumptionComponent implements OnInit {
   //   this.displayViewModal = true
   // }
   
-  handleView(invoice:any) { 
-    console.log('INVOICE',invoice)
-    this.selectedInvoice = invoice
-    
-    this.displayViewModal = true
-
-    this.viewTotal = 0
-    for (let index = 0; index < this.selectedInvoice.vouchers.length; index++) {
-      const voucher = this.selectedInvoice.vouchers[index];
-      let a:number = voucher.quantity * voucher.rateaftertaxes
-      this.viewTotal = this.viewTotal + a
-    }
-
+  handleView(invoice:any) {
+    localStorage.setItem('view-consumptions', JSON.stringify(invoice));
+    this.router.navigate(['account/view-consumption'])
   }
+
+
+  // handleView(invoice:any) { 
+  //   this.router.navigate(['account/view-consumption']);
+  //   console.log('INVOICE',invoice)
+  //   this.selectedInvoice = invoice
+    
+  //   this.displayViewModal = true
+
+  //   this.viewTotal = 0
+  //   for (let index = 0; index < this.selectedInvoice.vouchers.length; index++) {
+  //     const voucher = this.selectedInvoice.vouchers[index];
+  //     let a:number = voucher.quantity * voucher.rateaftertaxes
+  //     this.viewTotal = this.viewTotal + a
+  //   }
+
+  // }
 
   
 
@@ -1617,8 +1624,11 @@ onGlobalFilter(table: Table, event: Event) {
 }
 
 navigateToconsuptions() {
-  this.router.navigate(['account/consumption-create']);
+  this.router.navigate(['account/create-consumption']);
 }
+//
+//key1: string;
+
 
 } 
 
