@@ -276,24 +276,24 @@ export class SalesReturnComponent implements OnInit {
         }
     }
 
-    handleView(invoice: any) {
-        console.log('INVOICE', invoice);
-        this.selectedInvoice = invoice;
-        console.log('PARTY', this.selectedInvoice.partyaccounthead.accounthead);
-        this.viewPartyName = this.selectedInvoice.partyaccounthead.accounthead;
-        this.displayViewModal = true;
+    // handleView(invoice: any) {
+    //     console.log('INVOICE', invoice);
+    //     this.selectedInvoice = invoice;
+    //     console.log('PARTY', this.selectedInvoice.partyaccounthead.accounthead);
+    //     this.viewPartyName = this.selectedInvoice.partyaccounthead.accounthead;
+    //     this.displayViewModal = true;
 
-        this.viewTotal = 0;
-        for (
-            let index = 0;
-            index < this.selectedInvoice.vouchers.length;
-            index++
-        ) {
-            const voucher = this.selectedInvoice.vouchers[index];
-            let a: number = voucher.quantity * voucher.rateaftertaxes;
-            this.viewTotal = this.viewTotal + a;
-        }
-    }
+    //     this.viewTotal = 0;
+    //     for (
+    //         let index = 0;
+    //         index < this.selectedInvoice.vouchers.length;
+    //         index++
+    //     ) {
+    //         const voucher = this.selectedInvoice.vouchers[index];
+    //         let a: number = voucher.quantity * voucher.rateaftertaxes;
+    //         this.viewTotal = this.viewTotal + a;
+    //     }
+    // }
 
     //my methods
 
@@ -304,11 +304,9 @@ export class SalesReturnComponent implements OnInit {
         );
     }
 
-    handleViewItem(invoice: any) {
-        localStorage.setItem(
-            'editsaleretrunView',
-            JSON.stringify(this.sanitizedInvoiceList)
-        );
+    handleView(invoice: any) {
+        localStorage.setItem('salesreturnview',JSON.stringify(invoice));
         this.router.navigate(['account/salesreturnview']);
     }
+
 }

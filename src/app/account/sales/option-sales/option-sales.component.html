@@ -1,0 +1,64 @@
+<div class="card">
+
+    <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+        <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+            <span class="text-900 text-xl font-bold mb-4 block">Options</span>
+                </span>
+            </div>
+
+     <div class="grid">
+        <div class="col-12 lg:col-10">
+            <div class="grid formgrid p-fluid">
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="itemname" class="font-medium text-900">E-Way Bill No</label>
+                    <input type="text" pInputText [(ngModel)]="selectedEWayBillNo" placeholder="Enter E-Way Bill No"/>
+                </div>
+
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="itemname" class="font-medium text-900">Payment Methods</label>
+                    <textarea class="p-inputtextarea" [(ngModel)]="selectedPaymentMethods" placeholder="Enter payment methods"></textarea>
+                </div>
+
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="itemname" class="font-medium text-900">PO Date</label>
+                    <p-calendar 
+                    [(ngModel)]="selectedPODate"
+                    [ngModelOptions]="{standalone: true}" 
+                    [showTime]="true" [showSeconds]="true" 
+                    inputId="time" 
+                    appendTo="body" (onSelect)="poDateSelected($event)">
+                    </p-calendar> 
+                </div>
+
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="itemname" class="font-medium text-900">PO Number</label>
+                    <input type="text" pInputText [(ngModel)]="selectedPONO" placeholder="Enter PO Number"/>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+     </div>
+
+    <div class="ui-g-12" style= " text-align:right">
+        <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
+                <button style="margin-left: 10px;" pButton class="w-auto mt-3" icon="pi pi-check" (click)="saveOptions()" label="Ok"></button>
+                <button style="margin-left: 10px;" pButton class="w-auto mt-3 p-button-danger" icon="pi pi-times" (click)="navigateToSales()" label="Cancel"></button>
+    
+            </div>
+</div>
+
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+
+<ng-template [ngIf]="inProgress">
+    <div class="overlay" id="modal">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
+</ng-template>
+
+<p-toast></p-toast>

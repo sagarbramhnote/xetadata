@@ -15,10 +15,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 
+
 @NgModule({
     declarations: [
         AppComponent,
-        LoginComponent,
+        LoginComponent
+        
 
 
     ],

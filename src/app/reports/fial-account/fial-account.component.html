@@ -6,26 +6,25 @@
     }
 </style>
 <div class="card">
-    <p-table #dt [value]="finalAccounts" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+    <p-table #dt [value]="finalAccounts" responsiveLayout="scroll"
         [globalFilterFields]="['dahid','dac','debit','cahid','cac','credit']">
         <ng-template pTemplate="caption">
             <div class="table-header">
-                <!-- Final Accounts as on {{today | date:'fullDate'}}    -->
                 Statement of operations and balance sheet
             </div><br>
 
-            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+            <!-- <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
                 <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
                 </span>
             </div>
-            
+             -->
             <br>
-            <div class="displayline">
-                <div>
-                    <div>
+            <div class="grid">
+                <div class="col-12 lg:col-10">
+                    <div class="grid formgrid p-fluid">
+                      <div class="field mb-4 col-12 md:col-6">
                         <div>From Date</div>
                         <p-calendar 
                         [(ngModel)]="selectedFromDate"
@@ -36,10 +35,8 @@
                         [required]="true">
                         </p-calendar>
                     </div>
-                </div>
-                <div>
-                    <div>
 
+                    <div class="field mb-4 col-12 md:col-6">
                       <div>To Date</div>
                         <p-calendar 
                         [(ngModel)]="selectedToDate"
@@ -51,40 +48,42 @@
                         </p-calendar>
                         
                     </div>
-                </div>
 
-                <div>
-                    <button pButton class="p-button-sm" (click)="getFinalAccounts()">GET</button>
-                </div>
-
-            </div>
                 
+                  <div class="mr-2"><button pButton class="p-button-sm" (click)="getFinalAccounts(ta)">GET Trading Account</button></div>
+                   <br>
+                   <br>
+                  <div class="mr-2">  <button pButton class="p-button-sm" (click)="getFinalAccounts(pla)">GET Profit And Loss Account</button></div>
+                  <br>
+                  <br>  
+                  <div class="mr-2">   <button pButton class="p-button-sm" (click)="getFinalAccounts(bs)">GET Balance Sheet</button></div>
 
-
-                <br><br>
+                
+             </div>
+            </div>
+            </div>
+                <br>
     
 
-                <div class="flex">
+                <!-- <div class="flex">
                     <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
                     <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="newExportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                </div> -->
+                <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                    <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text"  (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                    </span>
+                    <div class="grid">
+                        <div class="col-12">
+                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="newExportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+
+                      </div>
+                        </div>
                 </div>
         </ng-template>
 
-        <!-- <ng-template pTemplate="header">
-            <tr>
-                <th pSortableColumn="dahid" class="white-space-nowrap" style="width:10%"> <p-sortIcon field="dahid"></p-sortIcon></th>
-                <th pSortableColumn="dac" class="white-space-nowrap" style="width:20%"> <p-sortIcon field="dac"></p-sortIcon></th>
-                <th pSortableColumn="debit" class="white-space-nowrap" style="width:15%"> <p-sortIcon field="debit"></p-sortIcon></th>
-                <th pSortableColumn="cahid" class="white-space-nowrap" style="width:15%"><p-sortIcon field="cahid"></p-sortIcon></th>
-                <th pSortableColumn="cac" class="white-space-nowrap" style="width:10%"> <p-sortIcon field="cac"></p-sortIcon></th>
-                <th pSortableColumn="credit" class="white-space-nowrap" style="width:12%"> <p-sortIcon field="credit"></p-sortIcon></th>
-                
-
-            </tr>
-        </ng-template> -->
-    
-
-        
 
         <ng-template pTemplate="header"> 
             <tr>
@@ -103,14 +102,14 @@
                 <td *ngIf="inv.dahid === 'title'" [pRowSpanGroup]="2">Title</td> -->
                 <td>{{inv.dac}}</td>
                 <td>
-                    <div class="my-right-text">{{inv.debit }}</div>
+                    <div class="my-right-text">{{inv.debit | number : "1.2-2"}}</div>
                 </td>
                 
                 
                 <td>{{inv.cahid}}</td>
                 <td>{{inv.cac}}</td> 
                 <td>
-                    <div class="my-right-text">{{inv.credit }}</div>
+                    <div class="my-right-text">{{inv.credit | number : "1.2-2" }}</div>
                 </td>
                 
             </tr>

@@ -31,6 +31,23 @@ import { SalesCreateComponent } from './sales/sales-create/sales-create.componen
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { NewJournalVoucherComponent } from './new-journal-voucher/new-journal-voucher.component';
 import { CreateVoucherComponent } from './new-journal-voucher/create-voucher/create-voucher.component';
+import { ProductionComponent } from './production/production.component';
+import { ProductionViewComponent } from './production/production-view/production-view.component';
+import { ProductionCreateComponent } from './production/production-create/production-create.component';
+import { BankReconciliationComponent } from './bank-reconciliation/bank-reconciliation.component';
+import { ViwBankReconciliationComponent } from './bank-reconciliation/viw-bank-reconciliation/viw-bank-reconciliation.component';
+import { ViewSalesComponent } from './sales/view-sales/view-sales.component';
+import { SendInvoiceSalesComponent } from './sales/send-invoice-sales/send-invoice-sales.component';
+import { OptionSalesComponent } from './sales/option-sales/option-sales.component';
+import { ReturnSalessComponent } from './sales/return-saless/return-saless.component';
+import { ConsumptionComponent } from './consumption/consumption.component';
+import { CreateConsumptionComponent } from './consumption/create-consumption/create-consumption.component';
+import { ViewConsumptionComponent } from './consumption/view-consumption/view-consumption.component';
+import { EditConsumptionComponent } from './consumption/edit-consumption/edit-consumption.component';
+import { PurchaseCreateComponent } from './purchase/purchase-create/purchase-create.component';
+import { PurchaseViewComponent } from './purchase/purchase-view/purchase-view.component';
+import { PurchasePurchaseReturnComponent } from './purchase/purchase-purchase-return/purchase-purchase-return.component';
+
 
 
 @NgModule({
@@ -48,6 +65,23 @@ import { CreateVoucherComponent } from './new-journal-voucher/create-voucher/cre
     SalesCreateComponent,
     NewJournalVoucherComponent,
     CreateVoucherComponent,
+    ProductionComponent,
+    ProductionViewComponent,
+    ProductionCreateComponent,
+    BankReconciliationComponent,
+    ViwBankReconciliationComponent,
+    ViewSalesComponent,
+    SendInvoiceSalesComponent,
+    OptionSalesComponent,
+    ReturnSalessComponent,
+    ConsumptionComponent,
+    CreateConsumptionComponent,
+    ViewConsumptionComponent,
+    EditConsumptionComponent,
+    PurchaseCreateComponent,
+    PurchaseViewComponent,
+    PurchasePurchaseReturnComponent
+
 
   ],
   imports: [

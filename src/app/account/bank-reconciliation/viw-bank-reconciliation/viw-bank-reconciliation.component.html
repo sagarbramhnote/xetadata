@@ -1,0 +1,52 @@
+<div class="card">
+    <p-table #dt [value]="chequesList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['maturitydate','originalparty.accounthead','amount','status']">
+        <ng-template pTemplate="caption">
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                </span>
+                 <!-- <button (click)="handleReturn()" pButton class="p-button-raised p-button-primary" icon="pi pi-plus" label="Return"></button>  -->
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                
+                
+                <th pSortableColumn="maturitydate" class="white-space-nowrap" style="width:15%">Date <p-sortIcon field="maturitydate"></p-sortIcon></th>
+                <th pSortableColumn="originalparty.accounthead" class="white-space-nowrap" style="width:15%">Party<p-sortIcon field="originalparty.accounthead"></p-sortIcon></th>
+                <th pSortableColumn="amount" class="white-space-nowrap" style="width:15%">Amount <p-sortIcon field="amount"></p-sortIcon></th>
+                <th pSortableColumn="status" class="white-space-nowrap" style="width:15%">Status <p-sortIcon field="status"></p-sortIcon></th>
+                <th class="white-space-nowrap" style="width:25%">Modify </th>
+
+            </tr>
+        </ng-template>
+
+
+    
+<ng-template pTemplate="body" let-ch let-i="rowIndex">
+    <tr>
+        
+        <td>{{ch.maturitydate}}</td>
+        <td>{{ch.originalparty.accounthead}}</td>
+        <td>{{ch.amount}}</td>
+        <td>{{ch.status}}</td>
+        <td>
+            <!-- <div class="displayline">
+                <button pButton class="p-button-sm" (click)="handleView(ch)">VIEW</button>
+                <p-button (click)="handleCancelWrittenCheque(ch)" label="Cancel"></p-button>
+            </div> -->
+            <div class="grid">
+                <div class="col-12">
+                    <button  pButton icon="pi pi-external-link" class="mr-2 p-button-success p-button-sm p-button-raised" (click)="handleView(ch)" label="View"></button>
+                    <button  pButton icon="pi pi-pencil" class="p-button-sm p-button-info p-button-raised" (click)="handleCancelWrittenCheque(ch)" label="Cancel"></button>
+                </div>
+                </div>
+        </td>
+
+    </tr>
+</ng-template>
+</p-table>
+</div>
