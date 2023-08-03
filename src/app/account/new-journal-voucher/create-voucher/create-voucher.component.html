@@ -9,7 +9,10 @@
             </div>
             
 <div class="card">
-    <div>Date</div>
+    <div class="col-12 lg:col-10">
+        <div class="grid formgrid p-fluid">
+    <div class="field mb-4 col-12 md:col-6">
+        <label for="itemname" class="font-medium text-900">Date</label>
     <p-calendar 
     [(ngModel)]="selectedDate"
     [ngModelOptions]="{standalone: true}" 
@@ -18,87 +21,76 @@
     appendTo="body" (onSelect)="dateSelected($event)" 
     [required]="true">
     </p-calendar> 
-
-    <br>
-    <br>    
+</div>
+</div>
+</div> 
     <div class="col-12 lg:col-10">
         <div class="grid formgrid p-fluid">
-    <div class="field mb-4 col-12 md:col-6">  Debit Account: 
-        
-                
-                         
-                <input type="number" min="0"  #selectDebitAmt="ngModel" pInputText class="p-inputtext-sm" 
-        placeholder="enter debit" [(ngModel)]="selectedDebitAmount" 
-        [ngModelOptions]="{standalone: true}"  autocomplete="off" (ngModelChange)="debitAmountChange($event)"
-        required>
-          
-        
-            <div class="debitaccount">
-                <p-autoComplete
-                [(ngModel)]="selectedDebitAccount"
-                [suggestions]="filteredDebitAccounts" 
-                (completeMethod)="filterDebits($event)"
-                field="accounthead" 
-                [multiple]="false" class="autocomplete" 
-                (onSelect)="handleOnSelectDebitAccount($event)"
-                [style]="{'width':'100%'}"
-                [inputStyle]="{'width':'100%'}" 
-                [placeholder]="placeholderDebitAccount" 
-                [ngModelOptions]="{standalone: true}"
-                (ngModelChange)="debitAccountChange($event)"
-                [required]="true" #selectParty="ngModel" 
-                [forceSelection]="true">
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="debit" class="font-medium text-900">DEBIT</label>
 
-                <ng-template let-selectedParty pTemplate="item">
-                    <div>{{selectedParty.accounthead}} - {{selectedParty.id}}</div>
-                    <div>{{selectedParty.endpoint}}</div>
-                </ng-template>
+                <!-- <div>CREDIT</div> -->
+                <div class="debitaccount">
+                    <p-autoComplete [(ngModel)]="selectedDebitAccount" [suggestions]="filteredDebitAccounts"
+                        (completeMethod)="filterDebits($event)" field="accounthead" [multiple]="false"
+                        class="autocomplete" (onSelect)="handleOnSelectDebitAccount($event)"
+                        [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                        [placeholder]="placeholderDebitAccount" [ngModelOptions]="{standalone: true}"
+                        (ngModelChange)="debitAccountChange($event)" [required]="true" #selectParty="ngModel"
+                        [forceSelection]="true">
 
-                </p-autoComplete> 
-            </div>
-             
+                        <ng-template let-selectedParty pTemplate="item">
+                            <div>{{selectedParty.accounthead}} - {{selectedParty.id}}</div>
+                            <div>{{selectedParty.endpoint}}</div>
+                        </ng-template>
 
+                    </p-autoComplete>
+                </div>
+                <div class="debitamount1">
+                    <input type="number" min="0" #selectDebitAmt="ngModel" pInputText class="p-inputtext-sm"
+                        placeholder="enter debit" [(ngModel)]="selectedDebitAmount"
+                        [ngModelOptions]="{standalone: true}" autocomplete="off"
+                        (ngModelChange)="debitAmountChange($event)" required>
+                </div>
             </div>
           
-            <div class="field mb-4 col-12 md:col-6" >Credit Account:
-                <input type="number" min="0"  #selectCreditAmt="ngModel" pInputText class="p-inputtext-sm" 
-        placeholder="enter credit" [(ngModel)]="selectedCreditAmount" 
-        [ngModelOptions]="{standalone: true}"  autocomplete="off" (ngModelChange)="creditAmountChange($event)"
-        required>
-            <br>
-            <div class="creditaccount">
-                <p-autoComplete
-                [(ngModel)]="selectedCreditAccount"
-                [suggestions]="filteredCreditAccounts" 
-                (completeMethod)="filterCredits($event)"
-                field="accounthead" 
-                [multiple]="false" class="autocomplete" 
-                (onSelect)="handleOnSelectCreditAccount($event)"
-                [style]="{'width':'100%'}"
-                [inputStyle]="{'width':'100%'}" 
-                [placeholder]="placeholderCreditAccount" 
-                [ngModelOptions]="{standalone: true}"
-                (ngModelChange)="creditAccountChange($event)"
-                [required]="true" #selectParty="ngModel" 
-                [forceSelection]="true">
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="itemname" class="font-medium text-900">CREDIT</label>
 
-                <ng-template let-selectedParty pTemplate="item">
-                    <div>{{selectedParty.accounthead}} - {{selectedParty.id}}</div>
-                    <div>{{selectedParty.endpoint}}</div>
-                </ng-template>
+                <div class="debitamount2"></div>
+                <div class="creditaccount">
+                    <p-autoComplete [(ngModel)]="selectedCreditAccount" [suggestions]="filteredCreditAccounts"
+                        (completeMethod)="filterCredits($event)" field="accounthead" [multiple]="false"
+                        class="autocomplete" (onSelect)="handleOnSelectCreditAccount($event)"
+                        [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                        [placeholder]="placeholderCreditAccount" [ngModelOptions]="{standalone: true}"
+                        (ngModelChange)="creditAccountChange($event)" [required]="true" #selectParty="ngModel"
+                        [forceSelection]="true">
 
-                </p-autoComplete>
-               
+                        <ng-template let-selectedParty pTemplate="item">
+                            <div>{{selectedParty.accounthead}} - {{selectedParty.id}}</div>
+                            <div>{{selectedParty.endpoint}}</div>
+                        </ng-template>
+
+                    </p-autoComplete>
+                </div>
+                <div class="creditamount1"></div>
+                <div class="creditamount2">
+                    <input type="number" min="0" #selectCreditAmt="ngModel" pInputText class="p-inputtext-sm"
+                        placeholder="enter credit" [(ngModel)]="selectedCreditAmount"
+                        [ngModelOptions]="{standalone: true}" autocomplete="off"
+                        (ngModelChange)="creditAmountChange($event)" required>
+                </div>
 
             </div>
-              
 
-            </div>
-            </div>
-            <textarea pInputTextarea [(ngModel)]="selectedNarration"[ngModelOptions]="{standalone: true}"
+            <div class="field mb-4 col-12 md:col-6" >
+            <textarea class="p-inputtextarea"  [(ngModel)]="selectedNarration"[ngModelOptions]="{standalone: true}"
             (ngModelChange)="narrationChange($event)"></textarea>
-
             </div>
+            </div>
+        </div>
+    </div>
 <div>          
     <p-button (click)="showNewVoucherDialog()" icon="pi pi-external-link" 
     styleClass="p-button-sm p-button-info p-button-raised"

@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
   selector: 'app-create-voucher',
   templateUrl: './create-voucher.component.html',
   styleUrls: ['./create-voucher.component.scss'],
-  providers: [ConfirmationService,MessageService]
+  providers: [ConfirmationService,MessageService,DecimalPipe]
 })
 export class CreateVoucherComponent implements OnInit {
 
@@ -69,12 +69,11 @@ export class CreateVoucherComponent implements OnInit {
   displaySubEditModal:boolean = false
 
   _iSub:any
-  decimalPipe: any
 
 
   constructor(private eventBusService:EventBusServiceService,private router:Router,
     private httpClient:HttpClient,private confirmationService:ConfirmationService,
-    //private decimalPipe: DecimalPipe,
+    private decimalPipe: DecimalPipe,
      private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -553,8 +552,6 @@ export class CreateVoucherComponent implements OnInit {
 
   
 
-
-
   handleSaveJournalVoucher() {
 
     //return
@@ -656,7 +653,7 @@ export class CreateVoucherComponent implements OnInit {
         else if(v.hasOwnProperty('success')) {
 
           this.inProgress = false
-          this.displayModal = false
+          this.router.navigate(['account/newJournalVoucher'])
           this.loadJVs(0,0)
           return;
         }
@@ -678,6 +675,7 @@ export class CreateVoucherComponent implements OnInit {
     return
 
   }
+
 
 
 
