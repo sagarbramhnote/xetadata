@@ -30,6 +30,7 @@
                         [(ngModel)]="selectedFromDate"
                         [ngModelOptions]="{standalone: true}" 
                         [showTime]="true" [showSeconds]="true" 
+                        placeholder="Select From Date"
                         inputId="fromdate" 
                         appendTo="body" (onSelect)="fromDateSelected($event)" 
                         [required]="true">
@@ -42,6 +43,7 @@
                         [(ngModel)]="selectedToDate"
                         [ngModelOptions]="{standalone: true}" 
                         [showTime]="true" [showSeconds]="true" 
+                        placeholder="Select To Date"
                         inputId="todate" 
                         appendTo="body" (onSelect)="toDateSelected($event)" 
                         [required]="true">
