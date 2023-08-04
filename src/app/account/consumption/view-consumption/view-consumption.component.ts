@@ -211,7 +211,7 @@ export class ViewConsumptionComponent implements OnInit {
 
   //this code is ends here
   ngOnInit(): void {
-    const list= localStorage.getItem('purchaseReturnView');
+    const list= localStorage.getItem('view-consumptions');
     if (list !== null) {
       this.selectedInvoice = JSON.parse(list);
       //console.log('PARTY',this.selectedInvoice.partyaccounthead.accounthead)
