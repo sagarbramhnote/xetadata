@@ -1,0 +1,61 @@
+<div class="card">
+    <p-table #dt [value]="sanitizedPabList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['account.id','account.accounthead','debit','credit']">
+        <ng-template pTemplate="caption">
+            <div>Register of Receipts</div>
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                </span>
+                
+                                
+            </div><br>
+            <div class="ui-g-12" style= " text-align:right">
+                <button (click)="showModalDialog1()" pButton class=" mr-2 p-button-primary" icon="pi pi-plus" label="New Receipt"></button>
+
+                
+                <button (click)="showModalReceiptsDialog()" pButton class="p-button-raised p-button-primary" icon="pi pi-plus" label="Receipts Register"></button>
+
+            </div>
+            
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                
+                <th pSortableColumn="account.id" class="white-space-nowrap" style="width:20%">Id<p-sortIcon field="account.id"></p-sortIcon></th>
+                <th pSortableColumn="account.accounthead" class="white-space-nowrap" style="width:15%">Party <p-sortIcon field="account.accounthead"></p-sortIcon></th>
+                <th pSortableColumn="debit" class="white-space-nowrap" style="width:15%">Receivable<p-sortIcon field="debit"></p-sortIcon></th>
+                <th pSortableColumn="credit" class="white-space-nowrap" style="width:15%">Payable<p-sortIcon field="credit"></p-sortIcon></th>
+                <th class="white-space-nowrap" style="width:25%">Modify </th>
+
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-inv let-i="rowIndex">
+            <tr>
+                
+                <td>{{inv.account.id}}</td>
+                <td>{{inv.account.accounthead}}</td>
+                <td>{{inv.debit | number: '1.2-2'}}</td>
+                <td>{{inv.credit | number: '1.2-2'}}</td>
+                <td>
+                    <div>
+                        <button pButton class="p-button-sm" (click)="handleView(inv.invoice)">VIEW</button>
+                    </div>
+                </td>
+
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+
+    <ng-template [ngIf]="inProgress">
+        <div class="overlay" id="modal">
+            <p-progressSpinner></p-progressSpinner>
+        </div>
+    </ng-template>

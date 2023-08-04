@@ -77,7 +77,12 @@ export class FialAccountComponent {
   onRowSelect(event:any) {
 
   }
-  getFinalAccounts() {
+  
+ta:any="ta"
+pla:any="pla"
+bs:any="bs"
+
+  getFinalAccounts(aa:any) {
     if (this.selectedFromDate >= this.selectedToDate) {
       this.confirm('From date should be less than to date')
       return
@@ -90,10 +95,10 @@ export class FialAccountComponent {
 
     console.log('CRITERIA',JSON.stringify(criteria))
 
-    this.loadFinalAccounts(criteria)
+    this.loadFinalAccounts(criteria,aa)
   }
 
-  loadFinalAccounts(criteria:any) {
+  loadFinalAccounts(criteria:any,bb:any) {
     this.inProgress = true
     let ahlService:PenultimateFinalAccountsService = new PenultimateFinalAccountsService(this.httpClient)
     console.log('CRITERIA',criteria)
@@ -117,7 +122,7 @@ export class FialAccountComponent {
           let dataSuccess:XetaSuccess = <XetaSuccess>v;
           let unprocessedData = dataSuccess
           console.log('FINAL ACCOUNTS',unprocessedData)
-          this.processFinalAccounts(unprocessedData)
+          this.processFinalAccounts(unprocessedData,bb)
           this.inProgress = false
           return
         }
@@ -152,15 +157,15 @@ export class FialAccountComponent {
   }
 
 
+  processFinalAccounts(unprocessedData:any,cc:any) {
 
-
-
-  processFinalAccounts(unprocessedData:any) {
-
+  console.log("cc coming",cc)
     let empty:any = {} 
 
     this.finalAccounts = []
-    
+   
+    if(cc=="ta"){
+    console.log("ta")
     let trdtitle:any = {
       'dahid':'TRADING ACCOUNT',
       'dac':'EXPENSES',
@@ -176,9 +181,14 @@ export class FialAccountComponent {
       const element = unprocessedData.success.trdlines[index];
       this.finalAccounts.push(element)
     }
+ 
+  }
 
-    this.finalAccounts.push(empty)
-    this.finalAccounts.push(empty)
+  if(cc=="pla"){
+    console.log("pla")
+
+    // this.finalAccounts.push(empty)
+    // this.finalAccounts.push(empty)
 
     let pltitle:any = {
       'dahid':'PROFIT OR LOSS ACCOUNT',
@@ -195,10 +205,14 @@ export class FialAccountComponent {
       const element = unprocessedData.success.pandlines[index];
       this.finalAccounts.push(element)
     }
+  }
 
-    this.finalAccounts.push(empty)
-    this.finalAccounts.push(empty)
+  if(cc=="bs"){
+    console.log("bs")
 
+    // this.finalAccounts.push(empty)
+    // this.finalAccounts.push(empty)
+ 
     let bstitle:any = {
       'dahid':'BALANCE SHEET',
       'dac':'ASSETS',
@@ -214,24 +228,18 @@ export class FialAccountComponent {
       const element = unprocessedData.success.bslines[index];
       this.finalAccounts.push(element)
     }
-
-
-    
+ 
+  }
 
     console.log('FA',this.finalAccounts)
 
     
 
+    // let a:any = {}
     
+    // this.finalAccounts.push(a)
 
-    let a:any = {}
-    
-    this.finalAccounts.push(a)
-
-    
-    
-    
-    
+     
 
   }
 

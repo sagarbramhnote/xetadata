@@ -1,68 +1,80 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import { AccountHeadListService } from 'src/app/services/account-head-list.service';
+import { Search } from 'src/app/services/search';
+import {ConfirmationService,MessageService} from 'primeng/api';
 import { EventBusServiceService } from 'src/app/global/event-bus-service.service';
 import { XetaSuccess } from 'src/app/global/xeta-success';
 import { Xetaerror } from 'src/app/global/xetaerror';
-import { AccountHeadListService } from 'src/app/services/account-head-list.service';
-import { ItemsListService } from 'src/app/services/items-list.service';
 import { JournalVoucherListService } from 'src/app/services/journal-voucher-list.service';
-import { SaveNewJournalVoucherService } from 'src/app/services/save-new-journal-voucher.service';
-import { Search } from 'src/app/services/search';
+
+import { ItemsListService } from 'src/app/services/items-list.service';
 import { DecimalPipe } from '@angular/common';
+import { SaveNewJournalVoucherService } from 'src/app/services/save-new-journal-voucher.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-create-voucher',
   templateUrl: './create-voucher.component.html',
   styleUrls: ['./create-voucher.component.scss'],
-  providers: [ConfirmationService,MessageService]
+  providers: [ConfirmationService,MessageService,DecimalPipe]
 })
-export class CreateVoucherComponent implements OnInit  {
-
+export class CreateVoucherComponent implements OnInit {
 
   journalVoucherList:any[] = [] 
   selectedDate:Date = new Date()
+
+  displayModal:boolean = false
+  
+
   selectedDebitAccount:any
   filteredDebitAccounts:any[] = []
   placeholderDebitAccount:any
- _eSub: any;
- selectedDebitAmount:any
- selectedCreditAmount:any
 
- selectedCreditAccount:any
- filteredCreditAccounts:any[] = []
- placeholderCreditAccount:any
- selectedNarration:string = ""
- selectedVouchers:any[] = []
- filteredItems:any[] =[]
-  placeholderItem:string = ''
+  selectedCreditAccount:any
+  filteredCreditAccounts:any[] = []
+  placeholderCreditAccount:any
+
+
+  selectedDebitAmount:any
+  selectedCreditAmount:any
+
+
+  selectedNarration:string = ""
+
+  _eSub:any
+  _ahlSub:any
+  _siSub:any
+
   inProgress:boolean = false
 
- voucher:any = {
-  'item':{
-    'itemname':'',
-    'uom':{
-      'uom':''
-    }
-  },
-  rate:0,
-  quantity:0
+  selectedVouchers:any[] = []
+  voucher:any = {
+    'item':{
+      'itemname':'',
+      'uom':{
+        'uom':''
+      }
+    },
+    rate:0,
+    quantity:0
 
-}
-displaySubModal:boolean = false
-displaySubEditModal:boolean = false
-_iSub: any;
-_ahlSub: any;
+  }
+  filteredItems:any[] =[]
+  placeholderItem:string = ''
 
-  _siSub: any;
-  displayModal:boolean = false
-  decimalPipe: any;
-  
+  displaySubModal:boolean = false
+  displaySubEditModal:boolean = false
+
+  _iSub:any
 
 
-  constructor(private router:Router,private eventBusService:EventBusServiceService,private httpClient:HttpClient,private confirmationService:ConfirmationService, private messageService: MessageService) { }
-
+  constructor(private eventBusService:EventBusServiceService,private router:Router,
+    private httpClient:HttpClient,private confirmationService:ConfirmationService,
+    private decimalPipe: DecimalPipe,
+     private messageService: MessageService) { }
 
   ngOnInit(): void {
      
@@ -104,249 +116,7 @@ _ahlSub: any;
     this.loadJVs(0,0)
 
   }
-  loadJVs(offset:number,moreoffset:number) {
-    
-    let ahlService:JournalVoucherListService = new JournalVoucherListService(this.httpClient)
-    let criteria:Search = <Search>{searchtext:'',screen:'',offset:moreoffset,searchtype:'',attribute:''};
-    console.log('CRITERIA',criteria)
-    this._ahlSub = ahlService.fetchJournalVoucherList(criteria).subscribe({
-      complete:() => {console.info('complete')},
-      error:(e) => {
-        this.inProgress = false
-        this.confirm('A server error occured while fetching account heads. '+e.message)
-        return
-      },
-      next:(v) => {
-        console.log('NEXT',v);
-        if (v.hasOwnProperty('error')) {
-          let dataError:Xetaerror = <Xetaerror>v; 
-          this.confirm(dataError.error)
-          this.inProgress = false
-          return
-        }
-        else if(v.hasOwnProperty('success')) {
-          let dataSuccess:XetaSuccess = <XetaSuccess>v;
-          //this.masterCopy = dataSuccess.success
-          this.processData(dataSuccess.success)
-          
-          this.inProgress = false
-          return
-        }
-        else if(v == null) { 
-          this.inProgress = false
-          this.confirm('A null object has been returned. An undefined error has occurred.')
-          return
-        }
-        else {
-          //alert('An undefined error has occurred.')
-          this.inProgress = false
-          this.confirm('An undefined error has occurred.')
-          return false
-        }
-      }
-    })
 
-  }
-
-  processData(udata:any) {
-    console.log('UDATA',udata)
-    this.journalVoucherList = []
-    for (let index = 0; index < udata.length; index++) {
-        const element = udata[index];
-        let jv:any = {}
-        let jvEntries = []
-        
-        let a:any = {}
-        a['title'] = element.debitaccount.accounthead
-        a["creditcol"] = ""
-        a["creditfractioncol"] = ""
-        a["style"] = "color: #1C00ff00"
-
-        a = this.formattedNumber(element.amount as number,a,'debitcol')
-        jvEntries.push(a)
-
-
-        let b:any = {}
-        b['title'] = element.creditaccount.accounthead
-        b["debitcol"] = ""
-        b["debitfractioncol"] = ""
-        b["style"] = "color: #1C00ff00"
-
-        b = this.formattedNumber(element.amount as number,b,'creditcol')
-        jvEntries.push(b)
-
-        jv["invoicedate"] = element.invoicedate
-        jv["jvEntries"] = jvEntries
-        
-        this.journalVoucherList.push(jv)
-
-     }
-
-     console.log('PROCESSED JVs',this.journalVoucherList)
-
-
-  }
-  formattedNumber(n:number,ca:any,coltype:any) {
-    
-    let a = n.toLocaleString(undefined, {minimumFractionDigits: 2,maximumFractionDigits:2})
-    const myArray = a.split(".");
-
-    ca["amount"] = n
-
-    if (coltype === 'debitcol') {
-      ca["debitamount"] = n
-      ca["debitcol"] = myArray[0]
-      ca["debitfractioncol"] = "."+myArray[1]
-      
-      if (this.isInt(n)){
-        ca["style"] = "color: #1C00ff00"
-      }
-      else if(!this.isInt(n)) {
-        ca["style"] = "color: #000000"
-      }
-
-      
-
-
-    }
-    else if(coltype === 'creditcol') {
-      ca["creditamount"] = n
-      ca["creditcol"] = myArray[0]
-      ca["creditfractioncol"] = "."+myArray[1]
-
-      if (this.isInt(n)){
-        ca["style"] = "color: #1C00ff00"
-      }
-      else if(!this.isInt(n)) {
-        ca["style"] = "color: #000000"
-      }
-
-      
-
-    }
-    
-    return ca
-
-  }
-  isInt(n:any) {
-    return n % 1 === 0;
-  }
-
-
-  dateSelected(event:any) {
-
-  }
-
-  filterDebits(event:any) {
-    console.log('IN FILTER PARTIES',event)
-    
-    // let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'party-name-contains'};
-    let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'noncashnonparty-accounthead-contains'};
-    console.log('CRITERIA',criteria)
-    let pService:AccountHeadListService = new AccountHeadListService(this.httpClient)
-    this._eSub = pService.fetchAccountHeads(criteria).subscribe({
-      complete: () => {
-        console.info('complete')
-      },
-      error: (e) => {
-        console.log('ERROR',e)
-        alert('A server error occured. '+e.message) 
-        return;
-      },
-      next: (v) => {
-        console.log('NEXT',v);
-        if (v.hasOwnProperty('error')) {
-          let dataError:Xetaerror = <Xetaerror>v; 
-          alert(dataError.error);
-          return;
-        }
-        else if(v.hasOwnProperty('success')) {
-          let dataSuccess:XetaSuccess = <XetaSuccess>v;
-          this.filteredDebitAccounts = dataSuccess.success;
-          console.log('FILTERED DEBIT ACCOUNTS',dataSuccess.success)
-          return;
-        }
-        else if(v == null) {
-          alert('A null object has been returned. An undefined error has occurred.')
-          return;
-        }
-        else {
-          alert('An undefined error has occurred.')
-          return
-        }
-      }
-    })
-  }
-  handleOnSelectDebitAccount(event:any) {
-    this.selectedDebitAccount = event
-  }
-
-  debitAccountChange(event:any) {
-
-  }
-
-  debitAmountChange(event:any) {
-    console.log('DEBIT AMOUNT EVENT',event)
-  }
-
-  
-  filterCredits(event:any) {
-    console.log('IN FILTER PARTIES',event)
-    
-    // let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'party-name-contains'};
-    let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'noncashnonparty-accounthead-contains'};
-    console.log('CRITERIA',criteria)
-    let pService:AccountHeadListService = new AccountHeadListService(this.httpClient)
-    this._eSub = pService.fetchAccountHeads(criteria).subscribe({
-      complete: () => {
-        console.info('complete')
-      },
-      error: (e) => {
-        console.log('ERROR',e)
-        alert('A server error occured. '+e.message)
-        return;
-      },
-      next: (v) => {
-        console.log('NEXT',v);
-        if (v.hasOwnProperty('error')) {
-          let dataError:Xetaerror = <Xetaerror>v; 
-          alert(dataError.error);
-          return;
-        }
-        else if(v.hasOwnProperty('success')) {
-          let dataSuccess:XetaSuccess = <XetaSuccess>v;
-          this.filteredCreditAccounts = dataSuccess.success;
-          console.log('FILTERED CREDIT ACCOUNTS',dataSuccess.success)
-          return;
-        }
-        else if(v == null) {
-          alert('A null object has been returned. An undefined error has occurred.')
-          return;
-        }
-        else {
-          alert('An undefined error has occurred.')
-          return
-        }
-      }
-    })
-  }
-
-  handleOnSelectCreditAccount(event:any) {
-
-  }
-
-  creditAccountChange(event:any) {
-    
-  }
-  creditAmountChange(event:any) { 
-
-
-  }
-
-
-  narrationChange(event:any) {
-
-  }
   showNewVoucherDialog() {
     this.voucher = {
       'item':{
@@ -359,12 +129,7 @@ _ahlSub: any;
       quantity:0
   
     }
-    this.displaySubModal=true
-  }
-
-  
-  onRowSelect(e:any) {
-
+    this.displaySubModal = true
   }
 
   handleEditVoucher(v:any) {
@@ -372,18 +137,9 @@ _ahlSub: any;
     this.displaySubEditModal = true
   }
 
-  getTotalAmount() {
-    let totalAmount = 0
-    for (let index = 0; index < this.selectedVouchers.length; index++) {
-      const element = this.selectedVouchers[index];
-      totalAmount = totalAmount + (element.rate * element.quantity)
-    }
-    return totalAmount
-  }
   handleDeleteVoucher(i:any) {
 
   }
-
 
   filterItems(event:any) {
     console.log('IN FILTER ITEMS',event)
@@ -489,21 +245,6 @@ _ahlSub: any;
 
   }
 
-
-
-  confirm(msg:string) {
-    this.confirmationService.confirm({
-        header:'Error',
-        message: msg,
-        acceptVisible: true,
-        rejectVisible: false,
-        acceptLabel: 'Ok',
-        accept: () => {
-            //Actual logic to perform a confirmation
-        }
-    });
-  }
-
   handleUpdateVoucher() {
     if(this.voucher.quantity < 0) {
       this.confirm('You cannot enter negative values for quantity')
@@ -532,7 +273,285 @@ _ahlSub: any;
     return false
   }
 
+
+  loadJVs(offset:number,moreoffset:number) {
+    
+    let ahlService:JournalVoucherListService = new JournalVoucherListService(this.httpClient)
+    let criteria:Search = <Search>{searchtext:'',screen:'',offset:moreoffset,searchtype:'',attribute:''};
+    console.log('CRITERIA',criteria)
+    this._ahlSub = ahlService.fetchJournalVoucherList(criteria).subscribe({
+      complete:() => {console.info('complete')},
+      error:(e) => {
+        this.inProgress = false
+        this.confirm('A server error occured while fetching account heads. '+e.message)
+        return
+      },
+      next:(v) => {
+        console.log('NEXT',v);
+        if (v.hasOwnProperty('error')) {
+          let dataError:Xetaerror = <Xetaerror>v; 
+          this.confirm(dataError.error)
+          this.inProgress = false
+          return
+        }
+        else if(v.hasOwnProperty('success')) {
+          let dataSuccess:XetaSuccess = <XetaSuccess>v;
+          //this.masterCopy = dataSuccess.success
+          this.processData(dataSuccess.success)
+          
+          this.inProgress = false
+          return
+        }
+        else if(v == null) { 
+          this.inProgress = false
+          this.confirm('A null object has been returned. An undefined error has occurred.')
+          return
+        }
+        else {
+          //alert('An undefined error has occurred.')
+          this.inProgress = false
+          this.confirm('An undefined error has occurred.')
+          return false
+        }
+      }
+    })
+
+  }
+
+
+
+  processData(udata:any) {
+    console.log('UDATA',udata)
+    this.journalVoucherList = []
+    for (let index = 0; index < udata.length; index++) {
+        const element = udata[index];
+        let jv:any = {}
+        let jvEntries = []
+        
+        let a:any = {}
+        a['title'] = element.debitaccount.accounthead
+        a["creditcol"] = ""
+        a["creditfractioncol"] = ""
+        a["style"] = "color: #1C00ff00"
+
+        a = this.formattedNumber(element.amount as number,a,'debitcol')
+        jvEntries.push(a)
+
+
+        let b:any = {}
+        b['title'] = element.creditaccount.accounthead
+        b["debitcol"] = ""
+        b["debitfractioncol"] = ""
+        b["style"] = "color: #1C00ff00"
+
+        b = this.formattedNumber(element.amount as number,b,'creditcol')
+        jvEntries.push(b)
+
+        jv["invoicedate"] = element.invoicedate
+        jv["jvEntries"] = jvEntries
+        
+        this.journalVoucherList.push(jv)
+
+     }
+
+     console.log('PROCESSED JVs',this.journalVoucherList)
+
+
+  }
+
+
+
+  isInt(n:any) {
+    return n % 1 === 0;
+  }
+
+  formattedNumber(n:number,ca:any,coltype:any) {
+    
+    let a = n.toLocaleString(undefined, {minimumFractionDigits: 2,maximumFractionDigits:2})
+    const myArray = a.split(".");
+
+    ca["amount"] = n
+
+    if (coltype === 'debitcol') {
+      ca["debitamount"] = n
+      ca["debitcol"] = myArray[0]
+      ca["debitfractioncol"] = "."+myArray[1]
+      
+      if (this.isInt(n)){
+        ca["style"] = "color: #1C00ff00"
+      }
+      else if(!this.isInt(n)) {
+        ca["style"] = "color: #000000"
+      }
+
+      
+
+
+    }
+    else if(coltype === 'creditcol') {
+      ca["creditamount"] = n
+      ca["creditcol"] = myArray[0]
+      ca["creditfractioncol"] = "."+myArray[1]
+
+      if (this.isInt(n)){
+        ca["style"] = "color: #1C00ff00"
+      }
+      else if(!this.isInt(n)) {
+        ca["style"] = "color: #000000"
+      }
+
+      
+
+    }
+    
+    return ca
+
+  }
+
+
   
+
+  onRowSelect(e:any) {
+
+  }
+
+  handleView(inv:any) {
+
+  }
+
+  showModalDialog() {
+    this.displayModal = true
+  }
+
+  handleMore() {
+
+  }
+
+  
+
+
+  dateSelected(event:any) {
+
+  }
+
+
+
+  filterDebits(event:any) {
+    console.log('IN FILTER PARTIES',event)
+    
+    // let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'party-name-contains'};
+    let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'noncashnonparty-accounthead-contains'};
+    console.log('CRITERIA',criteria)
+    let pService:AccountHeadListService = new AccountHeadListService(this.httpClient)
+    this._eSub = pService.fetchAccountHeads(criteria).subscribe({
+      complete: () => {
+        console.info('complete')
+      },
+      error: (e) => {
+        console.log('ERROR',e)
+        alert('A server error occured. '+e.message) 
+        return;
+      },
+      next: (v) => {
+        console.log('NEXT',v);
+        if (v.hasOwnProperty('error')) {
+          let dataError:Xetaerror = <Xetaerror>v; 
+          alert(dataError.error);
+          return;
+        }
+        else if(v.hasOwnProperty('success')) {
+          let dataSuccess:XetaSuccess = <XetaSuccess>v;
+          this.filteredDebitAccounts = dataSuccess.success;
+          console.log('FILTERED DEBIT ACCOUNTS',dataSuccess.success)
+          return;
+        }
+        else if(v == null) {
+          alert('A null object has been returned. An undefined error has occurred.')
+          return;
+        }
+        else {
+          alert('An undefined error has occurred.')
+          return
+        }
+      }
+    })
+  }
+
+  handleOnSelectDebitAccount(event:any) {
+    this.selectedDebitAccount = event
+  }
+
+  debitAccountChange(event:any) {
+
+  } 
+
+
+
+
+  filterCredits(event:any) {
+    console.log('IN FILTER PARTIES',event)
+    
+    // let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'party-name-contains'};
+    let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'noncashnonparty-accounthead-contains'};
+    console.log('CRITERIA',criteria)
+    let pService:AccountHeadListService = new AccountHeadListService(this.httpClient)
+    this._eSub = pService.fetchAccountHeads(criteria).subscribe({
+      complete: () => {
+        console.info('complete')
+      },
+      error: (e) => {
+        console.log('ERROR',e)
+        alert('A server error occured. '+e.message)
+        return;
+      },
+      next: (v) => {
+        console.log('NEXT',v);
+        if (v.hasOwnProperty('error')) {
+          let dataError:Xetaerror = <Xetaerror>v; 
+          alert(dataError.error);
+          return;
+        }
+        else if(v.hasOwnProperty('success')) {
+          let dataSuccess:XetaSuccess = <XetaSuccess>v;
+          this.filteredCreditAccounts = dataSuccess.success;
+          console.log('FILTERED CREDIT ACCOUNTS',dataSuccess.success)
+          return;
+        }
+        else if(v == null) {
+          alert('A null object has been returned. An undefined error has occurred.')
+          return;
+        }
+        else {
+          alert('An undefined error has occurred.')
+          return
+        }
+      }
+    })
+  }
+
+  handleOnSelectCreditAccount(event:any) {
+
+  }
+
+  creditAccountChange(event:any) {
+    
+  }
+
+
+  debitAmountChange(event:any) {
+    console.log('DEBIT AMOUNT EVENT',event)
+  }
+
+  creditAmountChange(event:any) { 
+
+  }
+
+  narrationChange(event:any) {
+
+  }
+
+  
+
   handleSaveJournalVoucher() {
 
     //return
@@ -607,6 +626,8 @@ _ahlSub: any;
 
 
   }
+
+
   saveJournalVoucher(newInvoice:any){
 
     this.inProgress = true
@@ -632,7 +653,7 @@ _ahlSub: any;
         else if(v.hasOwnProperty('success')) {
 
           this.inProgress = false
-          this.displayModal = false
+          this.router.navigate(['account/newJournalVoucher'])
           this.loadJVs(0,0)
           return;
         }
@@ -654,9 +675,34 @@ _ahlSub: any;
     return
 
   }
-  navigateToListItems(){
-    this.router.navigate(['account/new-journal-voucher'])
- }
 
+
+
+
+  confirm(msg:string) {
+    this.confirmationService.confirm({
+        header:'Error',
+        message: msg,
+        acceptVisible: true,
+        rejectVisible: false,
+        acceptLabel: 'Ok',
+        accept: () => {
+            //Actual logic to perform a confirmation
+        }
+    });
+  }
+
+  getTotalAmount() {
+    let totalAmount = 0
+    for (let index = 0; index < this.selectedVouchers.length; index++) {
+      const element = this.selectedVouchers[index];
+      totalAmount = totalAmount + (element.rate * element.quantity)
+    }
+    return totalAmount
+  }
+
+  navigateNewJournalVoucher(){
+       this.router.navigate(['account/newJournalVoucher'])
+  }
 
 }
