@@ -46,10 +46,15 @@ import { ViewConsumptionComponent } from './consumption/view-consumption/view-co
 import { PurchaseCreateComponent } from './purchase/purchase-create/purchase-create.component';
 import { PurchaseViewComponent } from './purchase/purchase-view/purchase-view.component';
 import { PurchasePurchaseReturnComponent } from './purchase/purchase-purchase-return/purchase-purchase-return.component';
+import { PaymentsComponent } from './payments/payments.component';
+import { PaymentsCreateComponent } from './payments/payments-create/payments-create.component';
+import { PaymentsRegisterComponent } from './payments/payments-register/payments-register.component';
+import { PaymentsViewComponent } from './payments/payments-view/payments-view.component';
 import { ReciptsComponent } from './recipts/recipts.component';
 import { ReciptsNewComponent } from './recipts/recipts-new/recipts-new.component';
 import { ReciptsRegisterComponent } from './recipts/recipts-register/recipts-register.component';
 import { TooltipModule } from 'primeng/tooltip';
+
 
 
 
@@ -83,10 +88,15 @@ import { TooltipModule } from 'primeng/tooltip';
     PurchaseCreateComponent,
     PurchaseViewComponent,
     PurchasePurchaseReturnComponent,
+    PaymentsComponent,
+    PaymentsCreateComponent,
+    PaymentsRegisterComponent,
+    PaymentsViewComponent,
     ReciptsComponent,
     ReciptsNewComponent,
     ReciptsRegisterComponent,
     PurchasePurchaseReturnComponent
+
 
 
 

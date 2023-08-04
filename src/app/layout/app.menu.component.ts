@@ -595,8 +595,10 @@ export class AppMenuComponent implements OnInit {
                     },
                     {
                         label: 'Payments',
-                        icon: 'pi pi-money-bill',
-                        routerLink: ['/account/sales'],
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/account/payments'],
+
+                       
                     },
                     {
                         label: 'Receipts',
