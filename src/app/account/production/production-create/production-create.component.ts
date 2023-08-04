@@ -1,5 +1,3 @@
-//import { Component } from '@angular/core';
-//import { ConfirmationService, MessageService } from 'primeng/api';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { XetaSuccess } from 'src/app/global/xeta-success';
 import { PeopleService } from 'src/app/services/people.service';
@@ -16,19 +14,20 @@ import { SaveSaleService } from 'src/app/services/save-sale.service';
 import { ProductServiceListService } from 'src/app/services/product-service-list.service';
 import { StockBalanceItemService } from 'src/app/services/stock-balance-item.service';
 import { SaveSaleReturnService } from 'src/app/services/save-sale-return.service';
-
+import { Table } from 'primeng/table';
 //import { EventData } from '../../global/event-data';
 import { SaveConsumptionService } from 'src/app/services/save-consumption.service';
-import { StockLocationBalanceService } from 'src/app/services/stock-location-balance.service';
+import { SaveProductionService } from 'src/app/services/save-production.service';
+import { StockLocationListService } from 'src/app/services/stock-location-list.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-view-consumption',
-  templateUrl: './view-consumption.component.html',
-  styleUrls: ['./view-consumption.component.scss'],
+  selector: 'app-production-create',
+  templateUrl: './production-create.component.html',
+  styleUrls: ['./production-create.component.scss'],
   providers: [ConfirmationService,MessageService]
 })
-export class ViewConsumptionComponent implements OnInit {
-
+export class ProductionCreateComponent implements OnInit{
   selectedStockBalances:any[] = []
 
   
@@ -42,7 +41,7 @@ export class ViewConsumptionComponent implements OnInit {
 
   newInvoice:any = {}
   newVoucher:any = {}
-
+ 
   selectedEntity:any
   filteredEntities:any[] = new Array
   private _eSub:any
@@ -72,6 +71,12 @@ export class ViewConsumptionComponent implements OnInit {
   private _iSub:any
   @ViewChild('selectItem') selectItem:any
   placeholderItem = 'select item'
+
+  selectedRelatedItem:any
+  filteredRelatedItems:any[] = new Array
+  private _irSub:any
+  @ViewChild('selectRelatedItem') selectRelatedItem:any
+  placeholderRelatedItem = 'select related item'
 
   selectedUOM:any = ""
 
@@ -178,59 +183,40 @@ export class ViewConsumptionComponent implements OnInit {
 
   saleInvoiceID:any
 
-  
+
+  selectedExpiryDate: Date = new Date();
+
   viewTotal:number = 0
 
-  selectedStockLocationBalance:any[] = []
-  selectedLocationQty:number = 0
+  selectedFromLocation:any
+  filteredFromLocations:any[] = new Array
+  @ViewChild('selectFromLocation') selectFromLocation:any
+  placeholderFromLocation = 'select location'
 
-  selectedValues: string[] = [];
-
-  sbcols: any[] = new Array;
 
   titleOptions:any[] = [{type:'ownership'},{type:'possession'},{type:''}]
   selectedTitleOption:any
   disableTitleOption:boolean = false
 
 
-  constructor(private eventBusService:EventBusServiceService,private httpClient:HttpClient,private confirmationService:ConfirmationService, private messageService: MessageService) { }
-// this is code for developed coe strat shere
-  // ngOnInit(): void {
+  selectedSNO:any
+  selectedBNO:any
+  selectedBrand:any
 
-    
-  //   this.sbcols = [
-  //     {field: 'balance'},
-  //     {field: 'rate'},
-  //     {field: 'inputqty'},
-  //     {field: 'title'}
-  //   ]
 
-  //   this.loadInvoices(0,0)
-  //   this.viewTotal = 0
-  // }
 
-  //this code is ends here
+
+
+  constructor(private router:Router,private eventBusService:EventBusServiceService,private httpClient:HttpClient,private confirmationService:ConfirmationService, private messageService: MessageService) { }
+
   ngOnInit(): void {
-    const list= localStorage.getItem('purchaseReturnView');
-    if (list !== null) {
-      this.selectedInvoice = JSON.parse(list);
-      //console.log('PARTY',this.selectedInvoice.partyaccounthead.accounthead)
-    //this.viewPartyName = this.selectedInvoice.partyaccounthead.accounthead 
-    this.displayViewModal = true
 
+    this.loadInvoices(0,0)
     this.viewTotal = 0
-      for (let index = 0; index < this.selectedInvoice.vouchers.length; index++) {
-        const voucher = this.selectedInvoice.vouchers[index];
-        let a:number = voucher.quantity * voucher.rateaftertaxes
-        this.viewTotal = this.viewTotal + a
-    }
-    }
-   // this.loadInvoices(0,0)
   }
 
 
   sanitizeInvoices() {
-
     for (let index = 0; index < this.saleList.length; index++) {
       const element = this.saleList[index];
 
@@ -245,15 +231,8 @@ export class ViewConsumptionComponent implements OnInit {
       let tax = 0
       for (let j = 0; j < element.vouchers.length; j++) {
         const voucher = element.vouchers[j];
-        if (voucher.objecttype === 'item') {
-          let sbs = voucher.stockbalanceinputs
-          for (let index = 0; index < sbs.length; index++) {
-            const sb = sbs[index];
-            let amt = parseFloat(sb.rate) * parseFloat(sb.inputqty)
-            taxableValue = taxableValue + amt
-          }
-        }
-        
+        let amt = parseFloat(voucher.originalrateaftertaxes) * parseFloat(voucher.quantity)
+        taxableValue = taxableValue + amt
       }
 
       tax = aftertaxValue - taxableValue
@@ -270,7 +249,7 @@ export class ViewConsumptionComponent implements OnInit {
 
     this.inProgress = true
     let ahlService:InvoiceListService = new InvoiceListService(this.httpClient)
-    let criteria:Search = <Search>{searchtext:'',screen:'display',offset:moreoffset,searchtype:'consumption',attribute:''};
+    let criteria:Search = <Search>{searchtext:'',screen:'display',offset:moreoffset,searchtype:'production',attribute:''};
     console.log('CRITERIA',criteria)
     this._invSub = ahlService.fetchInvoiceList(criteria).subscribe({
       complete:() => {console.info('complete')},
@@ -397,7 +376,7 @@ export class ViewConsumptionComponent implements OnInit {
   //   this.selectedInvoice = invoice
   //   this.displayViewModal = true
   // }
-  
+
   handleView(invoice:any) { 
     console.log('INVOICE',invoice)
     this.selectedInvoice = invoice
@@ -407,16 +386,85 @@ export class ViewConsumptionComponent implements OnInit {
     this.viewTotal = 0
     for (let index = 0; index < this.selectedInvoice.vouchers.length; index++) {
       const voucher = this.selectedInvoice.vouchers[index];
-      let a:number = voucher.quantity * voucher.rateaftertaxes
+      let a:number = voucher.quantity * voucher.originalrateaftertaxes
       this.viewTotal = this.viewTotal + a
     }
 
   }
 
-  
+
+
+  expiryDateSelected(event:any) {
+
+    console.log('EXPIRY DATE SELECTED',event)
+
+    this.selectedExpiryDate = event
+
+  }
+
+
+  filterFromLocations(event:any) {
+    console.log('IN FILTER ITEMS',event)
+    // let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'party-name-contains'};
+    let criteria:any = {searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'contains',attribute:''};
+    console.log('CRITERIA',criteria)
+    let iService:StockLocationListService = new StockLocationListService(this.httpClient)
+    this._iSub = iService.fetchStockLocations(criteria).subscribe({
+      complete: () => {
+        console.info('complete')
+      },
+      error: (e) => {
+        console.log('ERROR',e)
+        alert('A server error occured. '+e.message)
+        return;
+      },
+      next: (v) => {
+        console.log('NEXT',v);
+        if (v.hasOwnProperty('error')) {
+          let dataError:Xetaerror = <Xetaerror>v; 
+          alert(dataError.error);
+          return;
+        }
+        else if(v.hasOwnProperty('success')) {
+          let dataSuccess:XetaSuccess = <XetaSuccess>v;
+          this.filteredFromLocations = dataSuccess.success;
+          console.log('FILTERED STOCK LOCATIONS',dataSuccess.success)
+          return;
+        }
+        else if(v == null) {
+          alert('A null object has been returned. An undefined error has occurred.')
+          return;
+        }
+        else {
+          alert('An undefined error has occurred.')
+          return
+        }
+      }
+    })
+  }
 
 
 
+  handleOnSelectFromLocation(event:any) {
+
+    this.selectedFromLocation = event
+    // call the xetadata_stockbalance_ofitem_inlocation
+    console.log('SELECTED ITEM',this.selectedItem)
+    if (typeof this.selectedItem === 'undefined' || this.selectedItem == null || this.selectedItem.itemname === '') {
+      this.confirm('You must select an item')
+      return 
+    }
+    // let a = {
+    //   'itemid':this.selectedItem.id,
+    //   'location':this.selectedFromLocation.location
+    // }
+    //this.stockItemInLocation(a)
+  }
+
+  fromLocationChange(event:any) {
+    console.log('LOCATION CHANGE',event)
+    //this.selectedItemQuantity = ''
+  }
   
 
   
@@ -428,9 +476,19 @@ export class ViewConsumptionComponent implements OnInit {
   handleEditVoucher(v:any) {
     
     console.log('VOUCHER TO BE EDITED',v)
+
+    if(this.selectedQty < 0) {
+      this.confirm('You cannot enter negative values for quantity')
+      return
+    }
+
+    if(this.selectedUIR < 0) {
+      this.confirm('You cannot enter negative values for rate')
+      return
+    }
     
     this.selectedItem = v.object
-    this.selectedUIR = v.userinputrate
+    this.selectedUIR = v.originalrateaftertaxes
     this.selectedQty = v.quantity
     this.selectedStockBalances = v.stockbalanceinputs
     this.selectedAccountMap = v.accountmap
@@ -444,8 +502,11 @@ export class ViewConsumptionComponent implements OnInit {
       ri = 'ret'
     }
     //this.pcchange(ri)
+    this.selectedRelatedItem = v.relateditem
     this.selectedVoucherid = v.recordid
     this.displaySubEditModal = true
+
+    this.selectedFromLocation = v.location
 
   }
 
@@ -503,22 +564,6 @@ export class ViewConsumptionComponent implements OnInit {
     
     this.selectedItem = event
 
-    const dictionary = {
-      'id':this.selectedItem.id,
-      'serialnumber': this.selectedValues.includes('val1'),
-      'batchnumber': this.selectedValues.includes('val2'),
-      'expirydate': this.selectedValues.includes('val3'),
-      'brand': this.selectedValues.includes('val4')
-    };
-
-    this.loadStockBalance(dictionary)
-
-    this.loadStockLocationBalance(this.selectedItem.id)
-
-    this.selectedContextPrices = this.selectedItem.contextprices
-
-    console.log('SELECTED CPS',this.selectedContextPrices)
-
 
     this.rat = 0
     this.rbt = 0
@@ -531,67 +576,109 @@ export class ViewConsumptionComponent implements OnInit {
   }
 
 
-  snoBoolChange(event:any) {
-    console.log('EV',this.selectedValues)
-
-    const dictionary = {
-      'id':this.selectedItem.id,
-      'serialnumber': this.selectedValues.includes('val1'),
-      'batchnumber': this.selectedValues.includes('val2'),
-      'expirydate': this.selectedValues.includes('val3'),
-      'brand': this.selectedValues.includes('val4')
-    };
-
-    this.loadStockBalance(dictionary)
-    this.loadStockLocationBalance(this.selectedItem.id)
-    this.selectedQty = 0
+  filterRelatedItems(event:any) {
+    console.log('IN FILTER ITEMS',event)
+    // let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'party-name-contains'};
+    let criteria:any = {searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'itemcode-contains',attribute:''};
+    console.log('CRITERIA',criteria)
+    let iService:ItemsListService = new ItemsListService(this.httpClient)
+    this._irSub = iService.fetchItems(criteria).subscribe({
+      complete: () => {
+        console.info('complete')
+      },
+      error: (e) => {
+        console.log('ERROR',e)
+        alert('A server error occured. '+e.message)
+        return;
+      },
+      next: (v) => {
+        console.log('NEXT',v);
+        if (v.hasOwnProperty('error')) {
+          let dataError:Xetaerror = <Xetaerror>v; 
+          alert(dataError.error);
+          return;
+        }
+        else if(v.hasOwnProperty('success')) {
+          let dataSuccess:XetaSuccess = <XetaSuccess>v;
+          this.filteredRelatedItems = dataSuccess.success;
+          console.log('FILTERED ITEMS',dataSuccess.success)
+          return;
+        }
+        else if(v == null) {
+          alert('A null object has been returned. An undefined error has occurred.')
+          return;
+        }
+        else {
+          alert('An undefined error has occurred.')
+          return
+        }
+      }
+    })
   }
 
-  bnoBoolChange(event:any) {
-    console.log('EV',this.selectedValues)
-    const dictionary = {
-      'id':this.selectedItem.id,
-      'serialnumber': this.selectedValues.includes('val1'),
-      'batchnumber': this.selectedValues.includes('val2'),
-      'expirydate': this.selectedValues.includes('val3'),
-      'brand': this.selectedValues.includes('val4')
-    };
 
-    this.loadStockBalance(dictionary)
-    this.loadStockLocationBalance(this.selectedItem.id)
-    this.selectedQty = 0
+
+  handleOnSelectRelatedItem(event:any) {
+    
+    this.selectedRelatedItem = event
+
+    
+
+    this.rat = 0
+    this.rbt = 0
+    this.t = 0
+    this.selectedUOM = this.selectedRelatedItem.uom.uom
+
+    //this.pcchange(this.ri)
+
+
   }
 
-  edtBoolChange(event:any) {
-    console.log('EV',this.selectedValues)
-    console.log('EV',this.selectedValues)
-    const dictionary = {
-      'id':this.selectedItem.id,
-      'serialnumber': this.selectedValues.includes('val1'),
-      'batchnumber': this.selectedValues.includes('val2'),
-      'expirydate': this.selectedValues.includes('val3'),
-      'brand': this.selectedValues.includes('val4')
-    };
 
-    this.loadStockBalance(dictionary)
-    this.loadStockLocationBalance(this.selectedItem.id)
-    this.selectedQty = 0
+
+  uirChange(event:any) {
+    let uir:number = parseFloat(event)
+    
+    if(!this.discountState) {
+      this.discountAmount = uir*(this.inputDiscount/100)
+      this.selectedDiscountAmount = this.discountAmount
+      this.selectedDiscountPercent = this.inputDiscount
+      this.rad = this.selectedUIR - this.discountAmount
+    }
+
+    if(this.discountState) {
+      this.discountAmount = this.inputDiscount
+      this.selectedDiscountAmount = this.inputDiscount
+      this.selectedDiscountPercent = (this.inputDiscount*100)/uir
+      this.rad = this.selectedUIR - this.discountAmount
+    }
+
+    if(isNaN(this.discountAmount)) {
+      this.discountAmount = 0
+      this.selectedDiscountAmount = 0
+      this.rad = this.selectedUIR - this.discountAmount
+    }
+
+    if(isNaN(this.rad)) {
+      this.rad = this.selectedUIR
+    }
+
+    
+
+    //this.pcchange(this.ri)
+  }
+  
+
+  snoChange(event:any) {
+
   }
 
-  brandBoolChange(event:any) {
-    console.log('EV',this.selectedValues)
-    console.log('EV',this.selectedValues)
-    const dictionary = {
-      'id':this.selectedItem.id,
-      'serialnumber': this.selectedValues.includes('val1'),
-      'batchnumber': this.selectedValues.includes('val2'),
-      'expirydate': this.selectedValues.includes('val3'),
-      'brand': this.selectedValues.includes('val4')
-    };
+  bnoChange(event:any) {
 
-    this.loadStockBalance(dictionary)
-    this.loadStockLocationBalance(this.selectedItem.id)
-    this.selectedQty = 0
+  }
+
+  brandChange(event:any) {
+
   }
 
   titleOptionChange(event:any) {
@@ -606,125 +693,18 @@ export class ViewConsumptionComponent implements OnInit {
     }
   }
 
-  loadStockBalance(itemid:any) {
 
-    this.inStockBalanceProgress = true
+  onSearchChange(event:any,i:any): void {  
+    console.log('VALUE',event.target.value);
+    this.selectedStockBalances[i].inputqty = event.target.value
+    console.log('SBS',this.selectedStockBalances)
 
-    console.log('IN STOCK BALANCES')
-    // let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'party-name-contains'};
-    let criteria:any = itemid;
-    console.log('CRITERIA',criteria)
-    let iService:StockBalanceItemService = new StockBalanceItemService(this.httpClient)
-    this._sbSub = iService.fetchStockBalance(criteria).subscribe({
-      complete: () => {
-        console.info('complete')
-      },
-      error: (e) => {
-        console.log('ERROR',e)
-        alert('A server error occured. '+e.message)
-        return;
-      },
-      next: (v) => {
-        console.log('NEXT',v);
-        if (v.hasOwnProperty('error')) {
-          let dataError:Xetaerror = <Xetaerror>v; 
-          alert(dataError.error);
-          this.inStockBalanceProgress = false
-          return;
-        }
-        else if(v.hasOwnProperty('success')) {
-          let dataSuccess:XetaSuccess = <XetaSuccess>v;
-          this.selectedStockBalances = dataSuccess.success;
-          let tempsbs = []
-          for (let index = 0; index < this.selectedStockBalances.length; index++) {
-            const element = this.selectedStockBalances[index];
-            element['inputqty'] = 0
-            if(element['balance'] > 0) {
-              tempsbs.push(element)
-            }
-          }
-          this.selectedStockBalances = tempsbs
-
-          if (this.selectedStockBalances.length > 0) {
-            let obj = this.selectedStockBalances[0]
-            const dictionaryList = Object.keys(obj).map(key => {
-              return { field: key };
-            });
-            this.sbcols = dictionaryList
-          }
-          
-          console.log('STOCK BALANCES',this.selectedStockBalances)
-          this.inStockBalanceProgress = false
-          return;
-        }
-        else if(v == null) {
-          alert('A null object has been returned. An undefined error has occurred.')
-          this.inStockBalanceProgress = false
-          return;
-        }
-        else {
-          this.inStockBalanceProgress = false
-          alert('An undefined error has occurred.')
-          return
-        }
-      }
-    })
-  }
-
-  
-
-
-  // onSearchChange(event:any,i:any): void {  
-  //   console.log('VALUE',event.target.value);
-  //   this.selectedStockBalances[i].inputqty = event.target.value
-  //   console.log('SBS',this.selectedStockBalances)
-
-  //   this.selectedQty = 0
-
-  //   if(parseFloat(this.selectedStockBalances[i].inputqty) < 0){
-  //     this.confirm('You cannot consume negative stock')
-  //     event.target.value = 0
-  //     this.selectedStockBalances[i].inputqty = 0
-  //   }
-
-  //   if(parseFloat(this.selectedStockBalances[i].inputqty) < 0){
-  //     this.confirm('You cannot issue negative stock')
-  //     event.target.value = 0
-  //     this.selectedStockBalances[i].inputqty = 0
-  //   }
-  
-  //   if(parseFloat(this.selectedStockBalances[i].balance) < parseFloat(event.target.value)) {
-  //     this.confirm('You cannot issue stock more than the available quantity')
-  //     event.target.value = 0
-  //     this.selectedStockBalances[i].inputqty = 0
-  //   }
-
-  //   this.selectedQty = 0
-  //   for (let index = 0; index < this.selectedStockBalances.length; index++) {
-  //     const element = this.selectedStockBalances[index];
-  //     this.selectedQty = parseFloat(element.inputqty) + this.selectedQty
-      
-  //   }
-
-  // }
-
-
-  onNewSearchChange(event:any,i:any,sb:any): void {
-    
-    sb.inputqty = event.target.value
-    
     this.selectedQty = 0
-
-    if(parseFloat(this.selectedStockBalances[i].inputqty) < 0){
-      this.confirm('You cannot issue negative stock')
-      event.target.value = 0
-      sb.inputqty = 0
-    }
-
-    if(parseFloat(sb.balance) < parseFloat(event.target.value)) {
+  
+    if(parseFloat(this.selectedStockBalances[i].balance) < parseFloat(event.target.value)) {
       this.confirm('You cannot issue stock more than the available quantity')
       event.target.value = 0
-      sb.inputqty = 0
+      this.selectedStockBalances[i].inputqty = 0
     }
 
     this.selectedQty = 0
@@ -735,36 +715,6 @@ export class ViewConsumptionComponent implements OnInit {
     }
 
   }
-
-
-  onSearchSLBChange(event:any,i:any): void {  
-    console.log('VALUE',event.target.value);
-    this.selectedStockLocationBalance[i].inputqty = event.target.value
-    console.log('S Locaiton B',this.selectedStockLocationBalance)
-
-    // this.selectedQty = 0
-
-    if(parseFloat(this.selectedStockLocationBalance[i].inputqty) < 0){
-      this.confirm('You cannot issue negative stock')
-      event.target.value = 0
-      this.selectedStockLocationBalance[i].inputqty = 0
-    }
-
-    if(parseFloat(this.selectedStockLocationBalance[i].quantity) < parseFloat(event.target.value)) {
-      this.confirm('You cannot issue stock more than the available quantity')
-      event.target.value = 0
-      this.selectedStockLocationBalance[i].inputqty = 0
-    }
-
-    this.selectedLocationQty = 0
-    for (let index = 0; index < this.selectedStockLocationBalance.length; index++) {
-      const element = this.selectedStockLocationBalance[index];
-      this.selectedLocationQty = parseFloat(element.inputqty) + this.selectedLocationQty
-      
-    }
-
-  }
-
 
 
   highestRecordID(objectArray:any[]) {
@@ -792,65 +742,17 @@ export class ViewConsumptionComponent implements OnInit {
   } 
 
 
-  
+  relatedItemChange(event:any) {
 
-  loadStockLocationBalance(itemid:any) {
-
-    this.inStockBalanceProgress = true
-
-    console.log('IN STOCK BALANCES')
-    // let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'party-name-contains'};
-    let criteria:any = {id:itemid};
-    console.log('CRITERIA',criteria)
+    console.log('RELATED ITEM CHANGE',event)
+    this.selectedUOM = ""
+    this.selectedStockBalances = []
+    this.selectedContextPrices = []
+    this.selectedTaxes = []
     
-    let iService:StockLocationBalanceService = new StockLocationBalanceService(this.httpClient)
-    this._sbSub = iService.fetchStockLocationBalance(criteria).subscribe({
-      complete: () => {
-        console.info('complete')
-      },
-      error: (e) => {
-        console.log('ERROR',e)
-        alert('A server error occured. '+e.message)
-        return;
-      },
-      next: (v) => {
-        console.log('NEXT',v);
-        if (v.hasOwnProperty('error')) {
-          let dataError:Xetaerror = <Xetaerror>v; 
-          alert(dataError.error);
-          this.inStockBalanceProgress = false
-          return;
-        }
-        else if(v.hasOwnProperty('success')) {
-          let dataSuccess:XetaSuccess = <XetaSuccess>v;
-          this.selectedStockLocationBalance = dataSuccess.success;
-          let tempsbs = []
-          for (let index = 0; index < this.selectedStockLocationBalance.length; index++) {
-            const element = this.selectedStockLocationBalance[index];
-            element['inputqty'] = 0
-            tempsbs.push(element)
-            // if(element['balance'] > 0) {
-            //   tempsbs.push(element)
-            // }
-          }
-          this.selectedStockLocationBalance = tempsbs
-          console.log('STOCK LOCATION BALANCES',this.selectedStockLocationBalance)
-          this.inStockBalanceProgress = false
-          return;
-        }
-        else if(v == null) {
-          alert('A null object has been returned. An undefined error has occurred.')
-          this.inStockBalanceProgress = false
-          return;
-        }
-        else {
-          this.inStockBalanceProgress = false
-          alert('An undefined error has occurred.')
-          return
-        }
-      }
-    })
-  }
+  } 
+
+  
 
 
 
@@ -948,6 +850,7 @@ export class ViewConsumptionComponent implements OnInit {
 
     this.newVoucher = this.returnNewVoucher()
     this.selectedItem = null
+    this.selectedRelatedItem = null
     this.selectedUIR = 0
     this.selectedQty = 0
     this.selectedAccountMap = null
@@ -958,6 +861,7 @@ export class ViewConsumptionComponent implements OnInit {
     //this.pcchange('rit')
     this.selectedStockBalances = []
     this.selectedContextPrices = []
+    //this.titleOptionChange('ownership')
     this.displaySubModal = true;
 
   }
@@ -967,6 +871,17 @@ export class ViewConsumptionComponent implements OnInit {
     console.log('ITEM',this.selectedItem)
     console.log('QUANTITY',this.selectedQty)
     console.log('USER INPUT RATE',this.selectedUIR)
+    console.log('ACCOUNT MAP',this.selectedAccountMap)
+
+    if(this.selectedQty < 0) {
+      this.confirm('You cannot enter negative values for quantity')
+      return false
+    }
+
+    if(this.selectedUIR < 0) {
+      this.confirm('You cannot enter negative values for rate')
+      return false
+    }
 
     if (typeof this.selectedItem === 'undefined' || this.selectedItem == null) {
       this.confirm('You must select an item')
@@ -977,18 +892,13 @@ export class ViewConsumptionComponent implements OnInit {
       return false
     }
 
-    if (typeof this.selectedAccountMap === 'undefined' || this.selectedAccountMap == null || this.selectedAccountMap.accounthead === '') {
+    if ((typeof this.selectedAccountMap === 'undefined' || this.selectedAccountMap == null) && this.selectedTitleOption === 'ownership') {
       this.confirm('You must select an account')
       return false
     }
 
-    if (typeof this.selectedLocationQty === 'undefined' || this.selectedLocationQty == null || this.selectedLocationQty === 0) {
-      this.confirm('You must enter a location quantity greater than zero')
-      return false
-    }
-
-    if(this.selectedQty != this.selectedLocationQty) {
-      this.confirm('You must enter a location quantity equal to actual quantity')
+    if (typeof this.selectedFromLocation === 'undefined' || this.selectedFromLocation == null || this.selectedFromLocation === '') {
+      this.confirm('You must select a location')
       return false
     }
 
@@ -1005,198 +915,37 @@ export class ViewConsumptionComponent implements OnInit {
 
 
   buildVoucher() {
-    /*
-      {
-      action: "rec",
-      objecttype: "item",
-      object: {
-        itemname:null
-      },
-      quantity: null,
-      currency: "",
-      fromdatetime: "",
-      todatetime: "",
-      duedatetime: "",
-      userinputrate: null,
-      rateincludesvat: "True",
-      taxes: [],
-      discountpercent: null,
-      discountamount: null,
-      rateafterdiscount: null,
-      rateaftertaxes: null,
-      taxfactor: 1,
-      taxesperunit: null,
-      uom: {
-        uom: "",
-        symbol: "",
-        country: ""
-      },
-      nonvattaxperunit: null,
-      vattaxperunit: null,
-      nonvatpercent: null,
-      vatpercent: null,
-      ratebeforetaxes: null,
-      intofrom: {
-        id: "0",
-        itemname: "",
-        iscontainer: "True",
-        usercode: "",
-        uom: {
-          uom: "each",
-          symbol: "each",
-          country: "global"
-        },
-        taxes: [],
-        files: [],
-        recipe: {
-          consumedunits: [],
-          byproducts: []
-        }
-      },
-      by: {
-        itemid: "0",
-        neid: "",
-        relationshipid: "",
-        name: ""
-      },
-      delivery: {
-        id: "-1",
-        accounthead: "",
-        defaultgroup: "",
-        relationship: "-1",
-        neid: "-1",
-        person: "-1",
-        name: "",
-        endpoint: "",
-        rtype: ""
-      },
-      title: "",
-      accountmap: {
-        id: "",
-        accounthead: "",
-        defaultgroup: "",
-        relationship: "",
-        neid: "",
-        person: "",
-        name: "",
-        endpoint: "",
-        accounttype: "",
-        partofgroup: -1,
-        isgroup: false
-      },
-      files: [],
-      expirydate: new Date(),
-      vendorperson: null
-    }
-    */
-
     
-
     let v:any = {}
-    v['action'] = 'cons'
+    v['action'] = 'prod'
     v['objecttype'] = 'item'
     v['object'] = JSON.parse(JSON.stringify(this.selectedItem))
     v['quantity'] = this.selectedQty
     v['currency'] = '',
-    // v['fromdatetime'] = 'infinity'
-    // v['todatetime'] = 'infinity'
-    // v['duedatetime'] = 'infinity'
-    // v['userinputrate'] = this.selectedUIR
-    // if(this.ri === 'rit'){
-    //   v['rateincludesvat'] = true
-    // }
-    // if(this.ri === 'ret') {
-    //   v['rateincludesvat'] = false
-    // }
-
-    // v['taxes'] = JSON.parse(JSON.stringify(this.selectedTaxes))
-    // if(isNaN(this.selectedDiscountPercent)) {
-    //   this.selectedDiscountPercent = 0
-    // }
-    // v['discountpercent'] = this.selectedDiscountPercent
-    // v['discountamount'] = this.selectedDiscountAmount
-    // v['rateafterdiscount'] = this.rad
-    // v['rateaftertaxes'] = this.rat
-    // v['taxfactor'] = 0
-    // v['taxesperunit'] = this.t
+    v['originalrateaftertaxes'] = this.selectedUIR
+    
     v['uom'] = {
       uom: "",
       symbol: "",
       country: ""
     }
     
-    // v['nonvattaxperunit'] = this.nonvattaxperunit
     
-    // v['vattaxperunit'] = this.vattaxperunit
-    // v['nonvatpercent'] = this.totalnonvatperc
-    // v['vatpercent'] = this.totalvatperc
-    // v['ratebeforetaxes'] = this.rbt
-
-    // v['intofrom'] = {
-    //   id: "0",
-    //   itemname: "",
-    //   iscontainer: "True",
-    //   usercode: "",
-    //   uom: {
-    //     uom: "each",
-    //     symbol: "each",
-    //     country: "global"
-    //   },
-    //   taxes: [],
-    //   files: [],
-    //   recipe: {
-    //     consumedunits: [],
-    //     byproducts: []
-    //   }
-    // }
-    // v['by'] = {
-    //   itemid: "0",
-    //   neid: "",
-    //   relationshipid: "",
-    //   name: ""
-    // }
-    // v['delivery'] ={
-    //   id: "-1",
-    //   accounthead: "",
-    //   defaultgroup: "",
-    //   relationship: "-1",
-    //   neid: "-1",
-    //   person: "-1",
-    //   name: "",
-    //   endpoint: "",
-    //   rtype: ""
-    // }
-    // v['title'] = ""
     v['accountmap'] = JSON.parse(JSON.stringify(this.selectedAccountMap))
     
+    v['relateditem'] = this.selectedRelatedItem
     v['files'] = []
-    v['expirydate'] = new Date()
+    v['expirydate'] = this.selectedExpiryDate
     //v['vendorperson'] = null
     v['recordid'] = this.highestRecordID(this.selectedVouchers) + 1
 
-    this.uneditedSbs = JSON.parse(JSON.stringify(this.selectedStockBalances))
-    
-    let sbs = []
-    for (let index = 0; index < this.selectedStockBalances.length; index++) {
-      const element = this.selectedStockBalances[index];
-      if(parseFloat(element.inputqty) > 0) {
-        sbs.push(element)
-      }
-    }
+    v['location'] = this.selectedFromLocation
 
-    v['stockbalanceinputs'] = sbs
-
-    let slbs = []
-    for (let index = 0; index < this.selectedStockLocationBalance.length; index++) {
-      const element = this.selectedStockLocationBalance[index];
-      if(parseFloat(element.inputqty) > 0) {
-        slbs.push(element)
-      }
-    }
-
-    v['stocklocationbalanceinputs'] = slbs
     v['title'] = this.selectedTitleOption
 
+    v['serialno'] = this.selectedSNO
+    v['batchno'] = this.selectedBNO
+    v['brand'] = this.selectedBrand
 
     return v
 
@@ -1204,6 +953,16 @@ export class ViewConsumptionComponent implements OnInit {
 
 
   handleUpdateVoucher() {
+
+    if(this.selectedQty < 0) {
+      this.confirm('You cannot enter negative values for quantity')
+      return false
+    }
+
+    if(this.selectedUIR < 0) {
+      this.confirm('You cannot enter negative values for rate')
+      return false
+    }
 
     if (typeof this.selectedItem === 'undefined' || this.selectedItem == null) {
       this.confirm('You must select an item')
@@ -1214,18 +973,13 @@ export class ViewConsumptionComponent implements OnInit {
       return false
     }
 
-    if (typeof this.selectedAccountMap === 'undefined' || this.selectedAccountMap == null || this.selectedAccountMap.accounthead === '') {
+    if ((typeof this.selectedAccountMap === 'undefined' || this.selectedAccountMap == null) && this.selectedTitleOption === 'ownership') {
       this.confirm('You must select an account')
       return false
     }
 
-    if (typeof this.selectedLocationQty === 'undefined' || this.selectedLocationQty == null || this.selectedLocationQty === 0) {
-      this.confirm('You must enter a location quantity greater than zero')
-      return false
-    }
-
-    if(this.selectedQty != this.selectedLocationQty) {
-      this.confirm('You must enter a location quantity equal to actual quantity')
+    if (typeof this.selectedFromLocation === 'undefined' || this.selectedFromLocation == null || this.selectedFromLocation === '') {
+      this.confirm('You must select a location')
       return false
     }
 
@@ -1240,206 +994,36 @@ export class ViewConsumptionComponent implements OnInit {
 
 
   rebuildVoucher(v:any) {
-    /*
-      {
-      action: "rec",
-      objecttype: "item",
-      object: {
-        itemname:null
-      },
-      quantity: null,
-      currency: "",
-      fromdatetime: "",
-      todatetime: "",
-      duedatetime: "",
-      userinputrate: null,
-      rateincludesvat: "True",
-      taxes: [],
-      discountpercent: null,
-      discountamount: null,
-      rateafterdiscount: null,
-      rateaftertaxes: null,
-      taxfactor: 1,
-      taxesperunit: null,
-      uom: {
-        uom: "",
-        symbol: "",
-        country: ""
-      },
-      nonvattaxperunit: null,
-      vattaxperunit: null,
-      nonvatpercent: null,
-      vatpercent: null,
-      ratebeforetaxes: null,
-      intofrom: {
-        id: "0",
-        itemname: "",
-        iscontainer: "True",
-        usercode: "",
-        uom: {
-          uom: "each",
-          symbol: "each",
-          country: "global"
-        },
-        taxes: [],
-        files: [],
-        recipe: {
-          consumedunits: [],
-          byproducts: []
-        }
-      },
-      by: {
-        itemid: "0",
-        neid: "",
-        relationshipid: "",
-        name: ""
-      },
-      delivery: {
-        id: "-1",
-        accounthead: "",
-        defaultgroup: "",
-        relationship: "-1",
-        neid: "-1",
-        person: "-1",
-        name: "",
-        endpoint: "",
-        rtype: ""
-      },
-      title: "",
-      accountmap: {
-        id: "",
-        accounthead: "",
-        defaultgroup: "",
-        relationship: "",
-        neid: "",
-        person: "",
-        name: "",
-        endpoint: "",
-        accounttype: "",
-        partofgroup: -1,
-        isgroup: false
-      },
-      files: [],
-      expirydate: new Date(),
-      vendorperson: null
-    }
-    */
-
-    // IN REBUILD VOUCHER
-
-    //this.pcchange(this.ri)
     
-    v['action'] = 'cons'
+    v['action'] = 'prod'
     v['objecttype'] = 'item'
     v['object'] = JSON.parse(JSON.stringify(this.selectedItem)) // only this.selectedItem because it is assigned in handleEditVoucher
     v['quantity'] = this.selectedQty
     v['currency'] = '',
-    // v['fromdatetime'] = 'infinity'
-    // v['todatetime'] = 'infinity'
-    // v['duedatetime'] = 'infinity'
-    // v['userinputrate'] = this.selectedUIR
-    // if(this.ri === 'rit'){
-    //   v['rateincludesvat'] = true
-    // }
-    // if(this.ri === 'ret') {
-    //   v['rateincludesvat'] = false
-    // }
-
-    // v['taxes'] = JSON.parse(JSON.stringify(this.selectedTaxes))
-    // if(isNaN(this.selectedDiscountPercent)) {
-    //   this.selectedDiscountPercent = 0
-    // }
-    // v['discountpercent'] = this.selectedDiscountPercent
-    // v['discountamount'] = this.selectedDiscountAmount
-    // v['rateafterdiscount'] = this.rad
-    // v['rateaftertaxes'] = this.rat
-    // v['taxfactor'] = 0
-    // v['taxesperunit'] = this.t
+    
+    v['originalrateaftertaxes'] = this.selectedUIR
     v['uom'] = {
       uom: "",
       symbol: "",
       country: ""
     }
-    // v['nonvattaxperunit'] = this.nonvattaxperunit
-    // v['vattaxperunit'] = this.vattaxperunit
-    // v['nonvatpercent'] = this.totalnonvatperc
-    // v['vatpercent'] = this.totalvatperc
-    // v['ratebeforetaxes'] = this.rbt
-
-    // v['intofrom'] = {
-    //   id: "0",
-    //   itemname: "",
-    //   iscontainer: "True",
-    //   usercode: "",
-    //   uom: {
-    //     uom: "each",
-    //     symbol: "each",
-    //     country: "global"
-    //   },
-    //   taxes: [],
-    //   files: [],
-    //   recipe: {
-    //     consumedunits: [],
-    //     byproducts: []
-    //   }
-    // }
-    // v['by'] = {
-    //   itemid: "0",
-    //   neid: "",
-    //   relationshipid: "",
-    //   name: ""
-    // }
-    // v['delivery'] ={
-    //   id: "-1",
-    //   accounthead: "",
-    //   defaultgroup: "",
-    //   relationship: "-1",
-    //   neid: "-1",
-    //   person: "-1",
-    //   name: "",
-    //   endpoint: "",
-    //   rtype: ""
-    // }
-    // v['title'] = ""
+    
     v['accountmap'] = JSON.parse(JSON.stringify(this.selectedAccountMap))
+    v['relateditem'] = this.selectedRelatedItem
     v['files'] = []
-    v['expirydate'] = new Date()
-    // v['vendorperson'] = null
-    //v['recordid'] = this.highestRecordID(this.selectedVouchers) + 1
+    v['expirydate'] = this.selectedExpiryDate
+    v['location'] = this.selectedFromLocation
 
-    this.uneditedSbs = JSON.parse(JSON.stringify(this.selectedStockBalances))
-
-    let sbs = []
-    for (let index = 0; index < this.selectedStockBalances.length; index++) {
-      const element = this.selectedStockBalances[index];
-      if(parseFloat(element.inputqty) > 0) {
-        sbs.push(element)
-      }
-    }
-
-    v['stockbalanceinputs'] = sbs
-
-    let slbs = []
-    for (let index = 0; index < this.selectedStockLocationBalance.length; index++) {
-      const element = this.selectedStockLocationBalance[index];
-      if(parseFloat(element.inputqty) > 0) {
-        slbs.push(element)
-      }
-    }
-
-    v['stocklocationbalanceinputs'] = slbs
     v['title'] = this.selectedTitleOption
 
+    v['serialno'] = this.selectedSNO
+    v['batchno'] = this.selectedBNO
+    v['brand'] = this.selectedBrand
 
     return v
+
   }
 
-  
-
-
-  
-
-  
 
   recordByRecordID(recordid:any,array:any) {
     let object:any
@@ -1457,10 +1041,10 @@ export class ViewConsumptionComponent implements OnInit {
   filterAccountMaps(event:any) {
     
     console.log('IN FILTER PARTIES',event)
+
     let searchtype = ''
     console.log('SELECTED ITEM',this.selectedItem)
-    
-    
+
     if(this.selectedItem === null) {
       this.confirm('You must select an item')
       return
@@ -1478,7 +1062,7 @@ export class ViewConsumptionComponent implements OnInit {
 
     let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:searchtype};
     console.log('CRITERIA',criteria)
-
+    
     let pService:AccountHeadListService = new AccountHeadListService(this.httpClient)
     this._eSub = pService.fetchAccountHeads(criteria).subscribe({
       complete: () => {
@@ -1520,19 +1104,8 @@ export class ViewConsumptionComponent implements OnInit {
   }
 
   accountMapChange(event:any) {
-    this.selectedAccountMap =  {
-      id: "",
-      accounthead: "",
-      defaultgroup: "",
-      relationship: "",
-      neid: "",
-      person: "",
-      name: "",
-      endpoint: "",
-      accounttype: "",
-      partofgroup: -1,
-      isgroup: false
-    }
+    this.selectedAccountMap = null
+    
   }
 
 
@@ -1557,31 +1130,26 @@ export class ViewConsumptionComponent implements OnInit {
       return false
     }
 
-    
-    
-
     let newInvoice:any = {}
     newInvoice['date'] = this.ISODate(this.selectedDate)
     newInvoice['vouchers'] = this.selectedVouchers
-    newInvoice['type'] = 'consumption'
+    newInvoice['type'] = 'production'
 
-    console.log('CONSUMPTION INVOICE TO BE SAVED',JSON.stringify(newInvoice))
+    console.log('PRODUCTION INVOICE TO BE SAVED',JSON.stringify(newInvoice))
 
-    //return
-
-    this.saveConsumption(newInvoice)
+    this.saveProduction(newInvoice)
 
     return false
 
   }
 
 
-  saveConsumption(newInvoice:any){
+  saveProduction(newInvoice:any){
 
     this.inProgress = true
     
-    let sah:SaveConsumptionService = new SaveConsumptionService(this.httpClient)
-    this._siSub = sah.saveConsumption(newInvoice).subscribe({
+    let sah:SaveProductionService = new SaveProductionService(this.httpClient)
+    this._siSub = sah.saveProduction(newInvoice).subscribe({
       complete:() => {console.info('complete')},
       error:(e) => {
         console.log('ERROR',e)
@@ -1604,6 +1172,9 @@ export class ViewConsumptionComponent implements OnInit {
           this.displayModal = false
           this.sanitizedInvoiceList
           this.loadInvoices(0,0)
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Created', life: 3000 });
+
+          this.router.navigate(['account/production']) 
           return;
         }
         else if(v == null) {
@@ -1625,9 +1196,9 @@ export class ViewConsumptionComponent implements OnInit {
 
   }
 
+  navigateToProductionList(){
+    this.router.navigate(['account/production'])
+  }
 
+}
 
-
-  
-
-} 

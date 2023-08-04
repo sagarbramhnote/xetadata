@@ -33,12 +33,10 @@
                 <td>{{inv.tax | number:'1.2-2'}}</td>
                 <td>{{inv.aftertaxvalue | number:'1.2-2'}}</td>
                 <td>
-                    <div class="grid">
-                        <div class="col-12">
-                            <button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary" (click)="handleView(inv.invoice)" label="VIEW"></button>
-                            <ng-template [ngIf]="lo.digitalkey.purchasereturns.new"><button  pButton icon="pi pi-external-link" class="p-button-raised p-button-primary" (click)="handleReturn(inv.invoice)" label="PURCHASE RETURN"></button></ng-template>
-                          
-                        </div>
+                    <div class="flex flex-row gap-1"> 
+                            <button pButton pRipple class="p-button-rounded p-button-sm" pTooltip="View" (click)="handleView(inv.invoice)">V</button>
+                            <ng-template [ngIf]="lo.digitalkey.purchasereturns.new"><button pButton class="p-button-rounded p-button-sm p-button-danger" pTooltip="Purchase Return" (click)="handleReturn(inv.invoice)">PR</button></ng-template>
+
                         </div>
                     
                 </td>

@@ -222,52 +222,5 @@ exportPDFHtml() {
 
 }
 
-generateResponsivePdf(): void {
-  const screenWidth = window.innerWidth;
-  if (screenWidth >= 768) {
-    // Web view (large screen sizes)
-    this.generatePdfForWeb();
-  } else {
-    // Mobile view (small screen sizes)
-    this.generatePdfForMobile();
-  }
-}
-
-generatePdfForWeb(): void {
-  const doc: jsPDF = new jsPDF('p', 'pt', 'a4');
-  this.generatePdf(doc);
-  doc.save('responsive_pdf_web.pdf');
-}
-
-// Function to generate PDF for the mobile view (small screen sizes)
-generatePdfForMobile(): void {
-  const doc: jsPDF = new jsPDF('p', 'pt', 'a4');
-  doc.setFontSize(10); // Adjust font size for mobile layout
-  this.generatePdf(doc);
-  doc.save('responsive_pdf_mobile.pdf');
-}
-
-// Common function to generate PDF content
-generatePdf(doc: jsPDF): void {
-  let datePipe: DatePipe = new DatePipe('en-US');
-  let b = 'Closing Stock as on ' + datePipe.transform(this.today, 'fullDate');
-  let loginObject = GlobalConstants.loginObject;
-  let a = loginObject.entityname;
-
-  autoTable(doc, {
-    columns: this.exportColumns,
-    body: this.stockList,
-    didDrawPage: function (data) {
-      doc.setFontSize(15);
-      doc.setFont('helvetica', 'bold');
-      doc.text(a, data.settings.margin.left + 0, 20);
-      doc.setFontSize(10);
-      doc.setTextColor(40);
-      doc.text(b, data.settings.margin.left + 0, 35);
-    },
-    margin: { top: 40 },
-    theme: 'grid',
-  });
-}
 
 }

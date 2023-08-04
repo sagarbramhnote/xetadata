@@ -11,6 +11,8 @@ import { InvoiceListService } from 'src/app/services/invoice-list.service';
 import { PersonService } from 'src/app/services/person.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Search } from 'src/app/services/search';
+import { format, parseISO } from 'date-fns';
+
 
 @Component({
   selector: 'app-sales',
@@ -185,7 +187,7 @@ sanitizeInvoices() {
 
     let sanitInvoice:any = {}
     sanitInvoice['id'] = element.id
-    sanitInvoice['date'] = element.date
+    sanitInvoice['date'] = this.parseDateNew(element.date)
     sanitInvoice['vendor'] = element.partyaccounthead.accounthead
 
     console.log('VENDOR',element.partyaccounthead.accounthead)
@@ -210,6 +212,12 @@ sanitizeInvoices() {
     this.sanitizedInvoiceList.push(sanitInvoice)
     
   }
+}
+
+parseDateNew(dateString: string) {
+  const parsedDate = parseISO(dateString);
+  const formattedDate = format(parsedDate, 'dd-MMM-yyyy hh:mm a');
+  return formattedDate;
 }
 
 

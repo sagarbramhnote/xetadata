@@ -8,6 +8,8 @@ import { Xetaerror } from 'src/app/global/xetaerror';
 import { InvoiceListService } from 'src/app/services/invoice-list.service';
 import { Search } from 'src/app/services/search';
 import { Router } from '@angular/router';
+import { format, parseISO } from 'date-fns';
+
 
 @Component({
   selector: 'app-purchase-returns',
@@ -45,7 +47,7 @@ export class PurchaseReturnsComponent implements OnInit{
       const element = this.purchaseReturnList[index];
 
       let sanitInvoice:any = {}
-      sanitInvoice['date'] = element.date
+      sanitInvoice['date'] = this.parseDateNew(element.date)
       sanitInvoice['vendor'] = element.partyaccounthead.accounthead
 
       console.log('VENDOR',element.partyaccounthead.accounthead)
@@ -70,6 +72,12 @@ export class PurchaseReturnsComponent implements OnInit{
       this.sanitizedInvoiceList.push(sanitInvoice)
       
     }
+  }
+
+  parseDateNew(dateString: string) {
+    const parsedDate = parseISO(dateString);
+    const formattedDate = format(parsedDate, 'dd-MMM-yyyy hh:mm a');
+    return formattedDate;
   }
 
   loadInvoices(offset:number,moreoffset:number) {
