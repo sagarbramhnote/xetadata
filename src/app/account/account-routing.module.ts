@@ -29,6 +29,11 @@ import { EditConsumptionComponent } from './consumption/edit-consumption/edit-co
 import { PurchaseCreateComponent } from './purchase/purchase-create/purchase-create.component';
 import { PurchaseViewComponent } from './purchase/purchase-view/purchase-view.component';
 import { PurchasePurchaseReturnComponent } from './purchase/purchase-purchase-return/purchase-purchase-return.component';
+import { PaymentsComponent } from './payments/payments.component';
+import { PaymentsCreateComponent } from './payments/payments-create/payments-create.component';
+import { PaymentsRegisterComponent } from './payments/payments-register/payments-register.component';
+import { PaymentsViewComponent } from './payments/payments-view/payments-view.component';
+
 
 
 const routes: Routes = [
@@ -65,8 +70,11 @@ const routes: Routes = [
 
   {path: 'purchaseCreate', data: {breadcrumb: 'Create Purchase'},component:PurchaseCreateComponent},
   {path: 'purchaseView', data: {breadcrumb: 'View Purchase'},component:PurchaseViewComponent},
-  {path: 'purchaseReturnn', data: {breadcrumb: 'Return Purchase'},component:PurchasePurchaseReturnComponent}
-
+  {path: 'purchaseReturnn', data: {breadcrumb: 'Return Purchase'},component:PurchasePurchaseReturnComponent},
+  {path: 'payments', data: {breadcrumb: 'Payments'},component:PaymentsComponent},
+  {path: 'paymentsCreate', data: {breadcrumb: 'PaymentsCreate'},component:PaymentsCreateComponent},
+  {path: 'paymentsRegister', data: {breadcrumb: 'PaymentsRegister'},component:PaymentsRegisterComponent},
+  {path: 'paymentsView', data: {breadcrumb: 'PaymentsView'},component:PaymentsViewComponent}
 
 
 

@@ -47,6 +47,10 @@ import { EditConsumptionComponent } from './consumption/edit-consumption/edit-co
 import { PurchaseCreateComponent } from './purchase/purchase-create/purchase-create.component';
 import { PurchaseViewComponent } from './purchase/purchase-view/purchase-view.component';
 import { PurchasePurchaseReturnComponent } from './purchase/purchase-purchase-return/purchase-purchase-return.component';
+import { PaymentsComponent } from './payments/payments.component';
+import { PaymentsCreateComponent } from './payments/payments-create/payments-create.component';
+import { PaymentsRegisterComponent } from './payments/payments-register/payments-register.component';
+import { PaymentsViewComponent } from './payments/payments-view/payments-view.component';
 
 
 
@@ -81,7 +85,11 @@ import { PurchasePurchaseReturnComponent } from './purchase/purchase-purchase-re
     EditConsumptionComponent,
     PurchaseCreateComponent,
     PurchaseViewComponent,
-    PurchasePurchaseReturnComponent
+    PurchasePurchaseReturnComponent,
+    PaymentsComponent,
+    PaymentsCreateComponent,
+    PaymentsRegisterComponent,
+    PaymentsViewComponent
 
 
   ],
