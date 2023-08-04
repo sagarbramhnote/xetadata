@@ -43,7 +43,6 @@ import { ReturnSalessComponent } from './sales/return-saless/return-saless.compo
 import { ConsumptionComponent } from './consumption/consumption.component';
 import { CreateConsumptionComponent } from './consumption/create-consumption/create-consumption.component';
 import { ViewConsumptionComponent } from './consumption/view-consumption/view-consumption.component';
-import { EditConsumptionComponent } from './consumption/edit-consumption/edit-consumption.component';
 import { PurchaseCreateComponent } from './purchase/purchase-create/purchase-create.component';
 import { PurchaseViewComponent } from './purchase/purchase-view/purchase-view.component';
 import { PurchasePurchaseReturnComponent } from './purchase/purchase-purchase-return/purchase-purchase-return.component';
@@ -78,7 +77,6 @@ import { TooltipModule } from 'primeng/tooltip';
     ConsumptionComponent,
     CreateConsumptionComponent,
     ViewConsumptionComponent,
-    EditConsumptionComponent,
     PurchaseCreateComponent,
     PurchaseViewComponent,
     PurchasePurchaseReturnComponent
