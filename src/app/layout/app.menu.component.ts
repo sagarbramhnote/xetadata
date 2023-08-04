@@ -575,17 +575,17 @@ export class AppMenuComponent implements OnInit {
                 items: [
                     {
                         label: 'Sales',
-                        icon: 'pi pi-fw pi-user',
+                        icon: 'pi pi-user-plus',
                         routerLink: ['/account/sales'],
                     },
                     {
                         label: 'Purchases',
-                        icon: 'pi pi-fw pi-user',
+                        icon: 'pi pi-users',
                         routerLink: ['/account/purchase'],
                     },
                     {
                         label: 'Sale Return',
-                        icon: 'pi pi-fw pi-user',
+                        icon: 'pi pi-users',
                         routerLink: ['/account/sales-return'],
                     },
                     {
@@ -595,7 +595,7 @@ export class AppMenuComponent implements OnInit {
                     },
                     {
                         label: 'Payments',
-                        icon: 'pi pi-fw pi-user',
+                        icon: 'pi pi-money-bill',
                         routerLink: ['/account/sales'],
                     },
                     {
@@ -605,7 +605,7 @@ export class AppMenuComponent implements OnInit {
                     },
                     {
                         label: 'Bank Reconcilation',
-                        icon: 'pi pi-fw pi-user',
+                        icon: 'pi pi-money-bill',
                         routerLink: ['/account/back-reconciliation'],
                     },
                     {
@@ -615,12 +615,12 @@ export class AppMenuComponent implements OnInit {
                     },
                     {
                         label: 'Consumption',
-                        icon: 'pi pi-fw pi-user',
+                        icon: 'pi pi-bars',
                         routerLink: ['/account/consumption'],
                     },
                     {
                         label: 'Journal Voucher',
-                        icon: 'pi pi-fw pi-user',
+                        icon: 'pi pi-tag',
                         routerLink: ['/account/journal-voucher'],
                     },
                     {
@@ -635,7 +635,7 @@ export class AppMenuComponent implements OnInit {
                     },
                     {
                         label: 'Transfer',
-                        icon: 'pi pi-fw pi-user',
+                        icon: 'pi pi-send',
                         routerLink: ['/account/transfer'],
                     },
                     {
@@ -657,12 +657,12 @@ export class AppMenuComponent implements OnInit {
                     },                           
                     {
                         label: 'Party Accounts heads',
-                        icon: 'pi pi-user',
+                        icon: 'pi pi-user-plus',
                         routerLink: ['/entity/partyAccount'],
                     },
                     {
                         label: 'Others Accounts heads',
-                        icon: 'pi pi-user',
+                        icon: 'pi pi-user-plus',
                         routerLink: ['/entity/othersAccount'],
                     },
                        {
@@ -673,7 +673,7 @@ export class AppMenuComponent implements OnInit {
                     },
                     {
                         label: 'UOMs',
-                        icon: 'pi pi-user',
+                        icon: 'pi pi-user-plus',
                         routerLink: ['/entity/UOMs'],
                     },
                     {
@@ -714,7 +714,7 @@ export class AppMenuComponent implements OnInit {
                 items: [
                     {
                         label: 'General Ledger',
-                        icon: 'pi pi-fw pi-align-left',
+                        icon: 'pi pi-tags',
                         routerLink: ['/report/generalLedger'],
                     },
                     {
@@ -724,12 +724,12 @@ export class AppMenuComponent implements OnInit {
                     },
                     {
                         label: 'Stock Register',
-                        icon: 'pi pi-fw pi-align-left',
+                        icon: 'pi pi-user-edit',
                         routerLink: ['/report/stockRegister'],
                     },
                     {
                         label: 'Trailing Final Accounts',
-                        icon: 'pi pi-book',
+                        icon: 'pi pi-money-bill',
                         routerLink: ['/report/trailingFinalAccount'],
                     },
                     {
@@ -739,27 +739,27 @@ export class AppMenuComponent implements OnInit {
                     },
                     {
                         label: 'Final Accounts',
-                        icon: 'pi pi-fw pi-align-left',
+                        icon: 'pi pi-money-bill',
                         routerLink: ['/report/finalaccount'],
                     },
                     {
                         label: 'Item Movement Register',
-                        icon: 'pi pi-fw pi-align-left',
+                        icon: 'pi pi-users',
                         routerLink: ['/report/itemMovementRegister'],
                     },
                     {
                         label: 'Sale Invoice Ageing List',
-                        icon: 'pi pi-fw pi-align-left',
+                        icon: 'pi pi-users',
                         routerLink: ['/report/salesinvoiceageing'],
                     },
                     {
                         label: 'Purchase Invoice Ageing List',
-                        icon: 'pi pi-fw pi-align-left',
+                        icon: 'pi pi-users',
                         routerLink: ['/report/purchaseInvoice'],
                     },
                     {
                         label: 'Resource Tracker',
-                        icon: 'pi pi-fw pi-align-left',
+                        icon: 'pi pi-tablet  ',
                         routerLink: ['/report/resourcetracker'],
                     },
                 ]
