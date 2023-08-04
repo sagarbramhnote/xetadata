@@ -1,0 +1,184 @@
+<div class="card">
+
+    <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+        <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+            <span class="text-900 text-xl font-bold mb-4 block">Recipts</span>
+        </span>
+    </div>
+    <div class="grid">
+
+        <div class="col-12 lg:col-10">
+            <div class="grid formgrid p-fluid">
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="itemname" class="font-medium text-900">Date
+
+                    </label>
+                    <p-calendar 
+                               [(ngModel)]="selectedDate"
+                               [ngModelOptions]="{standalone: true}" 
+                                [showTime]="true" [showSeconds]="true" 
+                                inputId="time" 
+                                 appendTo="body" (onSelect)="dateSelected($event)" 
+                                [required]="true">
+                    </p-calendar>
+                </div>
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="itemname" class="font-medium text-900">Party</label>
+                    <p-autoComplete
+                        [(ngModel)]="selectedParty"
+                        [suggestions]="filteredParties" 
+                        (completeMethod)="filterParties($event)"
+                        field="accounthead" 
+                        [multiple]="false" class="autocomplete" 
+                        (onSelect)="handleOnSelectParty($event)"
+                        [style]="{'width':'100%'}"
+                        [inputStyle]="{'width':'100%'}" 
+                        [placeholder]="placeholderParty" 
+                        [ngModelOptions]="{standalone: true}"
+                        (ngModelChange)="partyChange($event)"
+                        [required]="true" #selectParty="ngModel" 
+                        [forceSelection]="true">
+    
+                        <ng-template let-selectedParty pTemplate="item">
+                            <div>{{selectedParty.accounthead}} - {{selectedParty.id}}</div>
+                            <div>{{selectedParty.endpoint}}</div>
+                        </ng-template>
+    
+                    </p-autoComplete>
+                    <ng-template [ngIf]="selectParty.errors">
+                        <small id="username2-help" class="p-error block">you must select a party</small>
+                    </ng-template>
+    
+                </div>
+                <div class="mr-2"> <p-button styleClass="p-button-sm p-button-info p-button-raised" (click)="showChequeDialog()" icon="pi pi-external-link" label="Cheques"></p-button></div><br><br>
+                <div class="mr-2"> <p-button styleClass="p-button-sm p-button-info p-button-raised"  icon="pi pi-external-link" label="via Person"></p-button></div><br><br>
+                <div class="mr-2"> <p-button styleClass="p-button-sm p-button-info p-button-raised"  icon="pi pi-external-link" label="Other"></p-button></div><br><br>
+            </div>
+                <div class="card" col-12>
+                    <p-table [value]="selectedVouchers" [scrollable]="true"  
+                    selectionMode="single" scrollHeight="200px" (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm">
+                        
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Instrument</th>
+                                <th>Number</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Modify</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-v let-i="rowIndex">
+                            <tr>
+                                <td>{{v.object.instrumenttype}}</td>
+                                <td>{{v.object.instrumentnumber}}</td>
+                                <td>{{v.object.amount}}</td>
+                                <td></td>
+                                <td>
+                                    <div class="displayline">
+                                        <button pButton class="p-button-sm" (click)="handleEditVoucher(v)">EDIT</button><span></span>
+                                        <button pButton class="p-button-sm" (click)="handleDeleteVoucher(i)">DEL</button>
+                                    </div>
+                                    
+                                </td>
+                                
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            
+        </div>
+    </div>
+
+
+<p-dialog header="Cash Voucher" [(visible)]="displayCashModal" [modal]="true"
+                [draggable]="false" [resizable]="false">
+            
+                <div>
+                    <div>Cash</div>
+                    
+                    <div>
+                        <input type="number" min="0"  #selectCashAmount="ngModel" pInputText class="p-inputtext-sm" 
+                    placeholder="enter cash" [(ngModel)]="selectedCashAmount" 
+                    [ngModelOptions]="{standalone: true}"  autocomplete="off" (ngModelChange)="cashAmountChange($event)"
+                    required>
+                    </div>
+                
+                </div>
+</p-dialog>
+
+<!---Cheque Voucher form-->
+
+<p-dialog header="Cheque Voucher" [(visible)]="displayChequeModal" [modal]="true"
+                [draggable]="false" [resizable]="false" [style]="{width: '150vw',height:'70vh'}">
+
+            
+              <div class="card col-12">
+                    <div>cheque</div>
+                    
+                    <p-dropdown [options]="selectedChequesOfPerson" 
+                    [(ngModel)]="selectedCP"
+                    [filter]="true" filterBy="instrumentnumber" 
+                    [showClear]="true" 
+                    placeholder="Select cheque" [required]="true" 
+                    #selectCP="ngModel" [ngModelOptions]="{standalone: true}" (onChange)="cpChange($event)" [style]="{width: '100%'}">
+                        <ng-template pTemplate="selectedItem">
+                            <div *ngIf="selectedCP">
+                                <div>{{selectedCP.instrumentnumber.toString() +' - '+selectedCP.amount.toString()}}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-cheque pTemplate="item">
+                            <div>
+                                <div>{{cheque.instrumentnumber.toString() +' - '+cheque.amount.toString()}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+
+                    <ng-template [ngIf]="selectCP.errors">
+                        <small id="username2-help" class="p-error block">you must select a cheque</small>
+                    </ng-template>
+                
+                </div>
+
+                <!-- <ng-template pTemplate="footer">
+                    <p-button icon="pi pi-check" (click)="handleAddCheque()" label="Ok" styleClass="p-button-text"></p-button>
+                </ng-template> -->
+                <div class="ui-g-12" style= " text-align:right">
+                    <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
+                            <button style="margin-left: 10px;" pButton class="w-auto mt-3" icon="pi pi-check" (click)="handleAddCheque()" label="Save"></button>
+                </div>
+
+</p-dialog>
+
+        
+
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="handleSaveReceipt()" label="Save" styleClass="p-button-text"></p-button>
+        </ng-template>
+
+        <div class="ui-g-12" style= " text-align:right">
+            <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
+                    <button style="margin-left: 10px;" pButton class="w-auto mt-3" icon="pi pi-check" (click)="handleSaveReceipt()" label="Save"></button>
+        </div>
+</div>
+
+<!--   Create-Recipts Form end-->
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+
+    <ng-template [ngIf]="inProgress">
+        <div class="overlay" id="modal">
+            <p-progressSpinner></p-progressSpinner>
+        </div>
+    </ng-template>
+
+<p-toast></p-toast>
+
+
+    
+
+
+
+                    
+        
+        

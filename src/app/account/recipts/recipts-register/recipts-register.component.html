@@ -1,0 +1,117 @@
+<div class="card">
+    <p-table #dt [value]="sanitizedInvoiceList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['date','vendor','amount']">
+        <ng-template pTemplate="caption">
+            <div>Register of Receipts</div>
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                
+                <th pSortableColumn="date" class="white-space-nowrap" style="width:20%">Date <p-sortIcon field="itemname"></p-sortIcon></th>
+                <th pSortableColumn="vendor" class="white-space-nowrap" style="width:15%">Party<p-sortIcon field="vendor"></p-sortIcon></th>
+                <th pSortableColumn="amount" class="white-space-nowrap" style="width:15%">Amount<p-sortIcon field="amount"></p-sortIcon></th>
+                <th class="white-space-nowrap" style="width:25%">Modify </th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-inv let-i="rowIndex">
+            <tr>
+                
+                <td>{{inv.date}}</td>
+                <td>{{inv.vendor}}</td>
+                <td>{{inv.amount | number: '1.2-2'}}</td>
+                <td>
+                    <div>
+                        <button pButton class="p-button-sm" (click)="handleView(inv.invoice)">VIEW</button>
+                    </div>
+                </td>
+
+            </tr>
+        </ng-template>
+
+
+    </p-table>
+</div>
+
+<!-- ------- view form of Register-Recipts -----  -->
+
+<p-dialog header="View Receipt" [(visible)]="displayViewModal" [modal]="true" [style]="{width: '70%'}">
+    <div class="card">
+
+        <div>Date: {{selectedInvoice.date}} </div>
+        <div>Vendor: {{ viewPartyName }}</div>
+    <br><br>
+        
+      <p-table [value]="selectedInvoice.vouchers" [scrollable]="true"  
+        selectionMode="single" scrollHeight="200px" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm">
+            
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Instrument</th>
+                    <th>Amount</th>
+                    <!-- <th>Modify</th> -->
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-v let-i="rowIndex">
+                <tr>
+                    <td>{{v.object.instrumenttype}} {{v.object.instrumentnumber}}</td> 
+                    <td>{{v.object.amount | number: '1.2-2'}}</td>
+                    
+                    
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <tr>
+                    <td colspan="" class="text-left">Total</td>
+                    <td >{{viewTotal | number: '1.2-2'}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    
+
+    <!-- <p-table [value]="viewList">
+        
+        <ng-template pTemplate="body" let-car let-i="rowIndex">
+            <tr *ngIf="i === 0">
+                <td colspan="5"><h1>{{car.col1}}</h1></td>
+            </tr>
+            <tr *ngIf="i === 1">
+                <td colspan="5">{{car.col1}}</td>
+            </tr>
+            <tr *ngIf="i === 2">
+                <td rowspan="2">{{car.col1}}</td>
+                <td rowspan="2">{{car.col2}}</td>
+                <td rowspan="2">{{car.col3}}</td>
+                <td>{{car.col4}}</td>
+                <td>{{car.col5}}</td>
+            </tr>
+            <tr *ngIf="i === 3">
+                <td colspan="3" class="text-right"></td>
+                <td>{{car.col1}}</td>
+                <td>{{car.col2}}</td>
+            </tr>
+        </ng-template>
+    </p-table> -->
+</p-dialog>
+<ng-template [ngIf]="inProgress">
+    <div class="overlay" id="modal">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
+</ng-template>
+
+
+
+
+
+
+
+
+
