@@ -1,0 +1,61 @@
+
+<p-toast key="globaltst"></p-toast>
+
+<p-dialog header="Via Person Receipt Voucher" [(visible)]="displayViaPersonReceiptModal" [modal]="true"
+    [draggable]="false" [resizable]="false" (onHide)="hideDialog()">
+
+    <div>
+        <div>Via Person</div> 
+        <p-autoComplete
+            [(ngModel)]="selectedReceiptVoucher.object"
+            [suggestions]="filteredViaPeople" 
+            (completeMethod)="filterViaPeople($event)"
+            field="accounthead" 
+            [multiple]="false" class="autocomplete" 
+            (onSelect)="handleOnSelectViaPersonReceipt($event,selectedReceiptVoucher)"
+            [style]="{'width':'100%'}"
+            [inputStyle]="{'width':'100%'}" 
+            placeholder="Select Person" 
+            [ngModelOptions]="{standalone: true}"
+            (ngModelChange)="viaPersonReceiptChange($event,selectedReceiptVoucher)"
+            [required]="true" #selectViaPerson="ngModel" 
+            [forceSelection]="true">
+
+            <ng-template let-selectedViaPerson pTemplate="item">
+                <div>{{selectedViaPerson.accounthead}} - {{selectedViaPerson.id}}</div>
+                <div>{{selectedViaPerson.endpoint}}</div>
+            </ng-template>
+
+        </p-autoComplete>
+        <ng-template [ngIf]="selectViaPerson.errors">
+            <small id="username2-help" class="p-error block">you must select a party</small>
+        </ng-template>
+
+        <div>
+            <div>Amount</div> 
+            
+            <div>
+                <input type="number" min="0"  #selectViaPersonAmount="ngModel" pInputText class="p-inputtext-sm" 
+            placeholder="enter amount" [(ngModel)]="selectedReceiptVoucher.userinputrate" disabled="true"
+            [ngModelOptions]="{standalone: true}"  autocomplete="off" 
+            (ngModelChange)="viaPersonReceiptAmountChange($event,selectedReceiptVoucher)"
+            required>
+            </div>
+        
+        </div>
+
+        <div>
+            <div>Receipt Mode</div>
+            <span class="p-fluid">
+                <p-autoComplete [(ngModel)]="selectedReceiptVoucher.paymentmode" [ngModelOptions]="{standalone: true}" 
+                [suggestions]="filteredModeTags" (completeMethod)="filterModeTags($event)" field="tag" [multiple]="false" [dropdown]="true" 
+                (ngModelChange)="handleChange($event)" appendTo="body">
+                </p-autoComplete>
+            </span>
+        </div>
+
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="handleAddViaPersonReceipt()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

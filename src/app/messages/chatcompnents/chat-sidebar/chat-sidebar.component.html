@@ -3,11 +3,20 @@
     <span class="text-900 text-xl font-semibold mt-2">{{ GlobalConstants.loginObject.accounthead }}</span>
 </div>
 <div class="w-full flex row-gap-4 flex-column surface-border p-2">
+    <div class="flex justify-end">
+        <!-- <button class="p-button p-button-text" (click)="refreshData()">
+            <i class="pi pi-refresh"></i> Refresh
+        </button> -->
+        <button pButton pRipple type="button" class="p-button-rounded p-button-outlined p-button-secondary" (click)="refreshData()">
+            <i class="pi pi-refresh"></i> Refresh
+        </button>
+    </div>
     <span class="p-input-icon-left w-full">
         <i class="pi pi-search"></i>
         <input id="search" type="text" pInputText placeholder="Search" class="w-full" [(ngModel)]="searchValue" (input)="filter()"/>
     </span>
-    <div class="w-full flex flex-row md:flex-column overflow-auto">
+    
+    <div class="w-full flex flex-column md:flex-column overflow-auto">
         <app-user-card *ngFor="let user of filteredUsers" [user]="user" ></app-user-card>
     </div>
 </div> 

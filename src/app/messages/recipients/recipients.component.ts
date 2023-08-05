@@ -110,7 +110,7 @@ export class RecipientsComponent implements OnInit{
 
   handleNew(e:any) {
     this.urlAddressForm.reset()
-  }
+  } 
 
   
 

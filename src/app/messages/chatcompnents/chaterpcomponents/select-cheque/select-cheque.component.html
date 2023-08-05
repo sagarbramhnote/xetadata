@@ -1,0 +1,55 @@
+<p-dialog
+      header="Select Cheque"
+      [(visible)]="displayReceiveChequeModal"
+      [modal]="true"
+      [draggable]="false"
+      [resizable]="false"
+      [style]="{ width: '161vw', height: '100vh' }"
+      (onHide)="hideDialog()"
+    >
+      <div class="flex mt-2 mb-2">
+        <p-button (click)="showReceiveChequeListDialog()" icon="pi pi-external-link" label="Receive Cheque"></p-button>
+      </div>
+
+      <div class="namebox">
+        <div>cheque</div>
+
+        <p-dropdown
+          [options]="selectedChequesOfPerson"
+          [(ngModel)]="newSelectedCP"
+          [filter]="true"
+          filterBy="instrumentnumber"
+          [showClear]="true"
+          placeholder="Select cheque"
+          [required]="true"
+          #selectCP="ngModel"
+          [ngModelOptions]="{ standalone: true }"
+          (onChange)="cpChange($event)"
+          [style]="{ width: '100%' }"
+        >
+          <ng-template pTemplate="selectedItem">
+            <div *ngIf="newSelectedCP">
+              <div>{{ newSelectedCP.instrumentnumber.toString() + ' - ' + newSelectedCP.amount.toString() }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-cheque pTemplate="item">
+            <div>
+              <div>{{ cheque.instrumentnumber.toString() + ' - ' + cheque.amount.toString() }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+
+        <ng-template [ngIf]="selectCP.errors">
+          <small id="username2-help" class="p-error block">you must select a cheque</small>
+        </ng-template>
+      </div>
+
+      <ng-template pTemplate="footer">
+        <p-button
+          icon="pi pi-check"
+          (click)="closeDialog()"
+          label="Ok"
+          styleClass="p-button-text"
+        ></p-button>
+      </ng-template>
+</p-dialog>

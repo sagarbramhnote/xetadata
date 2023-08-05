@@ -1,0 +1,101 @@
+<p-toast key="globaltst"></p-toast>
+
+<p-dialog header="Receive Cheque Detail New" [(visible)]="displayReceiveChequeModalDetail" [modal]="true" [style]="{width: '100%'}"
+    [draggable]="false" [resizable]="false" (onHide)="hideDialog()">
+
+     
+
+    <form #f="ngForm" autocomplete="off" novalidate class="box">
+
+        <p-toast key="tst"></p-toast>
+
+        <div class="field">
+            <div>Date</div> 
+            <div>{{ selectedReceiptVoucher.object.maturitydate?.toString() | date:'dd-MMM-yyyy hh:mm a' }}</div>
+        </div>
+
+        <div>
+            <div>cheque number</div>
+            <input type="text" #selectNumber="ngModel" pInputText class="p-inputtext-sm" 
+        placeholder="cheque number" [(ngModel)]="selectedReceiptVoucher.object.instrumentnumber" 
+        [ngModelOptions]="{standalone: true}"  autocomplete="off" disabled="true"
+        required>
+        
+
+        </div>
+
+        
+        <div>
+            <div>Party</div>
+            <p-autoComplete
+                [(ngModel)]="selectedParty"
+                [suggestions]="filteredParties" 
+                (completeMethod)="filterParties($event)"
+                field="accounthead" 
+                [multiple]="false" class="autocomplete" 
+                (onSelect)="handleOnSelectParty($event)"
+                [style]="{'width':'100%'}"
+                [inputStyle]="{'width':'100%'}" 
+                placeholder="select party" 
+                [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="receiveChequePartyChange($event)"
+                [required]="true" #selectParty="ngModel" 
+                [forceSelection]="true" [disabled]="true">
+
+                <ng-template let-selectedParty pTemplate="item">
+                    <div>{{selectedParty.accounthead}} - {{selectedParty.id}}</div>
+                    <div>{{selectedParty.endpoint}}</div>
+                </ng-template>
+
+            </p-autoComplete>
+            <ng-template [ngIf]="selectParty.errors">
+                <small id="username2-help" class="p-error block">you must select a party</small>
+            </ng-template>
+
+        </div>
+        
+        
+
+        <div>
+            <div>Bank</div>
+            <input type="text" #selectBankName="ngModel" pInputText class="p-inputtext-sm" 
+                placeholder="bank name on cheque" [(ngModel)]="selectedDraweeName" 
+                [ngModelOptions]="{standalone: true}"  autocomplete="off" required disabled="true">
+            <ng-template [ngIf]="selectBankName.errors">
+                <small id="username2-help" class="p-error block">you must enter bank name on cheque</small>
+            </ng-template>
+        </div>
+
+        
+
+        <div>
+            <div>amount</div>
+            <input type="number" min="0" #selectVal="ngModel" pInputText class="p-inputtext-sm" 
+        placeholder="enter amount" [(ngModel)]="selectedReceiptVoucher.object.amount" 
+        [ngModelOptions]="{standalone: true}"  autocomplete="off" disabled="true"
+        required>
+        
+
+        </div>
+
+        <div>
+            <div>DRAWEE IS</div>
+            <div>{{selectedReceiptVoucher.object.draweeis}}</div>
+        </div>
+
+        <div>
+            <div>STATUS</div>
+            <div>{{selectedReceiptVoucher.object.status}}</div>
+        </div>
+
+
+
+    </form>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="handleSaveReceiveCheque()" label="Save" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="handleAcceptReceiveCheque()" label="Accept" styleClass="p-button-text"></p-button>
+    </ng-template> 
+
+
+</p-dialog>

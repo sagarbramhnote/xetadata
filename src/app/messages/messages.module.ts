@@ -12,12 +12,27 @@ import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { CalendarModule } from 'primeng/calendar';
+
 
 import { UserCardComponent } from './chatcompnents/user-card/user-card.component';
 import { ChatBoxComponent } from './chatcompnents/chat-box/chat-box.component';
 import { ChatService } from './service/chat.service';
 import { ChatSidebarComponent } from './chatcompnents/chat-sidebar/chat-sidebar.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { DialogModule } from 'primeng/dialog';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { SelectChequeComponent } from './chatcompnents/chaterpcomponents/select-cheque/select-cheque.component';
+import { ReceiveChequeDetailComponent } from './chatcompnents/chaterpcomponents/receive-cheque-detail/receive-cheque-detail.component';
+import { ViaPersonReceiptVoucherComponent } from './chatcompnents/chaterpcomponents/via-person-receipt-voucher/via-person-receipt-voucher.component';
+import { WrittenChequeDetailComponent } from './chatcompnents/chaterpcomponents/written-cheque-detail/written-cheque-detail.component';
+
+
 
 
 
@@ -27,7 +42,11 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     RecipientsComponent,
     ChatSidebarComponent,
     UserCardComponent,
-    ChatBoxComponent
+    ChatBoxComponent,
+    SelectChequeComponent,
+    ReceiveChequeDetailComponent,
+    ViaPersonReceiptVoucherComponent,
+    WrittenChequeDetailComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +59,15 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     ToastModule,
     ReactiveFormsModule,
     ProgressSpinnerModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    DialogModule,
+    AutoCompleteModule,
+    SplitButtonModule,
+    CheckboxModule,
+    DropdownModule,
+    InputSwitchModule,
+    RadioButtonModule,
+    CalendarModule
   ],
   providers: [
       ChatService

@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
 import { Xetaerror } from '../../../global/xetaerror';
 import { XetaSuccess } from '../../../global/xeta-success';
 import { LatestReceiversService } from 'src/app/services/latest-receivers.service';
+import { EventBusServiceService } from 'src/app/global/event-bus-service.service';
+import { EventData } from 'src/app/global/event-data';
 
 @Component({
     selector: 'app-chat-sidebar',
@@ -29,7 +31,9 @@ export class ChatSidebarComponent implements OnInit {
 
     _ahlSub:any
 
-    constructor(private chatService: ChatService,private messageService: MessageService,private http:HttpClient) { }
+    display: boolean = false;
+
+    constructor(private chatService: ChatService,private messageService: MessageService,private http:HttpClient,private eventService:EventBusServiceService) { }
 
     ngOnInit(): void {
         console.log('HELLO')
@@ -47,6 +51,10 @@ export class ChatSidebarComponent implements OnInit {
         }
 
         this.filteredUsers = [...filtered];
+    }
+
+    refreshData() {
+      this.loadRecipients(GlobalConstants.loginObject)
     }
 
 
@@ -78,8 +86,12 @@ export class ChatSidebarComponent implements OnInit {
               this.users = dataSuccess.success.recipients
               this.filteredUsers = dataSuccess.success.recipients
               this.GlobalConstants.loginObject['xetamainperson'] = dataSuccess.success.xetamainperson
-              console.log('FINAL LO', this.GlobalConstants.loginObject)
-              //this.subLoading = false
+              //console.log('FINAL LO', this.GlobalConstants.loginObject)
+              
+              if(this.users.length > 0) {
+                this.eventService.emit(new EventData('MessageClicked',this.users[0]))
+              }
+              
               return
             }
             else if(v == null) { 
@@ -96,6 +108,8 @@ export class ChatSidebarComponent implements OnInit {
         })
     
     }
+
+    
 
     showInfoViaToast() {
         this.messageService.add({ key: 'tst', severity: 'info', summary: 'Info Message', detail: 'PrimeNG rocks' });
