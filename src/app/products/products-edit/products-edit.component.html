@@ -1,113 +1,120 @@
 <div class="card">
-    <span class="text-900 text-xl font-bold mb-4 block">Edit Product</span>
-
-    <div class="grid">
-        <div class="col-12 lg:col-10">
-            <div class="grid formgrid p-fluid">
-                <div class="field mb-4 col-12 md:col-6">
-                    <div class="field mb-4 col-12 md:col-6">
+    <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+        <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+            <span class="text-900 text-xl font-bold mb-4 block">Products</span>
+        </span>
+    </div>
+    <div>
+        <div class="grid">
+            <div class="col-12 lg:col-10">
+                <div class="grid formgrid p-fluid">
+                   <div class="field mb-4 col-12 md:col-6">
                         <label for="itemname" class="font-medium text-900">Prodct Name</label>
-                    <input type="text" 
-                    #itemTitle="ngModel" 
-                    pInputText 
-                    class="p-inputtext-sm" 
-                    placeholder="Enter item name" 
-                    [ngModelOptions]="{standalone: true}"
-                     [(ngModel)]="selectedProduct.itemdef.itemname" 
-                     autocomplete="off" 
-                     minlength="3" 
-                     required 
-                     (ngModelChange)="inputChange($event)" [disabled]="true"
-                     >
-                    <ng-template [ngIf]="itemTitle.errors"> 
-                        <small id="username2-help" class="p-error block">Item name is required and must be atleast 3 letters</small>
-                    </ng-template>
-    
+                        <input type="text" 
+                         #itemTitle="ngModel" 
+                         pInputText 
+                         class="p-inputtext-sm" 
+                         placeholder="Enter item name" 
+                        [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="selectedProduct.itemdef.itemname" 
+                        autocomplete="off" 
+                        minlength="3" 
+                        required 
+                       (ngModelChange)="inputChange($event)" [disabled]="true">
+                    </div>
+                    <div class="field mb-4 col-12 md:col-6">
+                         <label for="uom" class="font-medium text-900">Uom</label>
+                         <input type="text" 
+                          #itemTitle="ngModel" 
+                          pInputText 
+                          class="p-inputtext-sm" 
+                          placeholder="enter UOM" 
+                         [ngModelOptions]="{standalone: true}"
+                         [(ngModel)]="selectedProduct.itemdef.uom.uom" 
+                         autocomplete="off" 
+                         minlength="3" 
+                         required 
+                         (ngModelChange)="inputChange($event)" [disabled]="true">
+                    </div>
+                    <div class="field mb-6 col-12 md:col-6">
+                        <label for="uom" class="font-medium text-900">UserCode</label>
+                        <input type="text" 
+                         #itemTitle="ngModel" 
+                         pInputText 
+                        class="p-inputtext-sm" 
+                        placeholder="enter UOM" 
+                        [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="selectedProduct.usercode" 
+                        autocomplete="off" 
+                        minlength="3" 
+                        required 
+                        (ngModelChange)="inputChange($event)" [disabled]="true">
+                    </div>
+                    <div class="field mb-4 col-12 md:col-6"></div>
+
+                     <div class="field-checkbox, mb-4 col-12 md:col-6">
+                        <p-checkbox [(ngModel)]="selectedProduct.advertise" [binary]="true" inputId="binary-advt" [ngModelOptions]="{standalone: true}" ></p-checkbox>
+                        <label for="binary-ps">Advertise </label>
+                            <!-- <div>{{ selectedProduct.advertise }}</div> -->
+                    </div>
+                    
+
+                    <div class="field-checkbox,field mb-6  ">
+                         <p-checkbox [(ngModel)]="selectedProduct.inclinps" [binary]="true" inputId="binary-ps" [ngModelOptions]="{standalone: true}" ></p-checkbox>
+                         <label for="binary-ps">Include in Products & Services</label>
+                            <!-- <div>{{ selectedProduct.inclinps }}</div> -->
+                    </div> 
+                   </div>
+                       <div class="mr-2"> <p-button styleClass="p-button-sm p-button-info p-button-raised" (click)="showAddSalePriceDialog()" icon="pi pi-external-link" label="Add Sale Price"></p-button></div><br><br>
+                       </div>
+                    </div>
+        <!--CONTEXT   PRICES   Table -->
+                    <div class="card" col-12>
+                         <p-table [value]="selectedProduct.contextprices" [scrollable]="true"  
+                           selectionMode="single" scrollHeight="200px" (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm">
+                    
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Context</th>
+                                        <th>Sale Price</th>
+                                        <th>Modify</th>
+                                    </tr>
+                        
+                                </ng-template>
+                                <ng-template pTemplate="body" let-ctp let-i="rowIndex">
+                                    <tr>
+                                        <td>{{ctp.context}}</td>
+                                        <td>{{ctp.saleprice}}</td>
+                                        <td>
+                                            <div class="displayline">
+                                                <button pButton class="p-button-sm" (click)="handleEditContext(ctp)">EDIT</button>
+                                                <button pButton class="p-button-sm" (click)="handleDeleteContext(i)">DEL</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
                 </div>
+ 
 
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="uom" class="font-medium text-900">Uom</label>
-                <input type="text" 
-                #itemTitle="ngModel" 
-                pInputText 
-                class="p-inputtext-sm" 
-                placeholder="enter UOM" 
-                [ngModelOptions]="{standalone: true}"
-                 [(ngModel)]="selectedProduct.itemdef.uom.uom" 
-                 autocomplete="off" 
-                 minlength="3" 
-                 required 
-                 (ngModelChange)="inputChange($event)" [disabled]="true"
-                 >
-                <ng-template [ngIf]="itemTitle.errors"> 
-                    <small id="username2-help" class="p-error block">Item name is required and must be atleast 3 letters</small>
-                </ng-template>
 
-            </div>
 
-            <div  class="field mb-4 col-12 md:col-6">
-                <!-- <label for="uom" class="font-medium text-900">Tax</label> -->
-                <p-checkbox [(ngModel)]="selectedProduct.inclinps" [binary]="true" inputId="binary-ps" [ngModelOptions]="{standalone: true}" ></p-checkbox>
-                <!-- <div class="check-label"> -->
-                    <label for="binary-ps">Include in Products & Services</label>
-                    <div>{{ selectedProduct.inclinps }}</div>
-                <!-- </div>     -->
-            </div> 
 
-            <div class="field mb-4 col-12 md:col-6">
-                <p-checkbox [(ngModel)]="selectedProduct.advertise" [binary]="true" inputId="binary-advt" [ngModelOptions]="{standalone: true}" ></p-checkbox>
-                <div class="check-label">
-                    <label for="binary-advt">Advertise ?</label>
-                    <div>{{ selectedProduct.advertise }}</div>
-                </div>    
-            </div>
-            </div>
-            </div>
-            <div><button (click)="showAddSalePriceDialog()" pButton class="p-button-raised p-button-primary" icon="pi pi-plus" label="Add Sale Price"></button>
-            </div>
-               <!--Tis is AddSalePrice table show-->
-               <div>
-               <div class="card">
-                <p-table [value]="selectedProduct.contextprices" [scrollable]="true"  
-                selectionMode="single" scrollHeight="200px" 
-                (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm">
-                    
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>Context</th>
-                            <th>Sale Price</th>
-                            <th>Modify</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-ctp let-i="rowIndex">
-                        <tr>
-                            <td>{{ctp.context}}</td>
-                            <td>{{ctp.saleprice}}</td>
-                            <td>
-                                <div class="displayline">
-                                    <button pButton class="p-button-sm" (click)="handleEditContext(ctp)">EDIT</button>
-                                    <button pButton class="p-button-sm" (click)="handleDeleteContext(i)">DEL</button>
-                                </div>
-                                
-                            </td>
-                            
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </div>
-        </div>
 
-       <!--add sale form begins-->
-        <p-dialog header="Sale Price" [(visible)]="displaySubModal" [modal]="true" [style]="{width: '500px'}"
-                 class="p-fluid">
-
-                <!-- <p-dialog [(visible)]="displayTaxModal" [style]="{width: '450px'}" header="New Tax" [modal]="true" class="p-fluid">
-                    <ng-template pTemplate="content">   -->
+            <p-dialog header="Sale Price" [(visible)]="displaySubModal" [modal]="true" [style]="{width: '100vw',height:'100vw'}"
+                [draggable]="false" [resizable]="false" [maximizable]="true">
                 
-                
-                <div class="namebox">
+                <div>
+                    <div class="grid">
+                        <div class="col-12 lg:col-10">
+                            <div class="grid formgrid p-fluid">
+                                <div class="field mb-6 col-12 ">
+                              
+                <!-- <div class="namebox"> -->
                     
-                    <div>
+                    <!-- <div> -->
                         <div>Context</div>
                         <input type="text" min="0"  #selectContext="ngModel" pInputText class="p-inputtext-sm" 
                     placeholder="enter context" [(ngModel)]="selectedContext" 
@@ -120,7 +127,7 @@
                     </div>
 
                     
-                    <div>
+                    <div class="field mb-6 col-12 ">
                         <div>SalePrice</div>
                         <input type="number" min="0"  #selectSalePrice="ngModel" pInputText class="p-inputtext-sm" 
                     placeholder="enter sale price" [(ngModel)]="selectedSalePrice" 
@@ -136,56 +143,61 @@
                     
 
                     <p-button (click)="showNewTaxDialog()" icon="pi pi-external-link" label="New Tax"></p-button>
-
-            <!--Table for New Tax-->
-
-            <div class="card">
-                <p-table [value]="selectedTaxes" [scrollable]="true"  
-                selectionMode="single" scrollHeight="200px" 
-                (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm">
-                    
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>Name</th>
-                            <th>Code</th>
-                            <th>Percent</th>
-                            <th>Type</th>
-                            <th>Authority</th>
-                            <th>Modify</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-tax let-i="rowIndex">
-                        <tr>
+                       <!-- Ntew tax table-->
+                    <div class="card">
+                        <p-table [value]="selectedTaxes" [scrollable]="true"  
+                        selectionMode="single" scrollHeight="200px" 
+                        (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm">
                             
-                            <td>{{tax.taxname}}</td>
-                            <td>{{tax.taxcode}}</td>
-                            <td>{{tax.taxpercent}}</td>
-                            <td>{{tax.taxtype}}</td>
-                            <!-- <td>{{tax.taxauthority.accounthead}}</td> -->
-                            <td>
-                                <div *ngIf="tax.taxauthority; then thenBlock else elseBlock"></div>
-                                <ng-template #thenBlock>{{tax.taxauthority.accounthead}}</ng-template>
-                                <ng-template #elseBlock></ng-template>
-                            </td>
-                            
-                            <td>
-                                <div class="modifytax">
-                                    <button pButton class="p-button-sm" (click)="handleTaxEdit(tax)">EDIT</button>
-                                    <button pButton class="p-button-sm" (click)="handleTaxDelete(i)" >DEL</button>
-                                </div>
-                                
-                            </td>
-                            
-                        </tr>
-                    </ng-template>
-                </p-table>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Code</th>
+                                    <th>Percent</th>
+                                    <th>Type</th>
+                                    <th>Authority</th>
+                                    <th>Modify</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-tax let-i="rowIndex">
+                                <tr>
+                                    
+                                    <td>{{tax.taxname}}</td>
+                                    <td>{{tax.taxcode}}</td>
+                                    <td>{{tax.taxpercent}}</td>
+                                    <td>{{tax.taxtype}}</td>
+                                    <!-- <td>{{tax.taxauthority.accounthead}}</td> -->
+                                    <td>
+                                        <div *ngIf="tax.taxauthority; then thenBlock else elseBlock"></div>
+                                        <ng-template #thenBlock>{{tax.taxauthority.accounthead}}</ng-template>
+                                        <ng-template #elseBlock></ng-template>
+                                    </td>
+                                    
+                                    <td>
+                                        <div class="modifytax">
+                                            <button pButton class="p-button-sm" (click)="handleTaxEdit(tax)">EDIT</button>
+                                            <button pButton class="p-button-sm" (click)="handleTaxDelete(i)" >DEL</button>
+                                        </div>
+                                        
+                                    </td>
+                                    
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
             </div>
+        </div>
 
-        <!--New Tax Form Starts-->
-            <p-dialog header="Tax" [(visible)]="displayTaxModal" [modal]="true" [style]="{width: '500px'}"
+                    
+
+                    
+            <!--New Tax Form Start-->
+
+                    <p-dialog header="Tax" [(visible)]="displayTaxModal" [modal]="true" [style]="{width: '100vw',height:'100vw'}"
                 [draggable]="false" [resizable]="false">
                         
-                <form #taxForm="ngForm" autocomplete="off" novalidate class="box">
+                
                     <div class="modifytax">
                         <div>
                             <div>name</div>
@@ -248,20 +260,27 @@
                     </div>
                     
 
-                </form>
+                
                     
-            <ng-template pTemplate="footer">
+                            
+                            
+                             
+
+                            
+
+                        
+
+                        <ng-template pTemplate="footer">
                             <p-button icon="pi pi-check" (click)="handleAddTax()" label="Ok" styleClass="p-button-text"></p-button>
-            </ng-template>
-        </p-dialog>
+                        </ng-template>
+                    </p-dialog>
                     
                 <!-- New Tax For Ends-->  
 
-
-                <p-dialog header="Edit Tax" [(visible)]="displayTaxEditModal" [modal]="true" [style]="{width: '100vw',height:'100vw'}"
+                    <p-dialog header="Edit Tax" [(visible)]="displayTaxEditModal" [modal]="true" [style]="{width: '100vw',height:'100vw'}"
                 [draggable]="false" [resizable]="false">
                         
-                        <form #taxForm="ngForm" autocomplete="off" novalidate class="box">
+                        
                             <div class="modifytax">
                                 <div>
                                     <div>name</div>
@@ -302,24 +321,316 @@
                         
                                 </div>
 
+                            </div>
+                            <div>
+                                <div>code</div>
+                                <input type="text" #selectTaxcode="ngModel" pInputText class="p-inputtext-sm" placeholder="tax code" [(ngModel)]="selectedTaxcode" [ngModelOptions]="{standalone: true}"  autocomplete="off">
+                            </div>
+                            <div>
+                                <div>percent</div>
+                                <input type="number" #selectTaxpercent="ngModel" pInputText class="p-inputtext-sm" placeholder="tax percent" [(ngModel)]="selectedTaxpercent" [ngModelOptions]="{standalone: true}"  autocomplete="off" required>
+                                <ng-template [ngIf]="selectTaxpercent.errors">
+                                    <small id="username2-help" class="p-error block">you must enter a tax percent</small>
+                                </ng-template>
+                            </div>
+                            <div>
+                                <div>type</div>
+                            <p-dropdown #selectTaxType="ngModel" [options]="taxTypes" [(ngModel)]="selectedTaxtype" optionLabel="type" optionValue="type" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
+                            <ng-template [ngIf]="selectTaxType.errors">
+                                <small id="username2-help" class="p-error block">you must select a tax type</small>
+                            </ng-template>
+
+                            </div>
+                            
+
+                       
+                        
+                        <ng-template pTemplate="footer">
+                            <p-button icon="pi pi-check" (click)="handleUpdateTax()" label="Ok" styleClass="p-button-text"></p-button>
+                        </ng-template>
+                    </p-dialog>
+
+                    
+
+                </div>
+
+                <ng-template pTemplate="footer">
+                    <p-button icon="pi pi-check" (click)="handleAddContextPrice()" label="Ok" styleClass="p-button-text"></p-button>
+                </ng-template>
+            </p-dialog>
+
+            <p-dialog header="Sale Price" [(visible)]="displaySubEditModal" [modal]="true" [style]="{width: '100vw',height:'100vw'}"
+                [draggable]="false" [resizable]="false" [maximizable]="true">
+                
+                
+                <div class="namebox">
+                    
+                    <div>
+                        <div>Context</div>
+                        <input type="text" min="0"  #selectContext="ngModel" pInputText class="p-inputtext-sm" 
+                    placeholder="enter context" [(ngModel)]="selectedContext" 
+                    [ngModelOptions]="{standalone: true}"  autocomplete="off" (ngModelChange)="contextChange($event)"
+                    required>
+                    <ng-template [ngIf]="selectContext.errors">
+                        <small id="username2-help" class="p-error block">you must enter a context</small>
+                    </ng-template>
+    
+                    </div>
+
+                    
+                    <div>
+                        <div>SalePrice</div>
+                        <input type="number" min="0"  #selectSalePrice="ngModel" pInputText class="p-inputtext-sm" 
+                    placeholder="enter sale price" [(ngModel)]="selectedSalePrice" 
+                    [ngModelOptions]="{standalone: true}"  autocomplete="off" (ngModelChange)="salePriceChange($event)"
+                    required>
+                    <ng-template [ngIf]="selectSalePrice.errors">
+                        <small id="username2-help" class="p-error block">you must enter a sale price</small>
+                    </ng-template>
+    
+                    </div>
+
+                    
+                    
+
+                    <p-button (click)="showNewTaxDialog()" icon="pi pi-external-link" label="New Tax"></p-button>
+
+                    <div class="card">
+                        <p-table [value]="selectedTaxes" [scrollable]="true"  
+                        selectionMode="single" scrollHeight="200px" 
+                        (onRowSelect)="onRowSelect($event)" dataKey="recordid" selectionMode="single" styleClass="p-datatable-sm">
+                            
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Code</th>
+                                    <th>Percent</th>
+                                    <th>Type</th>
+                                    <th>Authority</th>
+                                    <th>Modify</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-tax let-i="rowIndex">
+                                <tr>
+                                    
+                                    <td>{{tax.taxname}}</td>
+                                    <td>{{tax.taxcode}}</td>
+                                    <td>{{tax.taxpercent}}</td>
+                                    <td>{{tax.taxtype}}</td>
+                                    <td>
+                                        <div *ngIf="tax.taxauthority; then thenBlock else elseBlock"></div>
+                                        <ng-template #thenBlock>{{tax.taxauthority.accounthead}}</ng-template>
+                                        <ng-template #elseBlock></ng-template>
+                                    </td>
+                                    
+                                    <td>
+                                        <div class="modifytax">
+                                            <button pButton class="p-button-sm" (click)="handleTaxEdit(tax)">EDIT</button>
+                                            <button pButton class="p-button-sm" (click)="handleTaxDelete(i)" >DEL</button>
+                                        </div>
+                                        
+                                    </td>
+                                    
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+
+                    
+
+                    
 
 
+                    <p-dialog header="Tax" [(visible)]="displayTaxModal" [modal]="true" [style]="{width: '100vw',height:'100vw'}"
+                [draggable]="false" [resizable]="false">
+                        
+                
+                    <div class="modifytax">
+                        <div>
+                            <div>name</div>
+                        <input type="text" #selectTaxname="ngModel" pInputText class="p-inputtext-sm fn" placeholder="tax name" [(ngModel)]="selectedTaxname" [ngModelOptions]="{standalone: true}"  autocomplete="off" required >
+                        <ng-template [ngIf]="selectTaxname.errors">
+                            <small id="username2-help" class="p-error block">you must enter a tax name. eg CGST or Sales Tax etc</small>
+                        </ng-template>
+                        </div>
+                        
 
 
+                        <div>
+                            <div>authority</div>
+                            <p-autoComplete
+                                [(ngModel)]="selectedTaxParty"
+                                [suggestions]="filteredParties" 
+                                (completeMethod)="filterParties($event)"
+                                field="accounthead" 
+                                [multiple]="false" class="autocomplete" 
+                                (onSelect)="handleOnSelectTaxParty($event)"
+                                [style]="{'width':'100%'}"
+                                [inputStyle]="{'width':'100%'}" 
+                                [placeholder]="placeholderTaxParty" 
+                                [ngModelOptions]="{standalone: true}"
+                                (ngModelChange)="partyChange($event)"
+                                [required]="true" #selectTaxParty="ngModel" 
+                                [forceSelection]="true">
+                
+                                <ng-template let-selectedTaxParty pTemplate="item">
+                                    <div>{{selectedTaxParty.accounthead}} - {{selectedTaxParty.id}}</div>
+                                    <div>{{selectedTaxParty.endpoint}}</div>
+                                </ng-template>
+                
+                            </p-autoComplete>
+                            <ng-template [ngIf]="selectTaxParty.errors">
+                                <small id="username2-help" class="p-error block">you must select a party</small>
+                            </ng-template>
+                
+                        </div>
+
+                    </div>
+                    <div>
+                        <div>code</div>
+                        <input type="text" #selectTaxcode="ngModel" pInputText class="p-inputtext-sm" placeholder="tax code" [(ngModel)]="selectedTaxcode" [ngModelOptions]="{standalone: true}"  autocomplete="off">
+                    </div>
+                    <div>
+                        <div>percent</div>
+                        <input type="number" #selectTaxpercent="ngModel" pInputText class="p-inputtext-sm" placeholder="tax percent" [(ngModel)]="selectedTaxpercent" [ngModelOptions]="{standalone: true}"  autocomplete="off" required>
+                        <ng-template [ngIf]="selectTaxpercent.errors">
+                            <small id="username2-help" class="p-error block">you must enter a tax percent</small>
+                        </ng-template>
+                    </div>
+                    <div>
+                        <div>type</div>
+                    <p-dropdown #selectTaxType="ngModel" [options]="taxTypes" [(ngModel)]="selectedTaxtype" optionLabel="type" optionValue="type" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
+                    <ng-template [ngIf]="selectTaxType.errors">
+                        <small id="username2-help" class="p-error block">you must select a tax type</small>
+                    </ng-template>
+
+                    </div>
+                   <ng-template pTemplate="footer">
+                            <p-button icon="pi pi-check" (click)="handleAddTax()" label="Ok" styleClass="p-button-text"></p-button>
+                        </ng-template>
+                    </p-dialog>
 
 
+                    <p-dialog header="Edit Tax" [(visible)]="displayTaxEditModal" [modal]="true" [style]="{width: '100vw',height:'100vw'}"
+                [draggable]="false" [resizable]="false">
+                        
+                        
+                            <div class="modifytax">
+                                <div>
+                                    <div>name</div>
+                                <input type="text" #selectTaxname="ngModel" pInputText class="p-inputtext-sm fn" placeholder="tax name" [(ngModel)]="selectedTaxname" [ngModelOptions]="{standalone: true}"  autocomplete="off" required >
+                                <ng-template [ngIf]="selectTaxname.errors">
+                                    <small id="username2-help" class="p-error block">you must enter a tax name. eg CGST or Sales Tax etc</small>
+                                </ng-template>
+                                </div>
+                                
 
 
+                                <div>
+                                    <div>authority</div>
+                                    <p-autoComplete
+                                        [(ngModel)]="selectedTaxParty"
+                                        [suggestions]="filteredParties" 
+                                        (completeMethod)="filterParties($event)"
+                                        field="accounthead" 
+                                        [multiple]="false" class="autocomplete" 
+                                        (onSelect)="handleOnSelectTaxParty($event)"
+                                        [style]="{'width':'100%'}"
+                                        [inputStyle]="{'width':'100%'}" 
+                                        [placeholder]="placeholderTaxParty" 
+                                        [ngModelOptions]="{standalone: true}"
+                                        (ngModelChange)="partyChange($event)"
+                                        [required]="true" #selectTaxParty="ngModel" 
+                                        [forceSelection]="true">
+                        
+                                        <ng-template let-selectedTaxParty pTemplate="item">
+                                            <div>{{selectedTaxParty.accounthead}} - {{selectedTaxParty.id}}</div>
+                                            <div>{{selectedTaxParty.endpoint}}</div>
+                                        </ng-template>
+                        
+                                    </p-autoComplete>
+                                    <ng-template [ngIf]="selectTaxParty.errors">
+                                        <small id="username2-help" class="p-error block">you must select a party</small>
+                                    </ng-template>
+                        
+                                </div>
 
+                            </div>
+                            <div>
+                                <div>code</div>
+                                <input type="text" #selectTaxcode="ngModel" pInputText class="p-inputtext-sm" placeholder="tax code" [(ngModel)]="selectedTaxcode" [ngModelOptions]="{standalone: true}"  autocomplete="off">
+                            </div>
+                            <div>
+                                <div>percent</div>
+                                <input type="number" #selectTaxpercent="ngModel" pInputText class="p-inputtext-sm" placeholder="tax percent" [(ngModel)]="selectedTaxpercent" [ngModelOptions]="{standalone: true}"  autocomplete="off" required>
+                                <ng-template [ngIf]="selectTaxpercent.errors">
+                                    <small id="username2-help" class="p-error block">you must enter a tax percent</small>
+                                </ng-template>
+                            </div>
+                            <div>
+                                <div>type</div>
+                            <p-dropdown #selectTaxType="ngModel" [options]="taxTypes" [(ngModel)]="selectedTaxtype" optionLabel="type" optionValue="type" [ngModelOptions]="{standalone: true}" [required]="true"></p-dropdown>
+                            <ng-template [ngIf]="selectTaxType.errors">
+                                <small id="username2-help" class="p-error block">you must select a tax type</small>
+                            </ng-template>
+
+                            </div>
+                            
+
+                        
+                        
+                        <ng-template pTemplate="footer">
+                            <p-button icon="pi pi-check" (click)="handleUpdateTax()" label="Ok" styleClass="p-button-text"></p-button>
+                        </ng-template>
+                    </p-dialog>
+
+                    
+
+                </div>
+
+                <ng-template pTemplate="footer">
+                    <p-button icon="pi pi-check" (click)="handleUpdateContextPrice()" label="Ok" styleClass="p-button-text"></p-button>
+                </ng-template>
+            </p-dialog>
+
+
+        
+        
+        
+
+        <!-- <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="handleUpdateProduct()" label="Save" styleClass="p-button-text"></p-button>
+        </ng-template> -->
+        <div class="ui-g-12" style= " text-align:right">
+            <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
+                    <button style="margin-left: 10px;" pButton class="w-auto mt-3" icon="pi pi-check" (click)="handleUpdateProduct()" label="Save"></button>
+        </div>
+
+
+        <ng-template [ngIf]="inSaveProgress">
+            <div class="overlay" id="modal">
+                <p-progressSpinner></p-progressSpinner>
             </div>
-            
+        </ng-template>
 
+    <!-- </p-dialog> -->
 
-
-
-
-
- 
 
 
     
+
+    <!-- <p-dialog header="View Sale Invoice" [(visible)]="displayViewModal" [modal]="true" [style]="{width: '100%'}">
+        <div>
+            <pre>{{selectedInvoice | json }}</pre>
+        </div>
+    </p-dialog> -->
+
+    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+
+    <ng-template [ngIf]="inProgress">
+        <div class="overlay" id="modal">
+            <p-progressSpinner></p-progressSpinner>
+        </div>
+    </ng-template>
+

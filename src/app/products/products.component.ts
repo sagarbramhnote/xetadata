@@ -141,8 +141,8 @@ navigateToCreateItems(){
 
 
 
-handleEditItem(i:any){
-  localStorage.setItem('editItem', JSON.stringify(i));
+handleEditItem(inv:any){
+  localStorage.setItem('editItem', JSON.stringify(inv));
   this.router.navigate(['products/edit'])
   
 }
