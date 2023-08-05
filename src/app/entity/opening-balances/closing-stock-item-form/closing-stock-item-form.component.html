@@ -1,0 +1,140 @@
+<p-toast key="globaltst"></p-toast>
+<p-dialog header="Closing Stock Item Form" [(visible)]="displayCSItemFormModal" [modal]="true" [style]="{width: '62vw',height:'100vh'}"
+    [draggable]="false" [resizable]="false" (onHide)="hideDialog()">
+    <div class="grid">
+        <div class="col-12">
+            <form [formGroup]="csItemForm" (ngSubmit)="handleSaveCSItem()" autocomplete="off" class="card p-fluid">
+                <div class="field">
+                    <div>Item</div> 
+                    <p-autoComplete
+                            class="p-inputtext-sm"
+                            [suggestions]="filteredItems" 
+                            (completeMethod)="filterItems($event)"
+                            field="itemname" 
+                            [multiple]="false" class="autocomplete" 
+                            [style]="{'width':'100%'}"
+                            [inputStyle]="{'width':'100%'}" 
+                            placeholder="Select item" 
+                            [required]="true" 
+                            [forceSelection]="true" appendTo="body" 
+                            (onSelect)="handleOnSelectItem($event,voucher)" 
+                            formControlName="object" id="object"> 
+        
+                            <ng-template let-selectedItem pTemplate="item">
+                                <div>{{selectedItem.itemname}} - {{selectedItem.id}}</div>
+                                <div>{{selectedItem.uom.uom}}</div>
+                                <div><span style="font-size: 10px;">{{ selectedItem.level1 }} > {{ selectedItem.level2 }} > {{selectedItem.level3}}</span></div>
+                            </ng-template>
+                    </p-autoComplete>
+                    <div class="text-xs text-red-600" *ngIf="csItemForm.controls['object'].touched && csItemForm.controls['object'].errors">You must select an item.</div>
+                </div> 
+        
+                
+        
+                <div class="field">
+                    <div>Quantity</div>
+                    <input type="number" min="0"   
+                        pInputText class="p-inputtext-sm" 
+                        placeholder="enter quantity"   
+                        autocomplete="off" 
+                        formControlName="quantity" id="quantity">
+                        <div class="text-xs text-red-600" *ngIf="csItemForm.controls['quantity'].touched && csItemForm.controls['quantity'].errors">You must enter a quantity</div>
+                </div>
+                
+                <div class="field">
+                    <div>Rate</div>
+                    <input type="number" min="0"  
+                        pInputText class="p-inputtext-sm" 
+                        placeholder="enter rate" formControlName="rate" id="rate" 
+                        autocomplete="off">
+                        <div class="text-xs text-red-600" *ngIf="csItemForm.controls['rate'].touched && csItemForm.controls['rate'].errors">You must enter a rate</div>
+                </div>
+        
+                <div class="field">
+                    <div>Serial No</div>
+                    <input type="text"    
+                        pInputText class="p-inputtext-sm" 
+                        placeholder="enter serial no" 
+                        autocomplete="off" formControlName="serialno"
+                        >
+                </div>
+        
+                <div class="field">
+                    <div>Batch No</div>
+                    <input type="text"  
+                        pInputText class="p-inputtext-sm" 
+                        placeholder="enter batch no"   
+                        autocomplete="off" formControlName="batchno"
+                        >
+                </div>
+        
+                <div class="field">
+                    <div>Expiry Date</div>
+                    <p-calendar 
+                            [showTime]="true" [showSeconds]="true" 
+                            inputId="time" 
+                            appendTo="body"
+                            placeholder="select expiry date" formControlName="expirydate">
+                    </p-calendar>
+                    <div class="flex w-full">
+                        <button pButton label="Clear Date" (click)="clearDate()"></button>                 
+                    </div>
+                </div>
+        
+                <div class="field">
+                    <div>Brand</div>
+                    <input type="text" 
+                        pInputText class="p-inputtext-sm" 
+                        placeholder="enter brand" 
+                        formControlName="brand"  
+                        autocomplete="off">
+                </div>
+        
+                <div class="field">
+                    <div>Title</div>
+                    <p-dropdown
+                        [options]="titleOptions" 
+                        optionLabel="type" 
+                        optionValue="type"  
+                        formControlName="title">
+                    </p-dropdown>
+                    <div class="text-xs text-red-600" *ngIf="csItemForm.controls['title'].touched && csItemForm.controls['title'].errors">You must select a title</div>
+                </div>
+        
+                <div class="field">
+                    <div>Location</div>
+                    <p-autoComplete
+                        formControlName="location"
+                        [suggestions]="filteredFromLocations" 
+                        (completeMethod)="filterFromLocations($event)"
+                        field="location" 
+                        [multiple]="false" class="autocomplete" 
+                        [style]="{'width':'100%'}"
+                        [inputStyle]="{'width':'100%'}" 
+                        placeholder="Select location" 
+                        [forceSelection]="true" 
+                        [minLength]="1" appendTo="body">
+        
+                        <ng-template let-selectedItem pTemplate="item">
+                            <div>{{selectedItem.location}}</div>
+                        </ng-template>
+                    </p-autoComplete>
+                    <div class="text-xs text-red-600" *ngIf="csItemForm.controls['location'].touched && csItemForm.controls['location'].errors">You must select a location.</div>
+                </div>
+        
+                <div>
+                    <p-button icon="pi pi-check" type="submit" label="Save"></p-button>
+                </div>
+                
+        
+            </form>
+        </div>
+    </div>
+    
+    
+
+    
+
+
+</p-dialog>
+

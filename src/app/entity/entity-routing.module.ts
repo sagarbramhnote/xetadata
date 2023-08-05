@@ -9,7 +9,6 @@ import { RecieveChequeComponent } from './recieve-cheque/recieve-cheque.componen
 import { TagsComponent } from './tags/tags.component';
 import { ItemLevelsComponent } from './item-levels/item-levels.component';
 import { StockLocationsComponent } from './stock-locations/stock-locations.component';
-import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 import { ItemCreateComponent } from './item/item-create/item-create.component';
 import { UpdateItemComponent } from './item/update-item/update-item.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
@@ -26,6 +25,7 @@ import { StockLocationsCreateComponent } from './stock-locations/stock-locations
 import { ProfileComponent } from './profile/profile.component';
 import { WrittenchequecreateComponent } from './write-cheque/writtenchequecreate/writtenchequecreate.component';
 import { RecievechequecreateComponent } from './recieve-cheque/recievechequecreate/recievechequecreate.component';
+import { OpeningBalancesComponent } from './opening-balances/opening-balances.component';
 
 
 const routes: Routes = [
@@ -57,7 +57,7 @@ const routes: Routes = [
 
 
   {path: 'stockLocations',component:StockLocationsComponent},
-  {path: 'openingBalance', data:{breadcrumb:'OpeningBalance'},component:OpeningBalanceComponent},
+  {path: 'openingBalance', data:{breadcrumb:'OpeningBalance'},component:OpeningBalancesComponent},
 
   {path: 'uomsCreate',data: {breadcrumb: 'Create'},component:UomsCreateComponent},
   {path: 'stockLocations',data: {breadcrumb: 'Stock-Location-List'},component:StockLocationsComponent},

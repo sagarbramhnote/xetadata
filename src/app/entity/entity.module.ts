@@ -50,9 +50,12 @@ import { TelephoneProfileComponent } from './profile/telephone-profile/telephone
 import { EmailIDProfileComponent } from './profile/email-id-profile/email-id-profile.component';
 import { PostalAddressProfileComponent } from './profile/postal-address-profile/postal-address-profile.component';
 import { GovtIDProfileComponent } from './profile/govt-id-profile/govt-id-profile.component';
-import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 import { WrittenchequecreateComponent } from './write-cheque/writtenchequecreate/writtenchequecreate.component';
 import { RecievechequecreateComponent } from './recieve-cheque/recievechequecreate/recievechequecreate.component';
+import { OpeningBalancesComponent } from './opening-balances/opening-balances.component';
+import { ClosingStockItemListComponent } from './opening-balances/closing-stock-item-list/closing-stock-item-list.component';
+import { ClosingStockItemFormComponent } from './opening-balances/closing-stock-item-form/closing-stock-item-form.component';
+import { CashEntryFormComponent } from './opening-balances/cash-entry-form/cash-entry-form.component';
 
 
 
@@ -82,7 +85,7 @@ import { RecievechequecreateComponent } from './recieve-cheque/recievechequecrea
          AccessPartyAccountComponent,
          UomsCreateComponent,
          StockLocationsCreateComponent,
-         OpeningBalanceComponent,
+         OpeningBalancesComponent,
          ProfileComponent,
          PersonalNameProfileComponent,
          CompanyNameProfileComponent,
@@ -91,7 +94,10 @@ import { RecievechequecreateComponent } from './recieve-cheque/recievechequecrea
          PostalAddressProfileComponent,
          GovtIDProfileComponent,
          WrittenchequecreateComponent,
-         RecievechequecreateComponent
+         RecievechequecreateComponent,
+         ClosingStockItemListComponent,
+         ClosingStockItemFormComponent,
+         CashEntryFormComponent,
 
 
 

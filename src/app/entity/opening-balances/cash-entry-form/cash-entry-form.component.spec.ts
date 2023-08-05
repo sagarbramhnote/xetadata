@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OpeningBalanceComponent } from './opening-balance.component';
+import { CashEntryFormComponent } from './cash-entry-form.component';
 
-describe('OpeningBalanceComponent', () => {
-  let component: OpeningBalanceComponent;
-  let fixture: ComponentFixture<OpeningBalanceComponent>;
+describe('CashEntryFormComponent', () => {
+  let component: CashEntryFormComponent;
+  let fixture: ComponentFixture<CashEntryFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OpeningBalanceComponent ]
+      declarations: [ CashEntryFormComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(OpeningBalanceComponent);
+    fixture = TestBed.createComponent(CashEntryFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

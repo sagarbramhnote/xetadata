@@ -1,0 +1,22 @@
+<p-dialog header="Cash on Hand" [(visible)]="displayCashModal" [modal]="true"
+                [draggable]="false" [resizable]="false" (onHide)="hideDialog()">
+    <div class="grid">
+        <div class="col-12">
+            <form [formGroup]="cashForm" (ngSubmit)="handleSaveCashForm()" autocomplete="off" class="card p-fluid">
+                <div class="field">
+                    <div>Amount</div>
+                    <input type="number" min="0"  
+                        pInputText class="p-inputtext-sm" 
+                        placeholder="enter amount" formControlName="amount" id="amount" 
+                        autocomplete="off">
+                        <div class="text-xs text-red-600" *ngIf="cashForm.controls['amount'].touched && cashForm.controls['amount'].errors">You must enter an amount</div>
+                </div>
+                <div>
+                    <p-button icon="pi pi-check" type="submit" label="Save"></p-button>
+                </div>
+            </form>
+        </div>
+
+    </div>        
+    
+</p-dialog>
