@@ -207,6 +207,15 @@ export class PaymentsCreateComponent {
 
     this.viewPartyName = ''
     this.viewTotal = 0
+    this.selectedEntity = null
+    this.selectedDate = new Date()
+    this.selectedParty = null
+
+    this.selectedVouchers = []
+    this.selectedVouchers.push(this.cashVoucher)
+    
+    this.displayModal = true;
+
   }
 
   sanitizeInvoices() {
