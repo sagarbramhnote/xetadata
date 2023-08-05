@@ -21,9 +21,9 @@
             </div> 
             
             <div>          
-                <p-button (click)="showNewVoucherDialog()" icon="pi pi-external-link" 
-                styleClass="p-button-sm p-button-info p-button-raised"
-                label="Production Voucher"></p-button>
+                <button (click)="showNewVoucherDialog()" icon="pi pi-external-link" 
+                pButton class="p-button-sm"
+                label="Production Voucher"></button>
               </div>
             <div class="card">
                 <p-table [value]="selectedVouchers" [scrollable]="true"  
@@ -58,6 +58,16 @@
                             </td>
                             
                         </tr>
+                        <p-dialog [(visible)]="deletevoucherDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                            <div class="flex align-items-center justify-content-center">
+                                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                                <span >Are you sure you want to delete <b></b>?</span>
+                            </div>
+                            <ng-template pTemplate="footer">
+                                <button pButton pRipple icon="pi pi-check" class="p-button-text" class="w-auto mt-3" label="Yes" (click)="confirmDelete(i)"></button>
+                                <button pButton pRipple icon="pi pi-times" class="p-button-text" class="w-auto mt-3 p-button-danger" label="No" (click)="deletevoucherDialog = false"></button>
+                            </ng-template>
+                        </p-dialog>
                     </ng-template>
                 </p-table>
             </div>
@@ -481,8 +491,17 @@
             </div>
                     
     </div>
+    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 
-    <p-toast></p-toast>
+
+<ng-template [ngIf]="inProgress">
+    <div class="overlay" id="modal">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
+</ng-template>
+
+<p-toast></p-toast>
+
         
 
 

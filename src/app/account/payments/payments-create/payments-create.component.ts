@@ -364,7 +364,19 @@ export class PaymentsCreateComponent {
     })
 
   }
-
+  deletevoucherDialog:boolean=false
+  handleDeleteVoucher(v:any) {
+    this.deletevoucherDialog=true;
+  
+  }
+  ;
+  
+  confirmDelete(v:any){
+    this.selectedVouchers.splice(v,1)
+    this.deletevoucherDialog=false;
+    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted', life: 3000 });
+  
+  }
 
 
   onRowSelect(event:any) {
@@ -644,13 +656,13 @@ export class PaymentsCreateComponent {
 
   
 
-  handleDeleteVoucher(v:any) {
-    console.log('V',v)
-    if (v===0) {
-      return
-    }
-    this.selectedVouchers.splice(v,1)
-  }
+  // handleDeleteVoucher(v:any) {
+  //   console.log('V',v)
+  //   if (v===0) {
+  //     return
+  //   }
+  //   this.selectedVouchers.splice(v,1)
+  // }
 
 
   

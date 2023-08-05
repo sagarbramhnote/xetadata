@@ -510,9 +510,9 @@ export class ProductionCreateComponent implements OnInit{
 
   }
 
-  handleDeleteVoucher(v:any) {
-    this.selectedVouchers.splice(v,1)
-  }
+  // handleDeleteVoucher(v:any) {
+  //   this.selectedVouchers.splice(v,1)
+  // }
 
 
   
@@ -1194,6 +1194,19 @@ export class ProductionCreateComponent implements OnInit{
 
     return
 
+  }
+  deletevoucherDialog:boolean=false
+  handleDeleteVoucher(v:any) {
+    this.deletevoucherDialog=true;
+  
+  }
+  ;
+  
+  confirmDelete(v:any){
+    this.selectedVouchers.splice(v,1)
+    this.deletevoucherDialog=false;
+    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted', life: 3000 });
+  
   }
 
   navigateToProductionList(){
