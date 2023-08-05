@@ -160,9 +160,6 @@ export class PurchaseReturnsComponent implements OnInit{
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
 }
 
-navigateToCreatePurchaseReturn(){
-   this.router.navigate(['entity/purchaseReturnCreate'])
-}
 
 
   handleView(invoice:any) {
