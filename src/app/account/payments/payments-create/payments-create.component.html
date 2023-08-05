@@ -50,9 +50,9 @@
                     </ng-template>
     
                 </div>
-                <div class="mr-2"> <p-button styleClass="p-button-sm p-button-info p-button-raised" (click)="showChequeDialog()" icon="pi pi-external-link" label="Cheques"></p-button></div><br><br>
-                <div class="mr-2"> <p-button styleClass="p-button-sm p-button-info p-button-raised" (click)="showViaPersonDialog()" icon="pi pi-external-link" label="via Person"></p-button></div><br><br>
-                <div class="mr-2"> <p-button styleClass="p-button-sm p-button-info p-button-raised"  icon="pi pi-external-link" label="Other"></p-button></div><br><br>
+                <div class="mr-2"> <button pButton class="p-button-sm"  (click)="showChequeDialog()" icon="pi pi-external-link" label="Cheques"></button></div><br><br>
+                <div class="mr-2"> <button pButton class="p-button-sm" (click)="showViaPersonDialog()" icon="pi pi-external-link" label="via Person"></button></div><br><br>
+                <div class="mr-2"> <button pButton class="p-button-sm"  icon="pi pi-external-link" label="Other"></button></div><br><br>
             </div>
                 <div class="card" col-12>
                     <p-table [value]="selectedVouchers" [scrollable]="true"  
@@ -84,6 +84,16 @@
                                 </td>
                                 
                             </tr>
+                            <p-dialog [(visible)]="deletevoucherDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                                <div class="flex align-items-center justify-content-center">
+                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                                    <span >Are you sure you want to delete <b></b>?</span>
+                                </div>
+                                <ng-template pTemplate="footer">
+                                    <button pButton pRipple icon="pi pi-check" class="p-button-text" class="w-auto mt-3" label="Yes" (click)="confirmDelete(i)"></button>
+                                    <button pButton pRipple icon="pi pi-times" class="p-button-text" class="w-auto mt-3 p-button-danger" label="No" (click)="deletevoucherDialog = false"></button>
+                                </ng-template>
+                            </p-dialog>
                         </ng-template>
                     </p-table>
                 </div>
