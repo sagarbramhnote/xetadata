@@ -1,7 +1,7 @@
 <div class="card">
     <p-table #dt [value]="product" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
-        [globalFilterFields]="['id','itemname','uom.uom','usercode','itemfatype']">
+        [globalFilterFields]="['id','itemdef.itemname','itemdef.uom.uom','inclinps','advertise']">
         <ng-template pTemplate="caption">
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
                 <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
@@ -23,20 +23,19 @@
 
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-v let-i="rowIndex">
+        <ng-template pTemplate="body" let-inv let-i="rowIndex">
             <tr>
-                <td>{{v.id}}</td>
-                <td>{{v.itemdef.itemname}}</td>
-                <td>{{v.itemdef.uom.uom}}</td>
-                <td>{{v.inclinps}}</td>
-                <td>{{v.advertise}}</td>
-
+                <td>{{inv.id}}</td>
+                <td>{{inv.itemdef.itemname}}</td>
+                <td>{{inv.itemdef.uom.uom}}</td>
+                <td>{{inv.inclinps}}</td>
+                <td>{{inv.advertise}}</td>
                 <td>
 
                     <div class="grid">
                         <div class="col-12">
                             
-                            <button  pButton icon="pi pi-pencil" class="p-button-sm p-button-info p-button-raised" (click)="handleEditItem(i)" label="Edit"></button>
+                            <button  pButton icon="pi pi-pencil" class="p-button-sm p-button-info p-button-raised" (click)="handleEditItem(inv)" label="Edit"></button>
                         </div>
                         </div>
                     
