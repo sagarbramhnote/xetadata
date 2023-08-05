@@ -26,13 +26,17 @@ import { ReturnSalessComponent } from './sales/return-saless/return-saless.compo
 import { ConsumptionComponent } from './consumption/consumption.component';
 import { CreateConsumptionComponent } from './consumption/create-consumption/create-consumption.component';
 import { ViewConsumptionComponent } from './consumption/view-consumption/view-consumption.component';
-import { EditConsumptionComponent } from './consumption/edit-consumption/edit-consumption.component';
 import { PurchaseCreateComponent } from './purchase/purchase-create/purchase-create.component';
 import { PurchaseViewComponent } from './purchase/purchase-view/purchase-view.component';
 import { PurchasePurchaseReturnComponent } from './purchase/purchase-purchase-return/purchase-purchase-return.component';
+import { PaymentsComponent } from './payments/payments.component';
+import { PaymentsCreateComponent } from './payments/payments-create/payments-create.component';
+import { PaymentsRegisterComponent } from './payments/payments-register/payments-register.component';
+import { PaymentsViewComponent } from './payments/payments-view/payments-view.component';
 import { ReciptsComponent } from './recipts/recipts.component';
 import { ReciptsNewComponent } from './recipts/recipts-new/recipts-new.component';
 import { ReciptsRegisterComponent } from './recipts/recipts-register/recipts-register.component';
+
 
 
 const routes: Routes = [
@@ -64,15 +68,20 @@ const routes: Routes = [
 
   {path: 'view-consumption', data: {breadcrumb: 'View Consumption'},component:ViewConsumptionComponent},
   
-  {path: 'edit-consumption', data: {breadcrumb: 'Edit Consumotion'},component:EditConsumptionComponent},
 
   {path: 'purchaseCreate', data: {breadcrumb: 'Create Purchase'},component:PurchaseCreateComponent},
   {path: 'purchaseView', data: {breadcrumb: 'View Purchase'},component:PurchaseViewComponent},
   {path: 'purchaseReturnn', data: {breadcrumb: 'Return Purchase'},component:PurchasePurchaseReturnComponent},
+
+  {path: 'payments', data: {breadcrumb: 'Payments'},component:PaymentsComponent},
+  {path: 'paymentsCreate', data: {breadcrumb: 'PaymentsCreate'},component:PaymentsCreateComponent},
+  {path: 'paymentsRegister', data: {breadcrumb: 'PaymentsRegister'},component:PaymentsRegisterComponent},
+  {path: 'paymentsView', data: {breadcrumb: 'PaymentsView'},component:PaymentsViewComponent},
   {path: 'recipts', data: {breadcrumb: 'List'},component:ReciptsComponent},
   {path: 'new-recipts', data: {breadcrumb: 'New'},component:ReciptsNewComponent},
   {path: 'register-recipts', data: {breadcrumb: 'New'},component:ReciptsRegisterComponent},
   {path: 'purchaseReturnn', data: {breadcrumb: 'Return Purchase'},component:PurchasePurchaseReturnComponent}
+
 
 
 
