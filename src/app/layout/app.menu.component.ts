@@ -523,22 +523,22 @@ export class AppMenuComponent implements OnInit {
                     }
                 ]
             },
-            // {
-            //     label: 'Messages',
-            //     icon: 'pi pi-fw pi-at',
-            //     items: [
-            //         {
-            //             label: 'Messages',
-            //             icon: 'pi pi-fw pi-at',
-            //             routerLink: ['/messages']
-            //         },
-            //         {
-            //             label: 'Recipients',
-            //             icon: 'pi pi-fw pi-at',
-            //             routerLink: ['/recipients']
-            //         }
-            //     ]
-            // },
+            {
+                label: 'Messages',
+                icon: 'pi pi-fw pi-at',
+                items: [
+                    {
+                        label: 'Messages',
+                        icon: 'pi pi-fw pi-at',
+                        routerLink: ['/messages']
+                    },
+                    {
+                        label: 'Recipients',
+                        icon: 'pi pi-fw pi-at',
+                        routerLink: ['/recipients']
+                    }
+                ]
+            },
             // {
             //     label: 'Orders',
             //     icon: 'pi pi-fw pi-sync',
