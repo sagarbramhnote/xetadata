@@ -628,12 +628,10 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Line Production',
                         icon: 'pi pi-fw pi-user',
-                        routerLink: ['/account/sales'],
                     },
                     {
                         label: 'Conversion',
                         icon: 'pi pi-fw pi-user',
-                        routerLink: ['/account/sales'],
                     },
                     {
                         label: 'Transfer',
