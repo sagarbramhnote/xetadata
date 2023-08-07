@@ -19,6 +19,9 @@ import { TelephoneComponent } from './personcomponents/telephone/telephone.compo
 import { EmailIDComponent } from './personcomponents/email-id/email-id.component';
 import { GovtIDComponent } from './personcomponents/govt-id/govt-id.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { ContactsUpdateComponent } from './contacts-update/contacts-update.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ContactsCreateComponent } from './contacts-create/contacts-create.component';
 
 
 
@@ -26,12 +29,15 @@ import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [
     ContactsComponent,
+    ContactsCreateComponent,
+    ContactsUpdateComponent,
     PersonalNameComponent,
     CompanyNameComponent,
     PostalAddressComponent,
     TelephoneComponent,
     EmailIDComponent,
-    GovtIDComponent 
+    GovtIDComponent,
+   
   ],
   imports: [
     CommonModule,
@@ -45,7 +51,9 @@ import { DropdownModule } from 'primeng/dropdown';
     RadioButtonModule,
     InputTextModule,
     ToggleButtonModule,
-    DropdownModule
+    DropdownModule,
+    ConfirmDialogModule,
+
   ]
 })
 export class ContactsModule { }

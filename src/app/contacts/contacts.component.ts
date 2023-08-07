@@ -7,6 +7,8 @@ import { XetaSuccess } from '../global/xeta-success';
 import { SaveFreshPersonService } from '../services/save-fresh-person.service';
 import { UpdatePersonService } from '../services/update-person.service';
 import { PeopleWithoutEndpointsServiceService } from '../services/people-without-endpoints-service.service';
+import { Router } from '@angular/router';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-contacts',
@@ -61,6 +63,8 @@ export class ContactsComponent {
   
 
   selectedState:any
+  inProgress:boolean = false
+
 
   dropdownItems = [
     { name: 'Option 1', code: 'Option 1' },
@@ -74,6 +78,13 @@ export class ContactsComponent {
 
   buttonText:string = 'Save'
 
+  navigateToCreateContacts(){
+    this.router.navigate(['contacts/create'])
+ }
+
+ onGlobalFilter(table: Table, event: Event) {
+  table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
+}
 
   pcchange(event:any) {
 
@@ -186,7 +197,7 @@ export class ContactsComponent {
     return person
   }
 
-  constructor(private httpClient:HttpClient,private confirmationService:ConfirmationService, private messageService: MessageService) {}
+  constructor(private router:Router,private httpClient:HttpClient,private confirmationService:ConfirmationService, private messageService: MessageService) {}
   
   ngOnInit(): void {
     this.loadPeople(0,0)
@@ -252,6 +263,8 @@ export class ContactsComponent {
   }
 
   handleNew(e:any) {
+
+
     if (e.checked) {
       this.initPerson()
       this.mode = 'new'
@@ -295,6 +308,10 @@ export class ContactsComponent {
   }
 
   handleEdit(person:any) {
+
+    localStorage.setItem('editContacts', JSON.stringify(person));
+    this.router.navigate(['contacts/edit'])
+
 
     this.mode = 'edit'
 

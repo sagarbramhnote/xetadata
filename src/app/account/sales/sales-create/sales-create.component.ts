@@ -1032,7 +1032,8 @@ handleOnSelectTaxParty(event:any) {
 this.selectedTaxParty = event
 }
 
-showFieldsTax: boolean = false;
+// showFieldsTax: boolean = false;
+// *ngIf="showFieldsTax"
 handleAddTax() {
 
 if (typeof this.selectedTaxParty === 'undefined' || this.selectedTaxParty == null) {
@@ -1074,7 +1075,7 @@ console.log('TAX TO BE ADDED',tax)
 //return false
 
 this.selectedTaxes.push(tax)
-this.showFieldsTax = true;
+// this.showFieldsTax = true;
 this.pcchange(this.ri)
 
 
@@ -1146,15 +1147,15 @@ handleAddVoucher(){
     return false
   }
 
-  if (typeof this.selectedLocationQty === 'undefined' || this.selectedLocationQty == null || this.selectedLocationQty === 0) {
-    this.confirm('You must enter a location quantity greater than zero')
-    return false
-  }
+  // if (typeof this.selectedLocationQty === 'undefined' || this.selectedLocationQty == null || this.selectedLocationQty === 0) {
+  //   this.confirm('You must enter a location quantity greater than zero')
+  //   return false
+  // }
 
-  if(this.selectedQty != this.selectedLocationQty) {
-    this.confirm('You must enter a location quantity equal to actual quantity')
-    return false
-  }
+  // if(this.selectedQty != this.selectedLocationQty) {
+  //   this.confirm('You must enter a location quantity equal to actual quantity')
+  //   return false
+  // }
 
   if (typeof this.selectedUIR === 'undefined' || this.selectedUIR == null) {
     this.confirm('You must enter a sale price greater than or equal to zero')
@@ -1352,15 +1353,15 @@ handleUpdateVoucher() {
     return false
   }
 
-  if (typeof this.selectedLocationQty === 'undefined' || this.selectedLocationQty == null || this.selectedLocationQty === 0) {
-    this.confirm('You must enter a location quantity greater than zero')
-    return false
-  }
+  // if (typeof this.selectedLocationQty === 'undefined' || this.selectedLocationQty == null || this.selectedLocationQty === 0) {
+  //   this.confirm('You must enter a location quantity greater than zero')
+  //   return false
+  // }
 
-  if(this.selectedQty != this.selectedLocationQty) {
-    this.confirm('You must enter a location quantity equal to actual quantity')
-    return false
-  }
+  // if(this.selectedQty != this.selectedLocationQty) {
+  //   this.confirm('You must enter a location quantity equal to actual quantity')
+  //   return false
+  // }
 
   if (typeof this.selectedUIR === 'undefined' || this.selectedUIR == null) {
     this.confirm('You must enter a quantity greater than or equal to zero')

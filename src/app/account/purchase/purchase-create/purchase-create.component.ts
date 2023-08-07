@@ -790,7 +790,7 @@ discountState:boolean = false
 
   }
 
-  showFieldsTax: boolean = false;
+ // showFieldsTax: boolean = false;
   displayTaxModal:boolean = false;
 
   selectedTaxname:any
@@ -899,7 +899,7 @@ handleAddTax() {
 
   this.selectedTaxes.push(tax)
   this.pcchange(this.ri)
-  this.showFieldsTax = true;
+ // this.showFieldsTax = true;
 
 
   this.selectedTaxname = null
