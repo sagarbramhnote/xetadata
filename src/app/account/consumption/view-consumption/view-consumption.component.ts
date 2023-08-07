@@ -20,6 +20,7 @@ import { SaveSaleReturnService } from 'src/app/services/save-sale-return.service
 //import { EventData } from '../../global/event-data';
 import { SaveConsumptionService } from 'src/app/services/save-consumption.service';
 import { StockLocationBalanceService } from 'src/app/services/stock-location-balance.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-consumption',
@@ -112,6 +113,9 @@ export class ViewConsumptionComponent implements OnInit {
   selectedDiscountAmount:any
   selectedDiscountPercent:any
 
+  navigateToListConsumprtions(){
+    this.router.navigate(['account/consumption'])
+  } 
   
   // @ViewChild('discountPercentInput') discountPercentInput:ElementRef = new ElementRef({}); 
   // @ViewChild('discountAmountInput') discountAmountInput:ElementRef = new ElementRef({});
@@ -193,7 +197,7 @@ export class ViewConsumptionComponent implements OnInit {
   disableTitleOption:boolean = false
 
 
-  constructor(private eventBusService:EventBusServiceService,private httpClient:HttpClient,private confirmationService:ConfirmationService, private messageService: MessageService) { }
+  constructor(private router:Router,private eventBusService:EventBusServiceService,private httpClient:HttpClient,private confirmationService:ConfirmationService, private messageService: MessageService) { }
 // this is code for developed coe strat shere
   // ngOnInit(): void {
 
