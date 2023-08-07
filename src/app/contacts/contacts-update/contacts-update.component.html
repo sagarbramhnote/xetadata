@@ -1,0 +1,89 @@
+<p-toast key="tst"></p-toast>
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            
+            <div class="p-fluid p-formgrid grid">
+                
+                <div class="field col-4 md:col-4">
+                    <p-radioButton name="pc" value="person" [(ngModel)]="person.pc" id="personradio" label="Person" (ngModelChange)="pcchange($event)" inputId="pc1"   [disabled]="true"></p-radioButton>
+                </div>
+                <div class="field col-4 md:col-4">
+                    <p-radioButton name="pc" value="company" [(ngModel)]="person.pc" id="companyradio" label="Company" (ngModelChange)="pcchange($event)" inputId="pc2"   [disabled]="true"></p-radioButton>
+                </div>
+                
+
+                <div class="col-12">
+                    <button pButton pRipple class="p-button-sm w-max" (click)="handleAddName()">Add Name</button>                    
+                </div>
+                <ng-container *ngFor="let name of person.names; let i = index">
+                    <div *ngIf="isperson; then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock>
+                        <app-personal-name class="col-12" [personalName]="name" (deleteEvent)="handleDeleteOfName($event,i)" ></app-personal-name>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                        <app-company-name class="col-12" [companyName]="name" (deleteEvent)="handleDeleteOfName($event,i)"  ></app-company-name>
+                    </ng-template>
+                </ng-container>
+                
+                
+              
+
+
+                <div class="col-12">
+                    <button id="lbtnt" (click)="handleAddTelephone()" pButton class="p-button-sm w-max">Add Telephone</button>
+                </div>
+                <ng-container *ngFor="let telephone of telephones; let i = index">
+                    <app-telephone class="col-12" [endpoint]="telephone" [mode]="''" (deleteEvent)="handleDeleteOfTelephone($event,i)"></app-telephone>
+                </ng-container>
+
+            
+                <div class="col-12">
+                    <button id="lbtne" (click)="handleAddEmailID()" pButton class="p-button-sm w-max">Add EmailID</button>
+                </div> 
+                <ng-container *ngFor="let emailid of emailids; let i = index">
+                    <app-email-id class="col-12" [endpoint]="emailid" (deleteEvent)="handleDeleteOfEmail($event,i)"></app-email-id>    
+                </ng-container>
+    
+             
+
+                <div class="col-12">
+                    <button id="lbtna" (click)="handleAddAddress()" pButton class="p-button-sm w-max">Add Address</button>
+                </div>
+                <ng-container *ngFor="let address of postalAddresses; let i = index">
+                    <app-postal-address class="col-12" [endpoint]="address" [mode]="''" (deleteEvent)="handleDeleteOfPostalAddress($event,i)"></app-postal-address>
+                </ng-container>
+                
+            
+                <div class="col-12">
+                    <button id="lbtng" (click)="handleAddGovtID()" pButton class="p-button-sm w-max">Add GovtID</button>
+                </div>
+                <ng-container *ngFor="let govtid of person.govtids; let i = index">
+                    <app-govt-id class="col-12" [govtid]="govtid" (deleteEvent)="handleDeleteOfGovtID($event,i)"></app-govt-id>
+                </ng-container>
+
+            
+
+                <div class="col-12 w-full flex flex-column gap-1">
+                    <p-dropdown [options]="accountTypes" [(ngModel)]="person.accounttype" optionLabel="type" optionValue="type" (ngModelChange)="accountTypeChange($event)" [ngModelOptions]="{standalone: true}" [disabled]="true"></p-dropdown>
+                    <input id="extpassword" type="password" pInputText class="p-inputtext-sm" [(ngModel)]="person.extpwd" [ngModelOptions]="{standalone: true}" placeholder="enter external password" />
+                    <input id="intpassword" type="password" pInputText class="p-inputtext-sm" [(ngModel)]="person.intpwd" [ngModelOptions]="{standalone: true}" placeholder="enter internal password" />
+                </div>                
+
+        
+            </div>
+            <div class="ui-g-12" style= " text-align:right">
+                <span class="w-full sm:w-20rem flex-order-1 sm:flex-order-0"></span>
+                <button style="margin-left: 10px;" pButton class="w-auto mt-3" icon="pi pi-check" (click)="atleast()" label="Update"></button>
+                <button style="margin-left: 10px;" pButton class="w-auto mt-3 p-button-danger" icon="pi pi-times" (click)="navigateToListContacts()" label="Cancel"></button>
+           </div>
+        </div>
+    </div>
+</div> 
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<ng-template [ngIf]="inProgress">
+    <div class="overlay" id="modal">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
+</ng-template>

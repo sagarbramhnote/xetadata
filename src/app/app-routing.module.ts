@@ -17,7 +17,7 @@ const routes: Routes = [
             { path: 'xetaproducts', loadChildren: () => import('./xetaproducts/xetaproducts.module').then(m => m.XetaproductsModule)},
             { path: '', redirectTo: '/xetaproducts', pathMatch: 'full' },
             { path: 'dashboard',data: { breadcrumb: 'Dashboard' }, loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule), canActivate:[authenticationGuard()]},
-            { path: 'contacts', loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule), canActivate:[authenticationGuard()]},
+            { path: 'contacts', data: { breadcrumb: 'Contacts' }, loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule), canActivate:[authenticationGuard()]},
             { path: 'messages', loadChildren: () => import('./messages/messages.module').then(m => m.MessagesModule), canActivate:[authenticationGuard()]},
             { path: 'recipients',component: RecipientsComponent, canActivate:[authenticationGuard()]},
             { path: 'products', data: { breadcrumb: 'Products' },loadChildren: () => import('./products/products.module').then(m => m.ProductsModule), canActivate:[authenticationGuard()]},
