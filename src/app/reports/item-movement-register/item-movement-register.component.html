@@ -41,15 +41,15 @@
                 <td>{{inv.item}}</td>
                 <td>{{inv.item_name}}</td>
                 <td>{{inv.uom}}</td>
-                <td>{{inv.purchase }}</td>
-                <td>{{inv.pret }}</td>
-                <td>{{inv.consume }}</td>
-                <td>{{inv.produce }}</td>
-                <td>{{inv.sale }}</td>
-                <td>{{inv.sret }}</td>
-                <td>{{inv.qty }}</td>
-                <td>{{inv.org }}</td>
-                <td style="text-align: right;">{{inv.amount}}</td>
+                <td style="text-align: right;">{{inv.purchase }}</td>
+                <td style="text-align: right;">{{inv.pret }}</td>
+                <td style="text-align: right;">{{inv.consume }}</td>
+                <td style="text-align: right;">{{inv.produce }}</td>
+                <td style="text-align: right;">{{inv.sale }}</td>
+                <td style="text-align: right;">{{inv.sret }}</td>
+                <td style="text-align: right;">{{inv.qty }}</td>
+                <td style="text-align: right;">{{inv.org | number : "1.2-2"}}</td>
+                <td style="text-align: right;">{{inv.amount | number : "1.2-2"}}</td>
                 
             </tr>
         </ng-template>

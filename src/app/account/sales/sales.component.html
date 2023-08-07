@@ -15,12 +15,12 @@
         <ng-template pTemplate="header">
             <tr>
                 <!-- <th>Id</th> -->
-                <th pSortableColumn="id" class="white-space-nowrap" style="width:5%">Id<p-sortIcon field="id"></p-sortIcon></th>
-                <th pSortableColumn="date" class="white-space-nowrap" style="width:18%">Date<p-sortIcon field="date"></p-sortIcon></th>
-                <th pSortableColumn="vendor" class="white-space-nowrap" style="width:15%">Customer<p-sortIcon field="vendor"></p-sortIcon></th>
-                <th pSortableColumn="taxablevalue" class="white-space-nowrap" style="width:12%">Taxable Value<p-sortIcon field="taxablevalue"></p-sortIcon></th>
-                <th pSortableColumn="tax" class="white-space-nowrap" style="width:12%">Tax<p-sortIcon field="tax"></p-sortIcon></th>
-                <th pSortableColumn="aftertaxvalue" class="white-space-nowrap" style="width:12%">Value<p-sortIcon field="aftertaxvalue"></p-sortIcon></th>
+                <th pSortableColumn="id" class="white-space-nowrap" >Id<p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="date" class="white-space-nowrap" >Date<p-sortIcon field="date"></p-sortIcon></th>
+                <th pSortableColumn="vendor" class="white-space-nowrap" >Customer<p-sortIcon field="vendor"></p-sortIcon></th>
+                <th pSortableColumn="taxablevalue" class="white-space-nowrap" >Taxable Value<p-sortIcon field="taxablevalue"></p-sortIcon></th>
+                <th pSortableColumn="tax" class="white-space-nowrap" >Tax<p-sortIcon field="tax"></p-sortIcon></th>
+                <th pSortableColumn="aftertaxvalue" class="white-space-nowrap" >Value<p-sortIcon field="aftertaxvalue"></p-sortIcon></th>
                 <th class="white-space-nowrap">Actions</th> 
             </tr>
         </ng-template>
@@ -30,9 +30,9 @@
                 <td>{{inv.date}}</td>
                 <td>{{inv.vendor}}</td>
                 <!-- <td>{{inv.taxablevalue}}</td> -->
-                <td >{{inv.taxablevalue | number:'1.2-2'}}</td>
-                <td >{{inv.tax | number:'1.2-2'}}</td>
-                <td >{{inv.aftertaxvalue | number:'1.2-2'}}</td>
+                <td style="text-align: right;">{{inv.taxablevalue | number:'1.2-2'}}</td>
+                <td style="text-align: right;">{{inv.tax | number:'1.2-2'}}</td>
+                <td style="text-align: right;">{{inv.aftertaxvalue | number:'1.2-2'}}</td>
                 <td>
                     <div class="flex flex-row gap-1"> 
                         <button pButton pRipple class="p-button-rounded p-button-sm" pTooltip="View" (click)="handleView(inv.invoice)">V</button>
