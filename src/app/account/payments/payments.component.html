@@ -17,10 +17,10 @@
         <ng-template pTemplate="header">
             <tr>
                 
-                <th pSortableColumn="account.id" class="white-space-nowrap" style="width:20%">Id<p-sortIcon field="account.id"></p-sortIcon></th>
-                <th pSortableColumn="account.accounthead" class="white-space-nowrap" style="width:20%">Party<p-sortIcon field="account.accounthead"></p-sortIcon></th>
-                <th pSortableColumn="debit" class="white-space-nowrap" style="width:20%">Receivable<p-sortIcon field="debit"></p-sortIcon></th>
-                <th pSortableColumn="credit" class="white-space-nowrap" style="width:20%">Payable<p-sortIcon field="credit"></p-sortIcon></th>
+                <th pSortableColumn="account.id" class="white-space-nowrap">Id<p-sortIcon field="account.id"></p-sortIcon></th>
+                <th pSortableColumn="account.accounthead" class="white-space-nowrap">Party<p-sortIcon field="account.accounthead"></p-sortIcon></th>
+                <th style="text-align: center;" pSortableColumn="debit" class="white-space-nowrap">Receivable<p-sortIcon field="debit"></p-sortIcon></th>
+                <th style="text-align: center;" pSortableColumn="credit" class="white-space-nowrap">Payable<p-sortIcon field="credit"></p-sortIcon></th>
           
             </tr>
         </ng-template>
@@ -29,8 +29,8 @@
                 
                 <td>{{inv.account.id}}</td>
                 <td>{{inv.account.accounthead}}</td>
-                <td>{{inv.debit}}</td>
-                <td>{{inv.credit}}</td>
+                <td style="text-align: right;">{{inv.debit | number : "1.2-2"}}</td>
+                <td style="text-align: right;">{{inv.credit | number : "1.2-2"}}</td>
             </tr>
         </ng-template>
     </p-table>

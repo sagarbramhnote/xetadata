@@ -15,7 +15,7 @@
             <tr>
                 
                 <th pSortableColumn="date" class="white-space-nowrap" style="width:20%">Date <p-sortIcon field="date"></p-sortIcon></th>
-                <th pSortableColumn="taxablevalue" class="white-space-nowrap" style="width:20%">Taxablevalue<p-sortIcon field="taxablevalue"></p-sortIcon></th>
+                <th pSortableColumn="taxablevalue" class="white-space-nowrap" style="width:20% ; text-align: center">Taxablevalue<p-sortIcon field="taxablevalue"></p-sortIcon></th>
                 <th class="white-space-nowrap" style="width:20%">Modify</th>
 
             </tr>
@@ -24,7 +24,7 @@
             <tr>
                 
                 <td>{{inv.date}}</td>
-                <td>{{inv.taxablevalue}}</td>
+                <td style="text-align: right">{{inv.taxablevalue}}</td>
                 <td>
                     <div class="grid">
                         <div class="col-12">

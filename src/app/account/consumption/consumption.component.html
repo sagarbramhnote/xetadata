@@ -23,7 +23,7 @@
                 <th pSortableColumn="date" class="white-space-nowrap" style="width: 30%">
                     Date <p-sortIcon field="date"></p-sortIcon>
                 </th>
-                <th pSortableColumn="taxablevalue" class="white-space-nowrap" style="width: 25%">
+                <th pSortableColumn="taxablevalue" class="white-space-nowrap" style="width: 25% ; text-align: center">
                     Consumption Value
                     <p-sortIcon field="taxablevalue"></p-sortIcon>
                 </th>
@@ -35,7 +35,7 @@
         <tr>
             
             <td>{{inv.date}}</td>
-            <td>{{inv.taxablevalue}}</td>
+            <td style="text-align: right">{{inv.taxablevalue}}</td>
             <td>
                 <div>
                     <button pButton class="p-button-sm" (click)="handleView(inv.invoice)">VIEW</button>

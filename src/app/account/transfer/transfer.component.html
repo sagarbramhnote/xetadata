@@ -26,7 +26,7 @@
                         field="item.itemname"></p-sortIcon></th>
                 <th pSortableColumn="item.uom.uom" class="white-space-nowrap" style="width:10%">Uom<p-sortIcon
                         field="item.uom.uom"></p-sortIcon></th>
-                <th pSortableColumn="quantity" class="white-space-nowrap" style="width:5%">Quantity<p-sortIcon
+                <th pSortableColumn="quantity" class="white-space-nowrap" style="width:5% ;text-align: center">Quantity<p-sortIcon
                         field="quantity"></p-sortIcon></th>
                 <th class="white-space-nowrap" style="width:5%">Modify </th>
 
@@ -42,7 +42,7 @@
                 <td>{{inv.to.location}}</td>
                 <td>{{inv.item.itemname}}</td>
                 <td>{{inv.item.uom.uom}}</td>
-                <td>{{inv.quantity}}</td>
+                <td style="text-align: right">{{inv.quantity}}</td>
 
                 <td>
                     <div>

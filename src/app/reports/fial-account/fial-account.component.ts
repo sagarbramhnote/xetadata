@@ -170,7 +170,7 @@ bs:any="bs"
       'dahid':'TRADING ACCOUNT',
       'dac':'EXPENSES',
       'debit':0,
-      'cahid':'',
+      'cahid':'ID',
       'cac':'REVENUE',
       'credit':0
     }
@@ -217,7 +217,7 @@ bs:any="bs"
       'dahid':'BALANCE SHEET',
       'dac':'ASSETS',
       'debit':0,
-      'cahid':'',
+      'cahid':'ID',
       'cac':'LIABILITIES',
       'credit':0
     }
