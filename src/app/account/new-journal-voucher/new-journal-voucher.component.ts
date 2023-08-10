@@ -12,6 +12,8 @@ import { ItemsListService } from 'src/app/services/items-list.service';
 import { JournalVoucherListService } from 'src/app/services/journal-voucher-list.service';
 import { SaveNewJournalVoucherService } from 'src/app/services/save-new-journal-voucher.service';
 import { Search } from 'src/app/services/search';
+import { format, parseISO } from 'date-fns';
+
 
 @Component({
   selector: 'app-new-journal-voucher',
@@ -348,7 +350,7 @@ export class NewJournalVoucherComponent implements OnInit{
         b = this.formattedNumber(element.amount as number,b,'creditcol')
         jvEntries.push(b)
 
-        jv["invoicedate"] = element.invoicedate
+        jv["invoicedate"] = this.parseDateNew(element.invoicedate)
         jv["jvEntries"] = jvEntries
         
         this.journalVoucherList.push(jv)
@@ -360,7 +362,11 @@ export class NewJournalVoucherComponent implements OnInit{
 
   }
 
-
+  parseDateNew(dateString: string) {
+    const parsedDate = parseISO(dateString);
+    const formattedDate = format(parsedDate, 'dd-MMM-yyyy hh:mm a');
+    return formattedDate;
+  }
 
   isInt(n:any) {
     return n % 1 === 0;

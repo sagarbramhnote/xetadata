@@ -22,10 +22,10 @@
                 <th pSortableColumn="invnum" class="white-space-nowrap" style="width:10%">Invoice Id <p-sortIcon field="invnum"></p-sortIcon></th>
                 <th pSortableColumn="trdatetime" class="white-space-nowrap" style="width:20%">Date<p-sortIcon field="trdatetime"></p-sortIcon></th>
                 <th pSortableColumn="partyname" class="white-space-nowrap" style="width:15%">Party & Contact<p-sortIcon field="partyname"></p-sortIcon></th>
-                <th pSortableColumn="credit" class="white-space-nowrap" style="width:15%">Value<p-sortIcon field="credit"></p-sortIcon></th>
-                <th pSortableColumn="paid" class="white-space-nowrap" style="width:10%">Paid<p-sortIcon field="paid"></p-sortIcon></th>
-                <th pSortableColumn="payable" class="white-space-nowrap" style="width:10%">Payable<p-sortIcon field="payable"></p-sortIcon></th>
-                <th pSortableColumn="numdays" class="white-space-nowrap" style="width:12%">Days<p-sortIcon field="numdays"></p-sortIcon></th>
+                <th pSortableColumn="credit" class="white-space-nowrap" style="width:15%; text-align: center">Value<p-sortIcon field="credit"></p-sortIcon></th>
+                <th pSortableColumn="paid" class="white-space-nowrap" style="width:10%; text-align: center">Paid<p-sortIcon field="paid"></p-sortIcon></th>
+                <th pSortableColumn="payable" class="white-space-nowrap" style="width:10%; text-align: center">Payable<p-sortIcon field="payable"></p-sortIcon></th>
+                <th pSortableColumn="numdays" class="white-space-nowrap" style="width:12%; text-align: center">Days<p-sortIcon field="numdays"></p-sortIcon></th>
 
             </tr>
         </ng-template>
@@ -35,23 +35,23 @@
                 <td>{{inv.invnum}}</td>
                 <td>{{ inv.trdatetime | date:'dd-MMM-yyyy hh:mm a' }}</td>
                 <td>{{inv.partyname}} - {{inv.endpoint}}</td>
-                <td>
+                <td style="text-align: right">
                     <div class="my-right-text">
                         {{inv.credit}}
                      </div>
                 </td>
                 
-                <td>
+                <td style="text-align: right">
                     <div class="my-right-text">
                         {{inv.paid}}
                      </div>
                 </td> 
-                <td>
+                <td style="text-align: right">
                     <div class="my-right-text">
                         {{inv.payable}}
                      </div>
                 </td>
-                <td>{{inv.numdays | number: '1.0-2'}}</td>
+                <td style="text-align: right">{{inv.numdays | number: '1.0-2'}}</td>
                 
                 
             </tr>

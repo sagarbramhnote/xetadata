@@ -28,7 +28,7 @@
                     Party
                     <p-sortIcon field="originalparty.accounthead"></p-sortIcon>
                 </th>
-                <th pSortableColumn="amount" class="white-space-nowrap" style="width: 15%">
+                <th pSortableColumn="amount" class="white-space-nowrap" style="width: 15%; text-align: center">
                     Amount<p-sortIcon field="amount"></p-sortIcon>
                 </th>
                 <th pSortableColumn="status" class="white-space-nowrap" style="width: 15%">
@@ -41,7 +41,7 @@
             <tr>
                 <td>{{ ch.maturitydate }}</td>
                 <td>{{ ch.originalparty.accounthead }}</td>
-                <td>{{ ch.amount | number : "1.2-2" }}</td>
+                <td  style="text-align: right">{{ ch.amount | number : "1.2-2" }}</td>
                 <td>{{ ch.status }}</td>
                 <td>
                     <div class="grid">

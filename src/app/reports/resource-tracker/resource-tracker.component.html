@@ -51,7 +51,7 @@
                     </div>
                 </th>
                 <!-- <th>Serial</th> -->
-                <th pSortableColumn="serialno">
+                <th pSortableColumn="serialno" style="text-align: center">
                     <div class="flex justify-content-between align-items-center">
                         Serial
                         <p-sortIcon field="serialno"></p-sortIcon>
@@ -74,7 +74,7 @@
                     </div>
                 </th>
                 <!-- <th>Quantity</th> -->
-                <th pSortableColumn="quantity">
+                <th pSortableColumn="quantity" style="text-align: center">
                     <div class="flex justify-content-between align-items-center">
                         Quantity
                         <p-sortIcon field="quantity"></p-sortIcon>
@@ -82,7 +82,7 @@
                     </div>
                 </th>
                 <!-- <th>Invoice Number</th> -->
-                <th pSortableColumn="invoice_number" class="white-space-nowrap" style="width: 10%">
+                <th pSortableColumn="invoice_number" class="white-space-nowrap" style="width: 10%; text-align: center">
                     <div class="flex justify-content-between align-items-center">
                         Inv No
                         <p-sortIcon field="invoice_number"></p-sortIcon>
@@ -123,12 +123,12 @@
                 <td>{{inv.timezone | date:'dd-MMM-yyyy hh:mm a'}}</td>
                 <td>{{inv.itemname}}</td>
                 <td>{{inv.uom}}</td>
-                <td>{{inv.serialno}}</td>
+                <td style="text-align: right">{{inv.serialno}}</td>
                 <td>{{inv.batchno}}</td>
 
                 <td>{{ inv.expirydate }}</td>
-                <td>{{inv.quantity }}</td>
-                <td>{{inv.invoice_number}}</td>
+                <td style="text-align: right">{{inv.quantity }}</td>
+                <td style="text-align: right">{{inv.invoice_number}}</td>
                 <td>{{inv.source}}</td>
                 <td>{{inv.party}}</td>
                 <td>{{inv.title}}</td>

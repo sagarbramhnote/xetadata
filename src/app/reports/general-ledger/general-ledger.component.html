@@ -87,9 +87,9 @@
             <tr>
                 <th pSortableColumn="trdatetime" class="white-space-nowrap" style="width:10%">Date <p-sortIcon field="trdatetime"></p-sortIcon></th>
                 <th pSortableColumn="accounthead" class="white-space-nowrap" style="width:20%">Account <p-sortIcon field="accounthead"></p-sortIcon></th>
-                <th pSortableColumn="debit" class="white-space-nowrap" style="width:15%">Debit <p-sortIcon field="debit"></p-sortIcon></th>
-                <th pSortableColumn="credit" class="white-space-nowrap" style="width:15%">Credit<p-sortIcon field="credit"></p-sortIcon></th>
-                <th pSortableColumn="balance" class="white-space-nowrap" style="width:10%">Balance <p-sortIcon field="balance"></p-sortIcon></th>
+                <th pSortableColumn="debit" class="white-space-nowrap" style="width:15% ;text-align: center">Debit <p-sortIcon field="debit"></p-sortIcon></th>
+                <th pSortableColumn="credit" class="white-space-nowrap" style="width:15%; text-align: center">Credit<p-sortIcon field="credit"></p-sortIcon></th>
+                <th pSortableColumn="balance" class="white-space-nowrap" style="width:10%; text-align: center">Balance <p-sortIcon field="balance"></p-sortIcon></th>
                 <th pSortableColumn="vid" class="white-space-nowrap" style="width:12%">vid <p-sortIcon field="vid"></p-sortIcon></th>
                 <th pSortableColumn="vtype" class="white-space-nowrap" style="width:12%">vtype <p-sortIcon field="vtype"></p-sortIcon></th>
 
@@ -99,9 +99,9 @@
             <tr>
                 <td>{{inv.trdatetime | date:'dd-MM-yyyy'}}</td>
                 <td>{{inv.accounthead}}</td>
-                <td>{{inv.debit }}</td>
-                <td>{{inv.credit }}</td>
-                <td>{{inv.balance}} &nbsp; {{inv.baltype}}</td>
+                <td style="text-align: right;">{{inv.debit }}</td>
+                <td style="text-align: right;">{{inv.credit }}</td>
+                <td style="text-align: right;">{{inv.balance}} &nbsp; {{inv.baltype}}</td>
                 <td>{{inv.vid}}</td>
                 <td>{{inv.vtype}}</td>
                 

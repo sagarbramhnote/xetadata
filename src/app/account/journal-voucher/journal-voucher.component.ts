@@ -11,6 +11,8 @@ import { JournalVoucherListService } from 'src/app/services/journal-voucher-list
 import { SaveJournalVoucherService } from 'src/app/services/save-journal-voucher.service';
 import { Table } from 'primeng/table/public_api';
 import { Router } from '@angular/router';
+import { format, parseISO } from 'date-fns';
+
 
 @Component({
     selector: 'app-journal-voucher',
@@ -168,7 +170,7 @@ export class JournalVoucherComponent implements OnInit {
             b = this.formattedNumber(element.amount as number, b, 'creditcol');
             jvEntries.push(b);
 
-            jv['invoicedate'] = element.invoicedate;
+            jv["invoicedate"] = this.parseDateNew(element.invoicedate)
             jv['jvEntries'] = jvEntries;
 
             this.journalVoucherList.push(jv);
@@ -176,6 +178,12 @@ export class JournalVoucherComponent implements OnInit {
 
         console.log('PROCESSED JVs', this.journalVoucherList);
     }
+
+    parseDateNew(dateString: string) {
+        const parsedDate = parseISO(dateString);
+        const formattedDate = format(parsedDate, 'dd-MMM-yyyy hh:mm a');
+        return formattedDate;
+      }
 
     isInt(n: any) {
         return n % 1 === 0;

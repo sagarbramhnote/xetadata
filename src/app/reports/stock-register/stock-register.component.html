@@ -23,8 +23,8 @@
                 <th pSortableColumn="id" class="white-space-nowrap" style="width:10%">Id <p-sortIcon field="id"></p-sortIcon></th>
                 <th pSortableColumn="item" class="white-space-nowrap" style="width:20%">Item <p-sortIcon field="item"></p-sortIcon></th>
                 <th pSortableColumn="uom" class="white-space-nowrap" style="width:15%">UOM <p-sortIcon field="uom"></p-sortIcon></th>
-                <th pSortableColumn="quantity" class="white-space-nowrap" style="width:15%">Quantity<p-sortIcon field="quantity"></p-sortIcon></th>
-                <th pSortableColumn="reorder" class="white-space-nowrap" style="width:10%">Reorder Level <p-sortIcon field="reorder"></p-sortIcon></th>
+                <th pSortableColumn="quantity" class="white-space-nowrap" style="width:15%;text-align: center">Quantity<p-sortIcon field="quantity"></p-sortIcon></th>
+                <th pSortableColumn="reorder" class="white-space-nowrap" style="width:10% ;text-align: center">Reorder Level <p-sortIcon field="reorder"></p-sortIcon></th>
                 <th pSortableColumn="status" class="white-space-nowrap" style="width:12%">Status <p-sortIcon field="status"></p-sortIcon></th>
                 <th class="white-space-nowrap">Actions </th>
 
@@ -35,8 +35,8 @@
                 <td>{{inv.id}}</td>
                 <td>{{inv.item}}</td>
                 <td>{{inv.uom}}</td>
-                <td>{{inv.quantity}}</td>
-                <td>{{inv.reorder}}</td>
+                <td style="text-align: right">{{inv.quantity}}</td>
+                <td style="text-align: right">{{inv.reorder}}</td>
                 <td><span [class]="'customer-badge status-' + inv.status">{{inv.status}}</span></td>
                 <td>
                     <div class="grid">

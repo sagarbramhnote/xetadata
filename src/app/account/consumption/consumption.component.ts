@@ -20,6 +20,8 @@ import { SaveConsumptionService } from 'src/app/services/save-consumption.servic
 import { StockLocationBalanceService } from 'src/app/services/stock-location-balance.service';
 import { Table } from 'primeng/table/public_api';
 import { Router } from '@angular/router';
+import { format, parseISO } from 'date-fns';
+
 
 @Component({
   selector: 'app-consumption',
@@ -215,7 +217,7 @@ export class ConsumptionComponent implements OnInit {
       const element = this.saleList[index];
 
       let sanitInvoice:any = {} 
-      sanitInvoice['date'] = element.date
+      sanitInvoice['date'] = this.parseDateNew(element.date)
       //sanitInvoice['vendor'] = element.partyaccounthead.accounthead
 
       //console.log('VENDOR',element.partyaccounthead.accounthead)
@@ -244,6 +246,13 @@ export class ConsumptionComponent implements OnInit {
       this.sanitizedInvoiceList.push(sanitInvoice)
       
     }
+  }
+
+  
+  parseDateNew(dateString: string) {
+    const parsedDate = parseISO(dateString);
+    const formattedDate = format(parsedDate, 'dd-MMM-yyyy hh:mm a');
+    return formattedDate;
   }
 
   loadInvoices(offset:number,moreoffset:number) {
