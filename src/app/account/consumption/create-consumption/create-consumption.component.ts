@@ -429,36 +429,51 @@ export class CreateConsumptionComponent implements OnInit {
 
   }
 
-  handleEditVoucher(v:any) {
-    
-    console.log('VOUCHER TO BE EDITED',v)
-    
-    this.selectedItem = v.object
-    this.selectedUIR = v.userinputrate
-    this.selectedQty = v.quantity
-    this.selectedStockBalances = v.stockbalanceinputs
-    this.selectedAccountMap = v.accountmap
-    this.selectedUOM = v.object.uom.uom
-    this.selectedTaxes = v.taxes
-    let ri = ""
-    if(v.rateincludesvat) {
-      ri = 'rit'
-    }
-    if(!v.rateincludesvat) {
-      ri = 'ret'
-    }
-    //this.pcchange(ri)
-    this.selectedVoucherid = v.recordid
-    this.displaySubEditModal = true
-
-  }
-
+ 
   handleDeleteVoucher(v:any) {
     this.selectedVouchers.splice(v,1)
   }
 
 
-  
+  filterParties(event:any) {
+    console.log('IN FILTER PARTIES',event)
+    // let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'party-name-contains'};
+    let criteria:Search = <Search>{searchtext:event.query,screen:'tokenfield',offset:0,searchtype:'party-accounthead-contains'};
+    console.log('CRITERIA',criteria)
+    let pService:AccountHeadListService = new AccountHeadListService(this.httpClient)
+    this._eSub = pService.fetchAccountHeads(criteria).subscribe({
+      complete: () => {
+        console.info('complete')
+      },
+      error: (e) => {
+        console.log('ERROR',e)
+        alert('A server error occured. '+e.message)
+        return;
+      },
+      next: (v) => {
+        console.log('NEXT',v);
+        if (v.hasOwnProperty('error')) {
+          let dataError:Xetaerror = <Xetaerror>v; 
+          alert(dataError.error);
+          return;
+        }
+        else if(v.hasOwnProperty('success')) {
+          let dataSuccess:XetaSuccess = <XetaSuccess>v;
+          this.filteredParties = dataSuccess.success;
+          console.log('FILTERED PEOPLE',dataSuccess.success)
+          return;
+        }
+        else if(v == null) {
+          alert('A null object has been returned. An undefined error has occurred.')
+          return;
+        }
+        else {
+          alert('An undefined error has occurred.')
+          return
+        }
+      }
+    })
+  }
 
 
   filterItems(event:any) {
@@ -771,19 +786,6 @@ export class CreateConsumptionComponent implements OnInit {
 
 
 
-  highestRecordID(objectArray:any[]) {
-    let recid = 0
-    for (let index = 0; index < objectArray.length; index++) {
-      const element = objectArray[index];
-      if(element.recordid > recid) {
-        recid = element.recordid
-      }
-    }
-    return recid
-
-  }
-
-
 
   itemChange(event:any) {
 
@@ -966,497 +968,7 @@ export class CreateConsumptionComponent implements OnInit {
 
   }
 
-  handleAddVoucher(){
-
-    console.log('ITEM',this.selectedItem)
-    console.log('QUANTITY',this.selectedQty)
-    console.log('USER INPUT RATE',this.selectedUIR)
-
-    if (typeof this.selectedItem === 'undefined' || this.selectedItem == null) {
-      this.confirm('You must select an item')
-      return false
-    }
-    if (typeof this.selectedQty === 'undefined' || this.selectedQty == null || this.selectedQty === 0) {
-      this.confirm('You must enter a quantity greater than zero')
-      return false
-    }
-
-    if (typeof this.selectedAccountMap === 'undefined' || this.selectedAccountMap == null || this.selectedAccountMap.accounthead === '') {
-      this.confirm('You must select an account')
-      return false
-    }
-
-    if (typeof this.selectedLocationQty === 'undefined' || this.selectedLocationQty == null || this.selectedLocationQty === 0) {
-      this.confirm('You must enter a location quantity greater than zero')
-      return false
-    }
-
-    if(this.selectedQty != this.selectedLocationQty) {
-      this.confirm('You must enter a location quantity equal to actual quantity')
-      return false
-    }
-
-    let v:any = this.buildVoucher()
-    this.selectedVouchers.push(v)
-    
-    this.displaySubModal = false
-    return false
-
-  }
-
-
-
-
-
-  buildVoucher() {
-    /*
-      {
-      action: "rec",
-      objecttype: "item",
-      object: {
-        itemname:null
-      },
-      quantity: null,
-      currency: "",
-      fromdatetime: "",
-      todatetime: "",
-      duedatetime: "",
-      userinputrate: null,
-      rateincludesvat: "True",
-      taxes: [],
-      discountpercent: null,
-      discountamount: null,
-      rateafterdiscount: null,
-      rateaftertaxes: null,
-      taxfactor: 1,
-      taxesperunit: null,
-      uom: {
-        uom: "",
-        symbol: "",
-        country: ""
-      },
-      nonvattaxperunit: null,
-      vattaxperunit: null,
-      nonvatpercent: null,
-      vatpercent: null,
-      ratebeforetaxes: null,
-      intofrom: {
-        id: "0",
-        itemname: "",
-        iscontainer: "True",
-        usercode: "",
-        uom: {
-          uom: "each",
-          symbol: "each",
-          country: "global"
-        },
-        taxes: [],
-        files: [],
-        recipe: {
-          consumedunits: [],
-          byproducts: []
-        }
-      },
-      by: {
-        itemid: "0",
-        neid: "",
-        relationshipid: "",
-        name: ""
-      },
-      delivery: {
-        id: "-1",
-        accounthead: "",
-        defaultgroup: "",
-        relationship: "-1",
-        neid: "-1",
-        person: "-1",
-        name: "",
-        endpoint: "",
-        rtype: ""
-      },
-      title: "",
-      accountmap: {
-        id: "",
-        accounthead: "",
-        defaultgroup: "",
-        relationship: "",
-        neid: "",
-        person: "",
-        name: "",
-        endpoint: "",
-        accounttype: "",
-        partofgroup: -1,
-        isgroup: false
-      },
-      files: [],
-      expirydate: new Date(),
-      vendorperson: null
-    }
-    */
-
-    
-
-    let v:any = {}
-    v['action'] = 'cons'
-    v['objecttype'] = 'item'
-    v['object'] = JSON.parse(JSON.stringify(this.selectedItem))
-    v['quantity'] = this.selectedQty
-    v['currency'] = '',
-    // v['fromdatetime'] = 'infinity'
-    // v['todatetime'] = 'infinity'
-    // v['duedatetime'] = 'infinity'
-    // v['userinputrate'] = this.selectedUIR
-    // if(this.ri === 'rit'){
-    //   v['rateincludesvat'] = true
-    // }
-    // if(this.ri === 'ret') {
-    //   v['rateincludesvat'] = false
-    // }
-
-    // v['taxes'] = JSON.parse(JSON.stringify(this.selectedTaxes))
-    // if(isNaN(this.selectedDiscountPercent)) {
-    //   this.selectedDiscountPercent = 0
-    // }
-    // v['discountpercent'] = this.selectedDiscountPercent
-    // v['discountamount'] = this.selectedDiscountAmount
-    // v['rateafterdiscount'] = this.rad
-    // v['rateaftertaxes'] = this.rat
-    // v['taxfactor'] = 0
-    // v['taxesperunit'] = this.t
-    v['uom'] = {
-      uom: "",
-      symbol: "",
-      country: ""
-    }
-    
-    // v['nonvattaxperunit'] = this.nonvattaxperunit
-    
-    // v['vattaxperunit'] = this.vattaxperunit
-    // v['nonvatpercent'] = this.totalnonvatperc
-    // v['vatpercent'] = this.totalvatperc
-    // v['ratebeforetaxes'] = this.rbt
-
-    // v['intofrom'] = {
-    //   id: "0",
-    //   itemname: "",
-    //   iscontainer: "True",
-    //   usercode: "",
-    //   uom: {
-    //     uom: "each",
-    //     symbol: "each",
-    //     country: "global"
-    //   },
-    //   taxes: [],
-    //   files: [],
-    //   recipe: {
-    //     consumedunits: [],
-    //     byproducts: []
-    //   }
-    // }
-    // v['by'] = {
-    //   itemid: "0",
-    //   neid: "",
-    //   relationshipid: "",
-    //   name: ""
-    // }
-    // v['delivery'] ={
-    //   id: "-1",
-    //   accounthead: "",
-    //   defaultgroup: "",
-    //   relationship: "-1",
-    //   neid: "-1",
-    //   person: "-1",
-    //   name: "",
-    //   endpoint: "",
-    //   rtype: ""
-    // }
-    // v['title'] = ""
-    v['accountmap'] = JSON.parse(JSON.stringify(this.selectedAccountMap))
-    
-    v['files'] = []
-    v['expirydate'] = new Date()
-    //v['vendorperson'] = null
-    v['recordid'] = this.highestRecordID(this.selectedVouchers) + 1
-
-    this.uneditedSbs = JSON.parse(JSON.stringify(this.selectedStockBalances))
-    
-    let sbs = []
-    for (let index = 0; index < this.selectedStockBalances.length; index++) {
-      const element = this.selectedStockBalances[index];
-      if(parseFloat(element.inputqty) > 0) {
-        sbs.push(element)
-      }
-    }
-
-    v['stockbalanceinputs'] = sbs
-
-    let slbs = []
-    for (let index = 0; index < this.selectedStockLocationBalance.length; index++) {
-      const element = this.selectedStockLocationBalance[index];
-      if(parseFloat(element.inputqty) > 0) {
-        slbs.push(element)
-      }
-    }
-
-    v['stocklocationbalanceinputs'] = slbs
-    v['title'] = this.selectedTitleOption
-
-
-    return v
-
-  }
-
-
-  handleUpdateVoucher() {
-
-    if (typeof this.selectedItem === 'undefined' || this.selectedItem == null) {
-      this.confirm('You must select an item')
-      return false
-    }
-    if (typeof this.selectedQty === 'undefined' || this.selectedQty == null || this.selectedQty === 0) {
-      this.confirm('You must enter a quantity greater than zero')
-      return false
-    }
-
-    if (typeof this.selectedAccountMap === 'undefined' || this.selectedAccountMap == null || this.selectedAccountMap.accounthead === '') {
-      this.confirm('You must select an account')
-      return false
-    }
-
-    if (typeof this.selectedLocationQty === 'undefined' || this.selectedLocationQty == null || this.selectedLocationQty === 0) {
-      this.confirm('You must enter a location quantity greater than zero')
-      return false
-    }
-
-    if(this.selectedQty != this.selectedLocationQty) {
-      this.confirm('You must enter a location quantity equal to actual quantity')
-      return false
-    }
-
-    let v:any = this.recordByRecordID(this.selectedVoucherid,this.selectedVouchers)
-    console.log('VOUCHER',v)
-    this.rebuildVoucher(v)
-    this.displaySubEditModal = false
-
-    return false
-
-  }
-
-
-  rebuildVoucher(v:any) {
-    /*
-      {
-      action: "rec",
-      objecttype: "item",
-      object: {
-        itemname:null
-      },
-      quantity: null,
-      currency: "",
-      fromdatetime: "",
-      todatetime: "",
-      duedatetime: "",
-      userinputrate: null,
-      rateincludesvat: "True",
-      taxes: [],
-      discountpercent: null,
-      discountamount: null,
-      rateafterdiscount: null,
-      rateaftertaxes: null,
-      taxfactor: 1,
-      taxesperunit: null,
-      uom: {
-        uom: "",
-        symbol: "",
-        country: ""
-      },
-      nonvattaxperunit: null,
-      vattaxperunit: null,
-      nonvatpercent: null,
-      vatpercent: null,
-      ratebeforetaxes: null,
-      intofrom: {
-        id: "0",
-        itemname: "",
-        iscontainer: "True",
-        usercode: "",
-        uom: {
-          uom: "each",
-          symbol: "each",
-          country: "global"
-        },
-        taxes: [],
-        files: [],
-        recipe: {
-          consumedunits: [],
-          byproducts: []
-        }
-      },
-      by: {
-        itemid: "0",
-        neid: "",
-        relationshipid: "",
-        name: ""
-      },
-      delivery: {
-        id: "-1",
-        accounthead: "",
-        defaultgroup: "",
-        relationship: "-1",
-        neid: "-1",
-        person: "-1",
-        name: "",
-        endpoint: "",
-        rtype: ""
-      },
-      title: "",
-      accountmap: {
-        id: "",
-        accounthead: "",
-        defaultgroup: "",
-        relationship: "",
-        neid: "",
-        person: "",
-        name: "",
-        endpoint: "",
-        accounttype: "",
-        partofgroup: -1,
-        isgroup: false
-      },
-      files: [],
-      expirydate: new Date(),
-      vendorperson: null
-    }
-    */
-
-    // IN REBUILD VOUCHER
-
-    //this.pcchange(this.ri)
-    
-    v['action'] = 'cons'
-    v['objecttype'] = 'item'
-    v['object'] = JSON.parse(JSON.stringify(this.selectedItem)) // only this.selectedItem because it is assigned in handleEditVoucher
-    v['quantity'] = this.selectedQty
-    v['currency'] = '',
-    // v['fromdatetime'] = 'infinity'
-    // v['todatetime'] = 'infinity'
-    // v['duedatetime'] = 'infinity'
-    // v['userinputrate'] = this.selectedUIR
-    // if(this.ri === 'rit'){
-    //   v['rateincludesvat'] = true
-    // }
-    // if(this.ri === 'ret') {
-    //   v['rateincludesvat'] = false
-    // }
-
-    // v['taxes'] = JSON.parse(JSON.stringify(this.selectedTaxes))
-    // if(isNaN(this.selectedDiscountPercent)) {
-    //   this.selectedDiscountPercent = 0
-    // }
-    // v['discountpercent'] = this.selectedDiscountPercent
-    // v['discountamount'] = this.selectedDiscountAmount
-    // v['rateafterdiscount'] = this.rad
-    // v['rateaftertaxes'] = this.rat
-    // v['taxfactor'] = 0
-    // v['taxesperunit'] = this.t
-    v['uom'] = {
-      uom: "",
-      symbol: "",
-      country: ""
-    }
-    // v['nonvattaxperunit'] = this.nonvattaxperunit
-    // v['vattaxperunit'] = this.vattaxperunit
-    // v['nonvatpercent'] = this.totalnonvatperc
-    // v['vatpercent'] = this.totalvatperc
-    // v['ratebeforetaxes'] = this.rbt
-
-    // v['intofrom'] = {
-    //   id: "0",
-    //   itemname: "",
-    //   iscontainer: "True",
-    //   usercode: "",
-    //   uom: {
-    //     uom: "each",
-    //     symbol: "each",
-    //     country: "global"
-    //   },
-    //   taxes: [],
-    //   files: [],
-    //   recipe: {
-    //     consumedunits: [],
-    //     byproducts: []
-    //   }
-    // }
-    // v['by'] = {
-    //   itemid: "0",
-    //   neid: "",
-    //   relationshipid: "",
-    //   name: ""
-    // }
-    // v['delivery'] ={
-    //   id: "-1",
-    //   accounthead: "",
-    //   defaultgroup: "",
-    //   relationship: "-1",
-    //   neid: "-1",
-    //   person: "-1",
-    //   name: "",
-    //   endpoint: "",
-    //   rtype: ""
-    // }
-    // v['title'] = ""
-    v['accountmap'] = JSON.parse(JSON.stringify(this.selectedAccountMap))
-    v['files'] = []
-    v['expirydate'] = new Date()
-    // v['vendorperson'] = null
-    //v['recordid'] = this.highestRecordID(this.selectedVouchers) + 1
-
-    this.uneditedSbs = JSON.parse(JSON.stringify(this.selectedStockBalances))
-
-    let sbs = []
-    for (let index = 0; index < this.selectedStockBalances.length; index++) {
-      const element = this.selectedStockBalances[index];
-      if(parseFloat(element.inputqty) > 0) {
-        sbs.push(element)
-      }
-    }
-
-    v['stockbalanceinputs'] = sbs
-
-    let slbs = []
-    for (let index = 0; index < this.selectedStockLocationBalance.length; index++) {
-      const element = this.selectedStockLocationBalance[index];
-      if(parseFloat(element.inputqty) > 0) {
-        slbs.push(element)
-      }
-    }
-
-    v['stocklocationbalanceinputs'] = slbs
-    v['title'] = this.selectedTitleOption
-
-
-    return v
-  }
-
-  
-
-
-  
-
-  
-
-  recordByRecordID(recordid:any,array:any) {
-    let object:any
-    for (let index = 0; index < array.length; index++) {
-      const element = array[index];
-      if(element.recordid === recordid) {
-        object = element
-      }
-    }
-    return object
-  }
-
-
+ 
 
   filterAccountMaps(event:any) {
     
@@ -1562,8 +1074,6 @@ export class CreateConsumptionComponent implements OnInit {
     }
 
     
-    
-
     let newInvoice:any = {}
     newInvoice['date'] = this.ISODate(this.selectedDate)
     newInvoice['vouchers'] = this.selectedVouchers
@@ -1571,10 +1081,12 @@ export class CreateConsumptionComponent implements OnInit {
 
     console.log('CONSUMPTION INVOICE TO BE SAVED',JSON.stringify(newInvoice))
 
-    //return
 
     this.saveConsumption(newInvoice)
-
+    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Created', life: 3000 });
+  
+    this.router.navigate(['account/consumption'])
+    
     return false
 
   }
@@ -1642,6 +1154,773 @@ onGlobalFilter(table: Table, event: Event) {
 
 navigateToListConsumprtions(){
   this.router.navigate(['account/consumption'])
-}  
+} 
+
+disableDynPrice:boolean = true
+
+cpChange(event:any) {
+
+  console.log('CP DROPDOWN CHANGE',event.value)
+
+  if (event.value.context === 'DYNAMIC') {
+    this.disableDynPrice = false
+  }
+  else if (event.value.context !== 'DYNAMIC') {
+    this.disableDynPrice = true
+  }
+
+  if(event.value !== null) {
+
+    this.selectedUIR = event.value.saleprice
+    this.selectedTaxes = event.value.taxes
+
+    // if context is DYNAMIC, selected UIR is dynamic price input
+
+    for (let index = 0; index < this.selectedTaxes.length; index++) {
+      const element = this.selectedTaxes[index];
+      element['recordid'] = index
+    }
+
+    this.uirChange({})
+
+  }
+
+  if(event.value === null) {
+    this.selectedUIR = 0
+    this.selectedTaxes = []
+    this.uirChange({})
+  }
+
+}
+
+
+pcchange(event:any) {
+
+  console.log('RI EVENT',event)
+
+  this.ri = event
+
+  if(this.ri === 'rit') {
+    this.rbt = this.rad/this.calculateTaxFactor()
+    this.rat = this.rad
+    this.t = this.rat - this.rbt
+    
+  }
+  if(this.ri === 'ret') {
+    this.rbt = this.rad
+    this.rat = this.rad*this.calculateTaxFactor()
+    this.t = this.rat - this.rbt
+  }
+
+  this.calculateSeparateTaxes()
+  
+}
+calculateTaxFactor() {
+  let totaltaxperc:number = 0
+  for (let index = 0; index < this.selectedTaxes.length; index++) {
+    const tax = this.selectedTaxes[index];
+    console.log('TAX',parseFloat(tax.taxpercent))
+    totaltaxperc = parseFloat(tax.taxpercent) + totaltaxperc
+    
+  }
+  let tf = 1+(totaltaxperc/100)
+  console.log('TAXFACTOR',tf)
+  return tf
+  
+}
+
+calculateSeparateTaxes() {
+  this.totalvatperc = 0
+  this.totalnonvatperc = 0
+  
+  for (let index = 0; index < this.selectedTaxes.length; index++) {
+    const element = this.selectedTaxes[index];
+    let tt = element.taxtype.toLowerCase()
+    if(tt === 'vat') {
+      this.totalvatperc = this.totalvatperc + parseFloat(element.taxpercent)
+    }
+    if(tt === 'nonvat') {
+      this.totalnonvatperc = this.totalnonvatperc + parseFloat(element.taxpercent)
+    }
+  }
+
+  let totaltaxperc = this.totalvatperc + this.totalnonvatperc
+  this.vattaxperunit = (this.totalvatperc/totaltaxperc)*this.t
+  this.nonvattaxperunit = (this.totalnonvatperc/totaltaxperc)*this.t
+
+  if (isNaN(this.vattaxperunit)) {
+    this.vattaxperunit = 0
+  }
+
+  if (isNaN(this.nonvattaxperunit)) {
+    this.nonvattaxperunit = 0
+  }
+
+
+  console.log('TOTALVATPERC',this.totalvatperc)
+  console.log('TOTALNONVATPERC',this.totalnonvatperc)
+  console.log('TOTALTAXPERC',totaltaxperc)
+  console.log('T',this.t)
+  console.log('VATTAXPU',this.vattaxperunit)
+  console.log('NONVATTAXPU',this.nonvattaxperunit)
+
+
+  // individual taxperc / totaltaxperc * this.t
+
+  for (let index = 0; index < this.selectedTaxes.length; index++) {
+    const element = this.selectedTaxes[index];
+
+    let ta = ((element.taxpercent / totaltaxperc) * this.t)
+    element['taxamount'] = ta
+    
+  }
+
+
+}
+
+uirChange(event:any) {
+  let uir:number = parseFloat(event)
+  
+  if(!this.discountState) {
+    this.discountAmount = uir*(this.inputDiscount/100)
+    this.selectedDiscountAmount = this.discountAmount
+    this.selectedDiscountPercent = this.inputDiscount
+    this.rad = this.selectedUIR - this.discountAmount
+  }
+
+  if(this.discountState) {
+    this.discountAmount = this.inputDiscount
+    this.selectedDiscountAmount = this.inputDiscount
+    this.selectedDiscountPercent = (this.inputDiscount*100)/uir
+    this.rad = this.selectedUIR - this.discountAmount
+  }
+
+  if(isNaN(this.discountAmount)) {
+    this.discountAmount = 0
+    this.selectedDiscountAmount = 0
+    this.rad = this.selectedUIR - this.discountAmount
+  }
+
+  if(isNaN(this.rad)) {
+    this.rad = this.selectedUIR
+  }
+
+  
+
+  this.pcchange(this.ri)
+}
+
+handleDiscountSwitchChange(event:any) {
+  this.discountState = event.checked
+  console.log('DISCOUNT STATE',this.discountState)
+
+  if(this.discountState) {
+    this.discountLabel = 'discount amount'
+    this.selectedDiscountPercent 
+  }
+  if(!this.discountState) {
+    this.discountLabel = 'discount percent'
+  }
+
+  if(this.inputDiscount === null || this.selectedUIR === null) {
+    return
+  }
+
+  if(this.discountState) {
+    this.discountAmount = this.inputDiscount
+    this.selectedDiscountAmount = this.inputDiscount
+    this.selectedDiscountPercent = (this.inputDiscount*100)/this.selectedUIR
+    this.rad = this.selectedUIR - this.discountAmount
+  }
+  if(!this.discountState) {
+    this.discountAmount = this.selectedUIR*(this.inputDiscount/100)
+    this.selectedDiscountAmount = this.discountAmount
+    this.selectedDiscountPercent = this.inputDiscount
+    this.rad = this.selectedUIR - this.discountAmount
+  }
+
+  if(isNaN(this.discountAmount)) {
+    this.discountAmount = 0
+    this.selectedDiscountAmount = 0
+    this.rad = this.selectedUIR - this.discountAmount
+  }
+
+  if(isNaN(this.rad)) {
+    this.rad = this.selectedUIR
+  }
+
+  this.pcchange(this.ri)
+
+}
+
+discountChange(event:any) {
+  
+  let d:number = parseFloat(event)
+
+  if(this.selectedUIR === null) {
+    return
+  }
+
+  if(!this.discountState) {
+    this.discountAmount = this.selectedUIR*(d/100)
+    this.selectedDiscountAmount = this.discountAmount
+    this.selectedDiscountPercent = d
+    this.rad = this.selectedUIR - this.discountAmount
+
+  }
+  if(this.discountState) {
+    this.discountAmount = d
+    this.selectedDiscountAmount = d
+    this.selectedDiscountPercent = (d*100)/this.selectedUIR
+    this.rad = this.selectedUIR - d
+  }
+
+  if(isNaN(this.discountAmount)) {
+    this.discountAmount = 0
+    this.selectedDiscountAmount = 0
+    this.rad = this.selectedUIR - this.discountAmount
+  }
+
+  if(isNaN(this.rad)) {
+    this.rad = this.selectedUIR
+  }
+
+  this.pcchange(this.ri)
+
+}
+
+showNewTaxDialog() {
+
+  this.selectedTaxname = null
+  this.selectedTaxcode = null
+  this.selectedTaxtype = null
+  this.selectedTaxpercent = null
+  this.selectedTaxParty = null
+  this.displayTaxModal = true;
+}
+
+
+handleTaxEdit(tax:any) {
+  console.log('TAX TO BE EDITED',tax)
+  this.selectedTaxname = tax.taxname
+  this.selectedTaxcode = tax.taxcode
+  this.selectedTaxpercent = tax.taxpercent
+  this.selectedTaxtype = tax.taxtype
+  this.selectedTaxParty = tax.taxauthority
+  this.selectedRecordid = tax.recordid
+  this.displayTaxEditModal = true
+}
+
+deleteTaxDialog:boolean=false;
+handleTaxDelete(event:any) {
+console.log('EVENT',event)
+this.deleteTaxDialog=true;
+
+}
+confirmDeletee(event:any){
+this.selectedTaxes.splice(event,1)
+this.pcchange(this.ri)
+this.deleteTaxDialog=false;
+this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted', life: 3000 });
+
+}
+
+handleOnSelectTaxParty(event:any) {
+this.selectedTaxParty = event
+}
+
+handleOnSelectParty(event:any) {
+  this.selectedParty = event
+  this.newInvoice.partyaccounthead = event;
+}
+
+partyChange(event:any) {
+  this.newInvoice.partyaccounthead =  {
+    id: "",
+    accounthead: "",
+    defaultgroup: "",
+    relationship: "",
+    neid: "",
+    person: "",
+    name: "",
+    endpoint: "",
+    accounttype: "",
+    partofgroup: -1,
+    isgroup: false
+  }
+}
+
+// showFieldsTax: boolean = false;
+// *ngIf="showFieldsTax"
+handleAddTax() {
+
+if (typeof this.selectedTaxParty === 'undefined' || this.selectedTaxParty == null) {
+  this.confirm('You must select a tax authority')
+  return false
+}
+if (typeof this.selectedTaxpercent === 'undefined' || this.selectedTaxpercent == null ) {
+  this.confirm('You must enter tax percent')
+  return false
+}
+
+if (typeof this.selectedTaxname === 'undefined' || this.selectedTaxname == null || this.selectedTaxname === '') {
+  this.confirm('You must enter a tax name')
+  return false
+}
+
+if (typeof this.selectedTaxtype === 'undefined' || this.selectedTaxtype == null || this.selectedTaxtype === '') {
+  this.confirm('You must select a tax type')
+  return false
+}
+
+if(this.selectedTaxParty.accounthead === '') {
+  this.confirm('You must select a tax authority')
+}
+
+let tax:any = {}
+tax['taxname'] = this.selectedTaxname
+if(this.selectedTaxcode === null) {
+  this.selectedTaxcode = ""
+}
+tax['taxcode'] = this.selectedTaxcode
+tax['taxpercent'] = this.selectedTaxpercent
+tax['taxtype'] = this.selectedTaxtype
+tax['taxauthority'] = this.selectedTaxParty
+tax['recordid'] = this.highestRecordID(this.selectedTaxes) + 1
+
+console.log('TAX TO BE ADDED',tax)
+
+//return false
+
+this.selectedTaxes.push(tax)
+// this.showFieldsTax = true;
+this.pcchange(this.ri)
+
+
+this.selectedTaxname = null
+this.selectedTaxcode = null
+this.selectedTaxtype = null
+this.selectedTaxpercent = null
+this.selectedTaxParty = null
+
+
+this.displayTaxModal = false
+
+return false
+
+}
+
+highestRecordID(objectArray:any[]) {
+let recid = 0
+for (let index = 0; index < objectArray.length; index++) {
+  const element = objectArray[index];
+  if(element.recordid > recid) {
+    recid = element.recordid
+  }
+}
+return recid
+
+}
+
+handleUpdateTax() {
+  
+let tax:any = this.recordByRecordID(this.selectedRecordid,this.selectedTaxes)
+tax.taxname = this.selectedTaxname
+if(this.selectedTaxcode === null) {
+  this.selectedTaxcode = ""
+}
+tax.taxcode = this.selectedTaxcode
+tax.taxpercent = this.selectedTaxpercent
+tax.taxauthority = this.selectedTaxParty
+tax.taxtype = this.selectedTaxtype
+this.pcchange(this.ri)
+this.displayTaxEditModal = false
+console.log('TAX TO BE UPDATED',tax)
+
+}
+
+recordByRecordID(recordid:any,array:any) {
+let object:any
+for (let index = 0; index < array.length; index++) {
+  const element = array[index];
+  if(element.recordid === recordid) {
+    object = element
+  }
+}
+return object
+}
+
+handleAddVoucher(){
+
+  console.log('ITEM',this.selectedItem)
+  console.log('QUANTITY',this.selectedQty)
+  console.log('USER INPUT RATE',this.selectedUIR)
+
+  if (typeof this.selectedItem === 'undefined' || this.selectedItem == null) {
+    this.confirm('You must select an item')
+    return false
+  }
+  if (typeof this.selectedQty === 'undefined' || this.selectedQty == null || this.selectedQty === 0) {
+    this.confirm('You must enter a quantity greater than zero')
+    return false
+  }
+
+  // if (typeof this.selectedLocationQty === 'undefined' || this.selectedLocationQty == null || this.selectedLocationQty === 0) {
+  //   this.confirm('You must enter a location quantity greater than zero')
+  //   return false
+  // }
+
+  // if(this.selectedQty != this.selectedLocationQty) {
+  //   this.confirm('You must enter a location quantity equal to actual quantity')
+  //   return false
+  // }
+
+  // if (typeof this.selectedUIR === 'undefined' || this.selectedUIR == null) {
+  //   this.confirm('You must enter a sale price greater than or equal to zero')
+  //   return false
+  // }
+
+  if ((typeof this.selectedAccountMap === 'undefined' || this.selectedAccountMap == null) && this.selectedTitleOption === 'ownership') {
+    this.confirm('You must select an account')
+    return false
+  }
+
+  if(this.taxPartyCheck()) {
+    this.confirm('One or more tax entries do not have tax authority selected.')
+    return false
+  }
+
+
+  for (let index = 0; index < this.selectedStockBalances.length; index++) {
+    const element = this.selectedStockBalances[index];
+    if (element.title === 'possession' && this.selectedTitleOption === 'ownership') {
+      this.confirm('One or more items that are on possession are being transfered with ownership title.')
+      return false
+    }
+  }
+
+
+  this.pcchange(this.ri)
+
+  let v:any = this.buildVoucher()
+  this.selectedVouchers.push(v)
+  
+  this.displaySubModal = false
+  return false
+
+}
+
+taxPartyCheck() {
+
+for (let index = 0; index < this.selectedTaxes.length; index++) {
+  const element = this.selectedTaxes[index];
+  //console.log("key" in obj)
+  if(!("taxauthority" in element) || (element.taxauthority.accounthead === '')) {
+    return true
+  }
+}
+return false
+}
+
+buildVoucher() {
+
+let v:any = {}
+v['action'] = 'iss'
+v['objecttype'] = 'item'
+v['object'] = JSON.parse(JSON.stringify(this.selectedItem))
+v['quantity'] = this.selectedQty
+v['currency'] = '',
+v['fromdatetime'] = 'infinity'
+v['todatetime'] = 'infinity'
+v['duedatetime'] = 'infinity'
+v['userinputrate'] = this.selectedUIR
+if(this.ri === 'rit'){
+  v['rateincludesvat'] = true
+}
+if(this.ri === 'ret') {
+  v['rateincludesvat'] = false
+}
+
+v['taxes'] = JSON.parse(JSON.stringify(this.selectedTaxes))
+if(isNaN(this.selectedDiscountPercent)) {
+  this.selectedDiscountPercent = 0
+}
+v['discountpercent'] = this.selectedDiscountPercent
+v['discountamount'] = this.selectedDiscountAmount
+v['rateafterdiscount'] = this.rad
+v['rateaftertaxes'] = this.rat
+v['taxfactor'] = this.calculateTaxFactor()
+v['taxesperunit'] = this.t
+v['uom'] = { 
+  uom: "",
+  symbol: "",
+  country: ""
+}
+
+v['nonvattaxperunit'] = this.nonvattaxperunit
+
+v['vattaxperunit'] = this.vattaxperunit
+v['nonvatpercent'] = this.totalnonvatperc
+v['vatpercent'] = this.totalvatperc
+v['ratebeforetaxes'] = this.rbt
+
+v['intofrom'] = {
+  id: "0",
+  itemname: "",
+  iscontainer: "True",
+  usercode: "",
+  uom: {
+    uom: "each",
+    symbol: "each",
+    country: "global"
+  },
+  taxes: [],
+  files: [],
+  recipe: {
+    consumedunits: [],
+    byproducts: []
+  }
+}
+v['by'] = {
+  itemid: "0",
+  neid: "",
+  relationshipid: "",
+  name: ""
+}
+v['delivery'] ={
+  id: "-1",
+  accounthead: "",
+  defaultgroup: "",
+  relationship: "-1",
+  neid: "-1",
+  person: "-1",
+  name: "",
+  endpoint: "",
+  rtype: ""
+}
+v['title'] = this.selectedTitleOption
+
+v['accountmap'] = JSON.parse(JSON.stringify(this.selectedAccountMap))
+v['files'] = []
+v['expirydate'] = new Date()
+v['vendorperson'] = null
+v['recordid'] = this.highestRecordID(this.selectedVouchers) + 1
+
+this.uneditedSbs = JSON.parse(JSON.stringify(this.selectedStockBalances))
+
+let sbs = []
+for (let index = 0; index < this.selectedStockBalances.length; index++) {
+  const element = this.selectedStockBalances[index];
+  if(parseFloat(element.inputqty) > 0) {
+    sbs.push(element)
+  }
+}
+
+v['stockbalanceinputs'] = sbs
+
+
+let slbs = []
+for (let index = 0; index < this.selectedStockLocationBalance.length; index++) {
+  const element = this.selectedStockLocationBalance[index];
+  if(parseFloat(element.inputqty) > 0) {
+    slbs.push(element)
+  }
+}
+
+v['stocklocationbalanceinputs'] = slbs
+
+return v
+
+}
+
+
+handleEditVoucher(v:any) {
+    
+  console.log('VOUCHER TO BE EDITED',v)
+  
+  this.selectedItem = v.object
+  this.selectedUIR = v.userinputrate
+  this.selectedQty = v.quantity
+  this.selectedStockBalances = this.uneditedSbs
+  this.selectedAccountMap = v.accountmap
+  this.selectedUOM = v.object.uom.uom
+  this.selectedTaxes = v.taxes
+  let ri = ""
+  if(v.rateincludesvat) {
+    ri = 'rit'
+  }
+  if(!v.rateincludesvat) {
+    ri = 'ret'
+  }
+  this.pcchange(ri)
+  this.selectedVoucherid = v.recordid
+  this.displaySubEditModal = true
+
+}
+
+handleUpdateVoucher() {
+
+  if (typeof this.selectedItem === 'undefined' || this.selectedItem == null) {
+    this.confirm('You must select an item')
+    return false
+  }
+  if (typeof this.selectedQty === 'undefined' || this.selectedQty == null || this.selectedQty === 0) {
+    this.confirm('You must enter a quantity greater than zero')
+    return false
+  }
+
+  // if (typeof this.selectedLocationQty === 'undefined' || this.selectedLocationQty == null || this.selectedLocationQty === 0) {
+  //   this.confirm('You must enter a location quantity greater than zero')
+  //   return false
+  // }
+
+  // if(this.selectedQty != this.selectedLocationQty) {
+  //   this.confirm('You must enter a location quantity equal to actual quantity')
+  //   return false
+  // }
+
+  if (typeof this.selectedUIR === 'undefined' || this.selectedUIR == null) {
+    this.confirm('You must enter a quantity greater than or equal to zero')
+    return false
+  }
+
+  if ((typeof this.selectedAccountMap === 'undefined' || this.selectedAccountMap == null) && this.selectedTitleOption === 'ownership') {
+    this.confirm('You must select an account')
+    return false
+  }
+
+  if(this.taxPartyCheck()) {
+    this.confirm('One or more tax entries do not have tax authority selected.')
+    return false
+  }
+
+  for (let index = 0; index < this.selectedStockBalances.length; index++) {
+    const element = this.selectedStockBalances[index];
+    if (element.title === 'possession' && this.selectedTitleOption === 'ownership') {
+      this.confirm('One or more items that are on possession are being transfered with ownership title.')
+      return false
+    }
+  }
+
+  this.pcchange(this.ri)
+
+  let v:any = this.recordByRecordID(this.selectedVoucherid,this.selectedVouchers)
+  console.log('VOUCHER',v)
+  this.rebuildVoucher(v)
+  this.displaySubEditModal = false
+
+  return false
+
+}
+
+
+rebuildVoucher(v:any) {
+
+  this.pcchange(this.ri)
+  
+  v['action'] = 'iss'
+  v['objecttype'] = 'item'
+  v['object'] = JSON.parse(JSON.stringify(this.selectedItem)) // only this.selectedItem because it is assigned in handleEditVoucher
+  v['quantity'] = this.selectedQty
+  v['currency'] = '',
+  v['fromdatetime'] = 'infinity'
+  v['todatetime'] = 'infinity'
+  v['duedatetime'] = 'infinity'
+  v['userinputrate'] = this.selectedUIR
+  if(this.ri === 'rit'){
+    v['rateincludesvat'] = true
+  }
+  if(this.ri === 'ret') {
+    v['rateincludesvat'] = false
+  }
+
+  v['taxes'] = JSON.parse(JSON.stringify(this.selectedTaxes))
+  if(isNaN(this.selectedDiscountPercent)) {
+    this.selectedDiscountPercent = 0
+  }
+  v['discountpercent'] = this.selectedDiscountPercent
+  v['discountamount'] = this.selectedDiscountAmount
+  v['rateafterdiscount'] = this.rad
+  v['rateaftertaxes'] = this.rat
+  v['taxfactor'] = this.calculateTaxFactor()
+  v['taxesperunit'] = this.t
+  v['uom'] = {
+    uom: "",
+    symbol: "",
+    country: ""
+  }
+  v['nonvattaxperunit'] = this.nonvattaxperunit
+  v['vattaxperunit'] = this.vattaxperunit
+  v['nonvatpercent'] = this.totalnonvatperc
+  v['vatpercent'] = this.totalvatperc
+  v['ratebeforetaxes'] = this.rbt
+
+  v['intofrom'] = {
+    id: "0",
+    itemname: "",
+    iscontainer: "True",
+    usercode: "",
+    uom: {
+      uom: "each",
+      symbol: "each",
+      country: "global"
+    },
+    taxes: [],
+    files: [],
+    recipe: {
+      consumedunits: [],
+      byproducts: []
+    }
+  }
+  v['by'] = {
+    itemid: "0",
+    neid: "",
+    relationshipid: "",
+    name: ""
+  }
+  v['delivery'] ={
+    id: "-1",
+    accounthead: "",
+    defaultgroup: "",
+    relationship: "-1",
+    neid: "-1",
+    person: "-1",
+    name: "",
+    endpoint: "",
+    rtype: ""
+  }
+  v['title'] = this.selectedTitleOption
+  v['accountmap'] = JSON.parse(JSON.stringify(this.selectedAccountMap))
+  v['files'] = []
+  v['expirydate'] = new Date()
+  v['vendorperson'] = null
+  //v['recordid'] = this.highestRecordID(this.selectedVouchers) + 1
+
+  this.uneditedSbs = JSON.parse(JSON.stringify(this.selectedStockBalances))
+
+  let sbs = []
+  for (let index = 0; index < this.selectedStockBalances.length; index++) {
+    const element = this.selectedStockBalances[index];
+    if(parseFloat(element.inputqty) > 0) {
+      sbs.push(element)
+    }
+  }
+
+  v['stockbalanceinputs'] = sbs
+
+  let slbs = []
+  for (let index = 0; index < this.selectedStockLocationBalance.length; index++) {
+    const element = this.selectedStockLocationBalance[index];
+    if(parseFloat(element.inputqty) > 0) {
+      slbs.push(element)
+    }
+  }
+
+  v['stocklocationbalanceinputs'] = slbs
+
+
+  return v
+} 
+
 
 } 
